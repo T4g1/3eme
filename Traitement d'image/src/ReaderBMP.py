@@ -6,7 +6,7 @@ import struct
 
 # Classe gérant le chargement d'un fichier BMP
 # Specification du format BMP: http://atlc.sourceforge.net/bmp.html
-class Reader:
+class ReaderBMP:
     def __init__(self, filename):
         self.file = open(filename, 'rb')
 

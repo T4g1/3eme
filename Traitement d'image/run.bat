@@ -1,3 +1,3 @@
 @echo off
-python.exe run.py
+python.exe src/run.py
 pause

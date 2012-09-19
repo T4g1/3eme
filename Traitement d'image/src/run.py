@@ -4,7 +4,9 @@
 import sys, os
 import time
 from PyQt4 import QtCore, QtGui
-from windowsLayout import Ui_MainWindow
+import Image
+import ImageQt
+from layout.windowsLayout import Ui_MainWindow
 
 
 ##
@@ -26,10 +28,14 @@ class MainWindows(QtGui.QMainWindow):
         filename = QtGui.QFileDialog.getOpenFileName(
                 self, u"Sélectionnez l'image source",
                 u"./picture", "Images PNJ ou BMP (*.png *.bmp)")
+        filename = str(filename).decode('utf-8')
         
-        reader = Reader(filename)
-        reader.readHeader()
-
+        image = Image.open(filename)
+        QtImage = ImageQt.ImageQt(image)
+        QtGuiImage = QtGui.QImage(QtImage)
+        pixmap = QtGui.QPixmap.fromImage(QtGuiImage)
+        self.ui.basePicture.setPixmap(pixmap)
+        
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

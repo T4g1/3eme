@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'windowsLayout.ui'
 #
-# Created: Wed Sep 19 16:17:03 2012
+# Created: Wed Sep 19 18:19:49 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -33,6 +33,7 @@ class Ui_MainWindow(object):
         self.resultPicture.setObjectName(_fromUtf8("resultPicture"))
         self.gridLayout.addWidget(self.resultPicture, 1, 1, 1, 1)
         self.basePicture = QtGui.QLabel(self.gridLayoutWidget)
+        self.basePicture.setText(_fromUtf8(""))
         self.basePicture.setObjectName(_fromUtf8("basePicture"))
         self.gridLayout.addWidget(self.basePicture, 1, 0, 1, 1)
         self.lab_imagesource = QtGui.QLabel(self.gridLayoutWidget)
@@ -70,7 +71,6 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Traitement d\'image", None, QtGui.QApplication.UnicodeUTF8))
-        self.basePicture.setText(QtGui.QApplication.translate("MainWindow", "Image source", None, QtGui.QApplication.UnicodeUTF8))
         self.lab_imagesource.setText(QtGui.QApplication.translate("MainWindow", "Image source:", None, QtGui.QApplication.UnicodeUTF8))
         self.lab_imageresultat.setText(QtGui.QApplication.translate("MainWindow", "Image résultat:", None, QtGui.QApplication.UnicodeUTF8))
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "Fichier", None, QtGui.QApplication.UnicodeUTF8))
