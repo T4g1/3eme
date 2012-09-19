@@ -1,4 +1,4 @@
-#!/usr/bin/python -d
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 import sys, os
@@ -23,9 +23,12 @@ class MainWindows(QtGui.QMainWindow):
     
     # Ouverture d'une image
     def openPicture(self):
-        file = QtGui.QFileDialog.getOpenFileName(
+        filename = QtGui.QFileDialog.getOpenFileName(
                 self, u"Sélectionnez l'image source",
                 u"./picture", "Images PNJ ou BMP (*.png *.bmp)")
+        
+        reader = Reader(filename)
+        reader.readHeader()
 
 
 if __name__ == "__main__":
