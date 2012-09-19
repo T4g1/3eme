@@ -28,13 +28,19 @@ class MainWindows(QtGui.QMainWindow):
         filename = QtGui.QFileDialog.getOpenFileName(
                 self, u"Sélectionnez l'image source",
                 u"./picture", "Images PNJ ou BMP (*.png *.bmp)")
+        if filename == "":
+            return
+        
         filename = str(filename).decode('utf-8')
         
-        image = Image.open(filename)
-        QtImage = ImageQt.ImageQt(image)
-        QtGuiImage = QtGui.QImage(QtImage)
-        pixmap = QtGui.QPixmap.fromImage(QtGuiImage)
-        self.ui.basePicture.setPixmap(pixmap)
+        # Conversion
+        self.basePicture = Image.open(filename)
+        self.QtImage = ImageQt.ImageQt(self.basePicture)
+        self.QtGuiImage = QtGui.QImage(self.QtImage)
+        
+        # Affichage
+        self.pixmap = QtGui.QPixmap.fromImage(self.QtGuiImage)
+        self.ui.basePicture.setPixmap(self.pixmap)
         
 
 if __name__ == "__main__":
