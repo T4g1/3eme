@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'windowsLayout.ui'
 #
-# Created: Thu Sep 20 20:49:09 2012
+# Created: Thu Sep 20 21:38:53 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -75,14 +75,14 @@ class Ui_MainWindow(object):
         self.actionSauver_sous.setObjectName(_fromUtf8("actionSauver_sous"))
         self.actionOuvrir = QtGui.QAction(MainWindow)
         self.actionOuvrir.setObjectName(_fromUtf8("actionOuvrir"))
-        self.actionTaille = QtGui.QAction(MainWindow)
-        self.actionTaille.setObjectName(_fromUtf8("actionTaille"))
+        self.actionModifierTaille = QtGui.QAction(MainWindow)
+        self.actionModifierTaille.setObjectName(_fromUtf8("actionModifierTaille"))
         self.actionPalette = QtGui.QAction(MainWindow)
         self.actionPalette.setObjectName(_fromUtf8("actionPalette"))
         self.menuFile.addAction(self.actionOuvrir)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionQuitter)
-        self.menuImage.addAction(self.actionTaille)
+        self.menuImage.addAction(self.actionModifierTaille)
         self.menuImage.addAction(self.actionPalette)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuImage.menuAction())
@@ -105,6 +105,6 @@ class Ui_MainWindow(object):
         self.actionSauver.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+S", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSauver_sous.setText(QtGui.QApplication.translate("MainWindow", "Sauver sous ...", None, QtGui.QApplication.UnicodeUTF8))
         self.actionOuvrir.setText(QtGui.QApplication.translate("MainWindow", "Ouvrir une image", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionTaille.setText(QtGui.QApplication.translate("MainWindow", "Taille", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionPalette.setText(QtGui.QApplication.translate("MainWindow", "Palette", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionModifierTaille.setText(QtGui.QApplication.translate("MainWindow", "Modifier la taille", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionPalette.setText(QtGui.QApplication.translate("MainWindow", "Modifier la palette", None, QtGui.QApplication.UnicodeUTF8))
 

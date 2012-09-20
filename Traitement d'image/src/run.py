@@ -5,6 +5,7 @@ import sys, os, time
 from PyQt4 import QtCore, QtGui
 import Image, ImageQt
 from layout.windowsLayout import Ui_MainWindow
+from dialog.DialogModifTaille import DialogModifTaille
 import Picture
 
 
@@ -16,6 +17,8 @@ class MainWindows(QtGui.QMainWindow):
         QtGui.QWidget.__init__(self, parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        
+        self.dialogModifTaille = DialogModifTaille()
         # Fin du wrapper
         
         # Crée les scénes
@@ -48,6 +51,8 @@ class MainWindows(QtGui.QMainWindow):
         # Menu
         self.ui.actionOuvrir.triggered.connect(self.openPicture)
         self.ui.actionQuitter.triggered.connect(QtGui.qApp.quit)
+        
+        self.ui.actionModifierTaille.triggered.connect(lambda: self.dialogModifTaille.show(self.basePicture.getSize()))
     
     # Ouverture d'une image
     def openPicture(self):
@@ -61,18 +66,18 @@ class MainWindows(QtGui.QMainWindow):
         self.basePicture.open(filename)
         
         # Affichage
-        self.showBasePicture(self.basePicture)
+        self.showBasePicture()
     
     # Affiche l'image de base
-    def showBasePicture(self, picture):
+    def showBasePicture(self):
         self.baseScene.clear()
-        self.baseScene.addPixmap(picture.getPixmap())
+        self.baseScene.addPixmap(self.basePicture.getPixmap())
         self.baseScene.update()
     
     # Affiche l'image résultat
-    def showResultPicture(self, picture):
+    def showResultPicture(self):
         self.resultScene.clear()
-        self.resultScene.addPixmap(picture.getPixmap())
+        self.resultScene.addPixmap(self.resultPicture.getPixmap())
         self.resultScene.update()
     
     # Passe l'image resultat en image de base
@@ -84,7 +89,7 @@ class MainWindows(QtGui.QMainWindow):
         self.basePicture.setImage(self.resultPicture.image.copy())
         
         # Affiche l'image
-        self.showBasePicture(self.basePicture)
+        self.showBasePicture()
     
     # Gestion des touches
     def keyPressEvent(self, event):
@@ -143,7 +148,7 @@ class MainWindows(QtGui.QMainWindow):
         
         # Affiche l'image
         self.resultPicture.setImage(roi.copy())
-        self.showResultPicture(self.resultPicture)
+        self.showResultPicture()
 
 
 if __name__ == "__main__":

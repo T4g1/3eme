@@ -31,6 +31,13 @@ class Picture():
     def getPixmap(self):
         self.pixmap = QtGui.QPixmap.fromImage(self.getQtImage())
         return self.pixmap
+    
+    # Donne les dimensions de l'image
+    def getSize(self):
+        if self.image == 0:
+            return (0, 0)
+        
+        return self.image.size
         
     # Donne le ROI définit par les deux points donné
     def getROI(self, a, b):
