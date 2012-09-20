@@ -7,6 +7,7 @@ from PyQt4 import QtCore, QtGui
 import Image
 import ImageQt
 from layout.windowsLayout import Ui_MainWindow
+import Picture
 
 
 ##
@@ -19,16 +20,24 @@ class MainWindows(QtGui.QMainWindow):
         self.ui.setupUi(self)
         # Fin du wrapper
         
-        self.basePicture = 0
-        self.resultPicture = 0
+        # Crée les scénes
+        self.baseScene = QtGui.QGraphicsScene()
+        self.resultScene = QtGui.QGraphicsScene()
+        
+        # Lie les scénes aux vues
+        self.ui.baseView.setScene(self.baseScene)
+        self.ui.resultView.setScene(self.resultScene)
+        
+        self.basePicture = Picture.Picture()
+        self.resultPicture = Picture.Picture()
         
         # ROI
         self.roiCorner = [];
         self.roiActivated = False
         
         # Clic sur l'image
-        self.ui.basePicture.mousePressEvent = self.basePictureOnClick
-        self.ui.basePicture.mouseReleaseEvent = self.basePictureOnClick
+        self.ui.baseView.mousePressEvent = self.basePictureOnClick
+        self.ui.baseView.mouseReleaseEvent = self.basePictureOnClick
         
         # Boutons pour modifications visible
         self.ui.modeROI.clicked.connect(self.setRoiMode)
@@ -47,70 +56,89 @@ class MainWindows(QtGui.QMainWindow):
             return
         
         filename = str(filename).decode('utf-8')
-        
-        # Conversion et ouverture du fichier
-        self.basePicture = Image.open(filename)
-        self.QtGuiImage = self.getQtGuiImage(self.basePicture)
+        self.basePicture.open(filename)
         
         # Affichage
-        self.showBasePicture(self.QtGuiImage)
-    
-    # Donne une image QtGui depuis une image PIL
-    def getQtGuiImage(self, pilImage):
-        self.QtImage = ImageQt.ImageQt(pilImage)
-        return QtGui.QImage(self.QtImage)
+        self.showBasePicture(self.basePicture)
     
     # Affiche l'image de base
-    def showBasePicture(self, qtImage):
-        self.pixmap = QtGui.QPixmap.fromImage(qtImage)
-        self.ui.basePicture.setPixmap(self.pixmap)
+    def showBasePicture(self, picture):
+        # Taille de l'image
+        w = picture.image.size[0]
+        h = picture.image.size[1]
+        
+        self.baseScene.clear()
+        self.baseScene.addPixmap(picture.getPixmap())
+        self.baseScene.update()
     
     # Affiche l'image résultat
-    def showResultPicture(self, qtImage):
-        self.pixmap = QtGui.QPixmap.fromImage(qtImage)
-        self.ui.resultPicture.setPixmap(self.pixmap)
+    def showResultPicture(self, picture):
+        # Taille de l'image
+        w = picture.image.size[0]
+        h = picture.image.size[1]
+        
+        self.resultScene.clear()
+        self.resultScene.addPixmap(picture.getPixmap())
+        self.resultScene.update()
     
     # Passe l'image resultat en image de base
     def switchResult2Base(self):
-        if self.resultPicture == 0:
+        if self.resultPicture.image == 0:
             print "Pas encore d'image résultat ..."
             return
         
         self.basePicture = self.resultPicture
         
         # Affiche l'image
-        self.QtGuiImage = self.getQtGuiImage(self.basePicture)
-        self.showBasePicture(self.QtGuiImage)
+        self.showBasePicture(self.basePicture)
     
     # Désactive les mode particuliers
     def setNoMode(self):
-        self.ui.basePicture.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
+        self.ui.baseView.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.roiActivated = False
         self.roiCorner = []
         
     # Active le mode ROI
     def setRoiMode(self):
-        self.ui.basePicture.setCursor(QtGui.QCursor(QtCore.Qt.CrossCursor))
+        self.ui.baseView.setCursor(QtGui.QCursor(QtCore.Qt.CrossCursor))
         self.roiActivated = True
     
     # Clic sur l'image source
     def basePictureOnClick(self, mouseEvent):
         if self.roiActivated:
-            x = mouseEvent.pos().x() 
-            y = mouseEvent.pos().y()
+            # Récupére les coordonées sur la scéne
+            pos = self.ui.baseView.mapToScene(mouseEvent.pos())
+            x = int(pos.x())
+            y = int(pos.y())
+            
+            # Dépassement des X
+            if x < 0:
+                x = 0
+            elif x >= self.basePicture.image.size[0]:
+                x = self.basePicture.image.size[0] - 1
+            
+            # Dépassement des Y
+            if y < 0:
+                y = 0
+            elif y >= self.basePicture.image.size[1]:
+                y = self.basePicture.image.size[1] - 1
+                
             self.roiCorner.append((x, y))
+            print "ROI coordinate", len(self.roiCorner), ":", (x, y)
             
             if len(self.roiCorner) >= 2:
                 self.showROI()
-                self.setNoMode()
+                #self.setNoMode()
     
     # Affiche le ROI séléctionné
     def showROI(self):
-        # Taille de la ROI
-        # Crée l'image
-        # Place les pixels voulu dans l'image
+        # Récupére la ROI
+        roi = self.basePicture.getROI(self.roiCorner[0], self.roiCorner[1])
+        self.roiCorner = []
+        
         # Affiche l'image
-        pass
+        self.resultPicture.setImage(roi)
+        self.showResultPicture(self.resultPicture)
 
 
 if __name__ == "__main__":

@@ -30,26 +30,6 @@
      <property name="spacing">
       <number>6</number>
      </property>
-     <item row="1" column="1">
-      <widget class="QLabel" name="resultPicture">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="basePicture">
-       <property name="cursor">
-        <cursorShape>ArrowCursor</cursorShape>
-       </property>
-       <property name="mouseTracking">
-        <bool>false</bool>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="0">
       <widget class="QLabel" name="lab_imagesource">
        <property name="maximumSize">
@@ -93,6 +73,12 @@
         </widget>
        </item>
       </layout>
+     </item>
+     <item row="1" column="0">
+      <widget class="QGraphicsView" name="baseView"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QGraphicsView" name="resultView"/>
      </item>
     </layout>
    </widget>

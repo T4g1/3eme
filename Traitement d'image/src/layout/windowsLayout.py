@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'windowsLayout.ui'
 #
-# Created: Thu Sep 20 08:43:54 2012
-#      by: PyQt4 UI code generator 4.9.4
+# Created: Thu Sep 20 20:36:00 2012
+#      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -28,16 +28,6 @@ class Ui_MainWindow(object):
         self.gridLayout.setSpacing(6)
         self.gridLayout.setMargin(0)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
-        self.resultPicture = QtGui.QLabel(self.gridLayoutWidget)
-        self.resultPicture.setText(_fromUtf8(""))
-        self.resultPicture.setObjectName(_fromUtf8("resultPicture"))
-        self.gridLayout.addWidget(self.resultPicture, 1, 1, 1, 1)
-        self.basePicture = QtGui.QLabel(self.gridLayoutWidget)
-        self.basePicture.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
-        self.basePicture.setMouseTracking(False)
-        self.basePicture.setText(_fromUtf8(""))
-        self.basePicture.setObjectName(_fromUtf8("basePicture"))
-        self.gridLayout.addWidget(self.basePicture, 1, 0, 1, 1)
         self.lab_imagesource = QtGui.QLabel(self.gridLayoutWidget)
         self.lab_imagesource.setMaximumSize(QtCore.QSize(16777215, 10))
         self.lab_imagesource.setObjectName(_fromUtf8("lab_imagesource"))
@@ -56,6 +46,12 @@ class Ui_MainWindow(object):
         self.modeROI.setObjectName(_fromUtf8("modeROI"))
         self.horizontalLayout.addWidget(self.modeROI)
         self.gridLayout.addLayout(self.horizontalLayout, 2, 0, 1, 1)
+        self.baseView = QtGui.QGraphicsView(self.gridLayoutWidget)
+        self.baseView.setObjectName(_fromUtf8("baseView"))
+        self.gridLayout.addWidget(self.baseView, 1, 0, 1, 1)
+        self.resultView = QtGui.QGraphicsView(self.gridLayoutWidget)
+        self.resultView.setObjectName(_fromUtf8("resultView"))
+        self.gridLayout.addWidget(self.resultView, 1, 1, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 798, 21))
