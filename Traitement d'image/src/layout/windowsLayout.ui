@@ -39,6 +39,12 @@
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="basePicture">
+       <property name="cursor">
+        <cursorShape>ArrowCursor</cursorShape>
+       </property>
+       <property name="mouseTracking">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -64,6 +70,30 @@
        </property>
       </widget>
      </item>
+     <item row="2" column="0">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetNoConstraint</enum>
+       </property>
+       <item>
+        <widget class="QPushButton" name="modeNormal">
+         <property name="toolTip">
+          <string extracomment="Aucun"/>
+         </property>
+         <property name="text">
+          <string>Aucun</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="modeROI">
+         <property name="text">
+          <string>R.O.I.</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
     </layout>
    </widget>
   </widget>
@@ -84,7 +114,15 @@
     <addaction name="separator"/>
     <addaction name="actionQuitter"/>
    </widget>
+   <widget class="QMenu" name="menuImage">
+    <property name="title">
+     <string>Image</string>
+    </property>
+    <addaction name="actionTaille"/>
+    <addaction name="actionPalette"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuImage"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionQuitter">
@@ -111,6 +149,16 @@
   <action name="actionOuvrir">
    <property name="text">
     <string>Ouvrir une image</string>
+   </property>
+  </action>
+  <action name="actionTaille">
+   <property name="text">
+    <string>Taille</string>
+   </property>
+  </action>
+  <action name="actionPalette">
+   <property name="text">
+    <string>Palette</string>
    </property>
   </action>
  </widget>

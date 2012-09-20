@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'windowsLayout.ui'
 #
-# Created: Wed Sep 19 18:19:49 2012
-#      by: PyQt4 UI code generator 4.9.1
+# Created: Thu Sep 20 08:43:54 2012
+#      by: PyQt4 UI code generator 4.9.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -33,6 +33,8 @@ class Ui_MainWindow(object):
         self.resultPicture.setObjectName(_fromUtf8("resultPicture"))
         self.gridLayout.addWidget(self.resultPicture, 1, 1, 1, 1)
         self.basePicture = QtGui.QLabel(self.gridLayoutWidget)
+        self.basePicture.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
+        self.basePicture.setMouseTracking(False)
         self.basePicture.setText(_fromUtf8(""))
         self.basePicture.setObjectName(_fromUtf8("basePicture"))
         self.gridLayout.addWidget(self.basePicture, 1, 0, 1, 1)
@@ -43,12 +45,25 @@ class Ui_MainWindow(object):
         self.lab_imageresultat = QtGui.QLabel(self.gridLayoutWidget)
         self.lab_imageresultat.setObjectName(_fromUtf8("lab_imageresultat"))
         self.gridLayout.addWidget(self.lab_imageresultat, 0, 1, 1, 1)
+        self.horizontalLayout = QtGui.QHBoxLayout()
+        self.horizontalLayout.setSizeConstraint(QtGui.QLayout.SetNoConstraint)
+        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
+        self.modeNormal = QtGui.QPushButton(self.gridLayoutWidget)
+        self.modeNormal.setToolTip(_fromUtf8(""))
+        self.modeNormal.setObjectName(_fromUtf8("modeNormal"))
+        self.horizontalLayout.addWidget(self.modeNormal)
+        self.modeROI = QtGui.QPushButton(self.gridLayoutWidget)
+        self.modeROI.setObjectName(_fromUtf8("modeROI"))
+        self.horizontalLayout.addWidget(self.modeROI)
+        self.gridLayout.addLayout(self.horizontalLayout, 2, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 798, 21))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menuFile = QtGui.QMenu(self.menubar)
         self.menuFile.setObjectName(_fromUtf8("menuFile"))
+        self.menuImage = QtGui.QMenu(self.menubar)
+        self.menuImage.setObjectName(_fromUtf8("menuImage"))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtGui.QStatusBar(MainWindow)
         self.statusbar.setObjectName(_fromUtf8("statusbar"))
@@ -61,10 +76,17 @@ class Ui_MainWindow(object):
         self.actionSauver_sous.setObjectName(_fromUtf8("actionSauver_sous"))
         self.actionOuvrir = QtGui.QAction(MainWindow)
         self.actionOuvrir.setObjectName(_fromUtf8("actionOuvrir"))
+        self.actionTaille = QtGui.QAction(MainWindow)
+        self.actionTaille.setObjectName(_fromUtf8("actionTaille"))
+        self.actionPalette = QtGui.QAction(MainWindow)
+        self.actionPalette.setObjectName(_fromUtf8("actionPalette"))
         self.menuFile.addAction(self.actionOuvrir)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionQuitter)
+        self.menuImage.addAction(self.actionTaille)
+        self.menuImage.addAction(self.actionPalette)
         self.menubar.addAction(self.menuFile.menuAction())
+        self.menubar.addAction(self.menuImage.menuAction())
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -73,11 +95,16 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Traitement d\'image", None, QtGui.QApplication.UnicodeUTF8))
         self.lab_imagesource.setText(QtGui.QApplication.translate("MainWindow", "Image source:", None, QtGui.QApplication.UnicodeUTF8))
         self.lab_imageresultat.setText(QtGui.QApplication.translate("MainWindow", "Image résultat:", None, QtGui.QApplication.UnicodeUTF8))
+        self.modeNormal.setText(QtGui.QApplication.translate("MainWindow", "Aucun", None, QtGui.QApplication.UnicodeUTF8))
+        self.modeROI.setText(QtGui.QApplication.translate("MainWindow", "R.O.I.", None, QtGui.QApplication.UnicodeUTF8))
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "Fichier", None, QtGui.QApplication.UnicodeUTF8))
+        self.menuImage.setTitle(QtGui.QApplication.translate("MainWindow", "Image", None, QtGui.QApplication.UnicodeUTF8))
         self.actionQuitter.setText(QtGui.QApplication.translate("MainWindow", "Quitter", None, QtGui.QApplication.UnicodeUTF8))
         self.actionQuitter.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+Q", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSauver.setText(QtGui.QApplication.translate("MainWindow", "Sauver", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSauver.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+S", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSauver_sous.setText(QtGui.QApplication.translate("MainWindow", "Sauver sous ...", None, QtGui.QApplication.UnicodeUTF8))
         self.actionOuvrir.setText(QtGui.QApplication.translate("MainWindow", "Ouvrir une image", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionTaille.setText(QtGui.QApplication.translate("MainWindow", "Taille", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionPalette.setText(QtGui.QApplication.translate("MainWindow", "Palette", None, QtGui.QApplication.UnicodeUTF8))
 
