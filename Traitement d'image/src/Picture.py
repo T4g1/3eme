@@ -53,7 +53,7 @@ class Picture():
                 i = (y * self.getSize()[0]) + x
                 data.append(self.data[i])
         """
-        print len(data), w * h
+        
         # Création de la nouvelle image
         resized = Image.new(self.image.mode, (w, h))
         resized.putdata(data)
@@ -76,6 +76,13 @@ class Picture():
             return (0, 0)
         
         return self.image.size
+        
+    # Donne le pixel voulu
+    def getPixel(self, x, y):
+        if self.image == 0:
+            return (0, 0, 0)
+        
+        return self.image.getpixel((x, y))
         
     # Donne le ROI définit par les deux points donné
     def getROI(self, a, b):

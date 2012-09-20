@@ -112,7 +112,7 @@
      <string>Image</string>
     </property>
     <addaction name="actionModifierTaille"/>
-    <addaction name="actionPalette"/>
+    <addaction name="actionModifierPalette"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuImage"/>
@@ -149,7 +149,7 @@
     <string>Modifier la taille</string>
    </property>
   </action>
-  <action name="actionPalette">
+  <action name="actionModifierPalette">
    <property name="text">
     <string>Modifier la palette</string>
    </property>

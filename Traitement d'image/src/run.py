@@ -6,6 +6,7 @@ from PyQt4 import QtCore, QtGui
 import Image, ImageQt
 from layout.windowsLayout import Ui_MainWindow
 from dialog.DialogModifTaille import DialogModifTaille
+from dialog.DialogModifPalette import DialogModifPalette
 import Picture
 
 
@@ -19,6 +20,7 @@ class MainWindows(QtGui.QMainWindow):
         self.ui.setupUi(self)
         
         self.dialogModifTaille = DialogModifTaille(self)
+        self.dialogModifPalette = DialogModifPalette(self)
         # Fin du wrapper
         
         # Crée les scénes
@@ -33,12 +35,15 @@ class MainWindows(QtGui.QMainWindow):
         self.resultPicture = Picture.Picture()
         
         # ROI
-        self.roiCorner = [];
+        self.roiCorner = []
         self.roiActivated = False
         
+        # Color picker
+        self.colorPickerActivated = False
+        
         # Clic sur l'image
-        self.ui.baseView.mousePressEvent = self.basePictureOnClick
-        self.ui.baseView.mouseReleaseEvent = self.basePictureOnClick
+        self.ui.baseView.mousePressEvent = self.basePictureOnMousePress
+        self.ui.baseView.mouseReleaseEvent = self.basePictureOnMouseRelease
         
         # Boutons pour modifications visible
         self.ui.modeROI.clicked.connect(self.setRoiMode)
@@ -53,6 +58,7 @@ class MainWindows(QtGui.QMainWindow):
         self.ui.actionQuitter.triggered.connect(QtGui.qApp.quit)
         
         self.ui.actionModifierTaille.triggered.connect(lambda: self.dialogModifTaille.show(self.basePicture.getSize()))
+        self.ui.actionModifierPalette.triggered.connect(self.dialogModifPalette.show)
     
     # Ouverture d'une image
     def openPicture(self):
@@ -103,33 +109,62 @@ class MainWindows(QtGui.QMainWindow):
     def setNoMode(self):
         self.ui.baseView.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.roiActivated = False
+        self.colorPickerActivated = True
         self.roiCorner = []
+    
+    # Active le mode prise de couleur
+    def setColorPickerMode(self):
+        self.setNoMode()
+        self.ui.baseView.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.colorPickerActivated = True
         
     # Active le mode ROI
     def setRoiMode(self):
+        self.setNoMode()
         self.ui.baseView.setCursor(QtGui.QCursor(QtCore.Qt.CrossCursor))
         self.roiActivated = True
     
-    # Clic sur l'image source
-    def basePictureOnClick(self, mouseEvent):
+    # Clic enfoncé sur l'image source
+    def basePictureOnMousePress(self, mouseEvent):
+        x, y = self.getRealPos(mouseEvent)
+        
         if self.roiActivated:
-            # Récupére les coordonées sur la scéne
-            pos = self.ui.baseView.mapToScene(mouseEvent.pos())
-            x = int(pos.x())
-            y = int(pos.y())
-            
-            # Dépassement des X
-            if x < 0:
-                x = 0
-            elif x > self.basePicture.image.size[0]:
-                x = self.basePicture.image.size[0] - 1
-            
-            # Dépassement des Y
-            if y < 0:
-                y = 0
-            elif y > self.basePicture.image.size[1]:
-                y = self.basePicture.image.size[1] - 1
-                
+            self.onRoiClick(x, y)
+        elif self.colorPickerActivated:
+            color = self.basePicture.getPixel(x, y)
+            self.dialogModifPalette.setPickedColor(color)
+    
+    # Clic enfoncé sur l'image source
+    def basePictureOnMouseRelease(self, mouseEvent):
+        x, y = self.getRealPos(mouseEvent)
+        
+        if self.roiActivated:
+            self.onRoiClick(x, y)
+    
+    # Donne les coordonnées de l'event sur la scéne
+    def getRealPos(self, mouseEvent):
+        # Récupére les coordonées sur la scéne
+        pos = self.ui.baseView.mapToScene(mouseEvent.pos())
+        x = int(pos.x())
+        y = int(pos.y())
+        
+        # Dépassement des X
+        if x < 0:
+            x = 0
+        elif x > self.basePicture.image.size[0]:
+            x = self.basePicture.image.size[0] - 1
+        
+        # Dépassement des Y
+        if y < 0:
+            y = 0
+        elif y > self.basePicture.image.size[1]:
+            y = self.basePicture.image.size[1] - 1
+        
+        return (x, y)
+    
+    # Clic pour le ROI
+    def onRoiClick(self, x, y):
+        if self.roiActivated:
             self.roiCorner.append((x, y))
             print "ROI coordinate", len(self.roiCorner), ":", (x, y)
             

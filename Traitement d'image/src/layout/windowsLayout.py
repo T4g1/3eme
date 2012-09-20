@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'windowsLayout.ui'
 #
-# Created: Thu Sep 20 21:38:53 2012
+# Created: Thu Sep 20 23:55:10 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -77,13 +77,13 @@ class Ui_MainWindow(object):
         self.actionOuvrir.setObjectName(_fromUtf8("actionOuvrir"))
         self.actionModifierTaille = QtGui.QAction(MainWindow)
         self.actionModifierTaille.setObjectName(_fromUtf8("actionModifierTaille"))
-        self.actionPalette = QtGui.QAction(MainWindow)
-        self.actionPalette.setObjectName(_fromUtf8("actionPalette"))
+        self.actionModifierPalette = QtGui.QAction(MainWindow)
+        self.actionModifierPalette.setObjectName(_fromUtf8("actionModifierPalette"))
         self.menuFile.addAction(self.actionOuvrir)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionQuitter)
         self.menuImage.addAction(self.actionModifierTaille)
-        self.menuImage.addAction(self.actionPalette)
+        self.menuImage.addAction(self.actionModifierPalette)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuImage.menuAction())
 
@@ -106,5 +106,5 @@ class Ui_MainWindow(object):
         self.actionSauver_sous.setText(QtGui.QApplication.translate("MainWindow", "Sauver sous ...", None, QtGui.QApplication.UnicodeUTF8))
         self.actionOuvrir.setText(QtGui.QApplication.translate("MainWindow", "Ouvrir une image", None, QtGui.QApplication.UnicodeUTF8))
         self.actionModifierTaille.setText(QtGui.QApplication.translate("MainWindow", "Modifier la taille", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionPalette.setText(QtGui.QApplication.translate("MainWindow", "Modifier la palette", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionModifierPalette.setText(QtGui.QApplication.translate("MainWindow", "Modifier la palette", None, QtGui.QApplication.UnicodeUTF8))
 
