@@ -18,7 +18,7 @@ class MainWindows(QtGui.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         
-        self.dialogModifTaille = DialogModifTaille()
+        self.dialogModifTaille = DialogModifTaille(self)
         # Fin du wrapper
         
         # Crée les scénes

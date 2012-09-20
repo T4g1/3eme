@@ -21,6 +21,44 @@ class Picture():
     def setImage(self, image):
         self.image = image
         self.data = list(self.image.getdata())
+    
+    # Modifie la taille de l'image
+    def setSize(self, w, h):
+        if w <= 0 or h <= 0 or self.image == 0:
+            return 0
+        
+        # Récupére les data de la nouvelle image
+        data = []
+        
+        quantity = w    # Nombre de pixel pris par ligne
+        reste = 0       # Pixel a créer par ligne
+        
+        if quantity >= self.getSize()[0]:
+            reste = quantity - self.getSize()[0]
+            quantity = self.getSize()[0]
+        
+        # Pour chaque ligne
+        for y in range(h):
+            first = (y * self.getSize()[0])
+            
+            data.extend(self.data[first:first + quantity])
+            data.extend([data[-1]] * reste)
+        """ Version 1
+            for x in range(w):
+                # Si le point voulu n'existait pas sur l'image de base
+                if x >= self.getSize()[0] or y >= self.getSize()[1]:
+                    data.append(data[-1])
+                    continue
+                
+                i = (y * self.getSize()[0]) + x
+                data.append(self.data[i])
+        """
+        print len(data), w * h
+        # Création de la nouvelle image
+        resized = Image.new(self.image.mode, (w, h))
+        resized.putdata(data)
+        
+        return resized
         
     # Donne une image Qt depuis une image PIL
     def getQtImage(self):

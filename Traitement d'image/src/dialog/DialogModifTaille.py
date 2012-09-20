@@ -39,7 +39,17 @@ class DialogModifTaille(QtGui.QDialog):
         if self.parent == None:
             self.close()
         
-        newImage = self.parent.basePicture.setSize(100, 100)
-        self.parent.resultPicture.setImage(newImage.copy())
-        self.parent.showResultPicture()
+        # Récupére les dimensions
+        try:
+            w = int(self.ui.inputWidth.text())
+            h = int(self.ui.inputHeight.text())
+        except ValueError:
+            w = 0
+            h = 0
         
+        newImage = self.parent.basePicture.setSize(w, h)
+        if newImage != 0:
+            self.parent.resultPicture.setImage(newImage.copy())
+            self.parent.showResultPicture()
+        
+        self.close()
