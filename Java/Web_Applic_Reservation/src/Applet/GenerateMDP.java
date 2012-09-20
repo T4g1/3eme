@@ -117,9 +117,20 @@ public class GenerateMDP extends javax.swing.JApplet {
         JApplet friend = (JApplet)getAppletContext().getApplet("appletLogin");
         AppletLogin al = (AppletLogin)friend;
         
-        labelNom.setText(al.getUserName());
+        al.setPassword(getPassword());
     }//GEN-LAST:event_bouttonGenererActionPerformed
 
+    
+    /**
+     * Donne le mot de passe entré dans le champ
+     * 
+     * @return      Mot de passe saisit
+     */
+    public String getPassword() {
+        return champPassword.getText();
+    }   
+    
+    
     /**
      * Permet de recevoir le nom d'utilisateur
      * 
@@ -128,6 +139,7 @@ public class GenerateMDP extends javax.swing.JApplet {
     public void setUsername(String username) {
         labelNom.setText(username);
     }
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bouttonGenerer;

@@ -4,6 +4,10 @@
  */
 package Applet;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JApplet;
 
 /**
@@ -73,6 +77,11 @@ public class AppletLogin extends javax.swing.JApplet {
         jLabel1.setText("Nom:");
 
         bouttonLogin.setText("Se connecter");
+        bouttonLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bouttonLoginActionPerformed(evt);
+            }
+        });
 
         bouttonGenerer.setText("Générer un mot de passe");
         bouttonGenerer.addActionListener(new java.awt.event.ActionListener() {
@@ -128,6 +137,13 @@ public class AppletLogin extends javax.swing.JApplet {
         gm.setUsername(getUserName());
     }//GEN-LAST:event_bouttonGenererActionPerformed
 
+    private void bouttonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouttonLoginActionPerformed
+        try {
+            getAppletContext().showDocument(
+                    new URL("http://localhost:8090/java1/Bonjour.html"));
+        } catch (MalformedURLException ex) { }
+    }//GEN-LAST:event_bouttonLoginActionPerformed
+
     /**
      * Donne le nom d'utilisateur entré dans le champ
      * 
@@ -135,6 +151,15 @@ public class AppletLogin extends javax.swing.JApplet {
      */
     public String getUserName() {
         return champNom.getText();
+    }                                         
+
+    /**
+     * Permet de recevoir le mot de passe
+     * 
+     * @param password      Mot de passe
+     */
+    public void setPassword(String password) {
+        champPassword.setText(password);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
