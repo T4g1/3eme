@@ -1,12 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import sys, os
-import time
 from PyQt4 import QtCore, QtGui
-import Image
-import ImageQt
-from layout.windowsLayout import Ui_MainWindow
+import Image, ImageQt
 
 
 ##
@@ -42,6 +38,9 @@ class Picture():
         w = abs(a[0] - b[0])
         h = abs(a[1] - b[1])
         print "Taille de la ROI :", (w, h)
+        
+        if w == 0 or h == 0:
+            return 0
         
         # X coordonée
         if a[0] <= b[0]:

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'windowsLayout.ui'
 #
-# Created: Thu Sep 20 20:36:00 2012
+# Created: Thu Sep 20 20:49:09 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -52,6 +52,9 @@ class Ui_MainWindow(object):
         self.resultView = QtGui.QGraphicsView(self.gridLayoutWidget)
         self.resultView.setObjectName(_fromUtf8("resultView"))
         self.gridLayout.addWidget(self.resultView, 1, 1, 1, 1)
+        self.toBasePicture = QtGui.QPushButton(self.gridLayoutWidget)
+        self.toBasePicture.setObjectName(_fromUtf8("toBasePicture"))
+        self.gridLayout.addWidget(self.toBasePicture, 2, 1, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 798, 21))
@@ -93,6 +96,7 @@ class Ui_MainWindow(object):
         self.lab_imageresultat.setText(QtGui.QApplication.translate("MainWindow", "Image résultat:", None, QtGui.QApplication.UnicodeUTF8))
         self.modeNormal.setText(QtGui.QApplication.translate("MainWindow", "Aucun", None, QtGui.QApplication.UnicodeUTF8))
         self.modeROI.setText(QtGui.QApplication.translate("MainWindow", "R.O.I.", None, QtGui.QApplication.UnicodeUTF8))
+        self.toBasePicture.setText(QtGui.QApplication.translate("MainWindow", "<- Prendre comme image de base", None, QtGui.QApplication.UnicodeUTF8))
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "Fichier", None, QtGui.QApplication.UnicodeUTF8))
         self.menuImage.setTitle(QtGui.QApplication.translate("MainWindow", "Image", None, QtGui.QApplication.UnicodeUTF8))
         self.actionQuitter.setText(QtGui.QApplication.translate("MainWindow", "Quitter", None, QtGui.QApplication.UnicodeUTF8))

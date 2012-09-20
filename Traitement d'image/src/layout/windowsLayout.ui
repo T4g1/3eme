@@ -80,6 +80,13 @@
      <item row="1" column="1">
       <widget class="QGraphicsView" name="resultView"/>
      </item>
+     <item row="2" column="1">
+      <widget class="QPushButton" name="toBasePicture">
+       <property name="text">
+        <string>&lt;- Prendre comme image de base</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
   </widget>

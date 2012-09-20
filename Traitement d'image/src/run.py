@@ -1,11 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import sys, os
-import time
+import sys, os, time
 from PyQt4 import QtCore, QtGui
-import Image
-import ImageQt
+import Image, ImageQt
 from layout.windowsLayout import Ui_MainWindow
 import Picture
 
@@ -43,6 +41,10 @@ class MainWindows(QtGui.QMainWindow):
         self.ui.modeROI.clicked.connect(self.setRoiMode)
         self.ui.modeNormal.clicked.connect(self.setNoMode)
         
+        # Passer le resultat en image de base
+        self.ui.toBasePicture.clicked.connect(self.switchResult2Base)
+        self.ui.centralwidget.keyPressEvent = self.keyPressEvent
+        
         # Menu
         self.ui.actionOuvrir.triggered.connect(self.openPicture)
         self.ui.actionQuitter.triggered.connect(QtGui.qApp.quit)
@@ -63,20 +65,12 @@ class MainWindows(QtGui.QMainWindow):
     
     # Affiche l'image de base
     def showBasePicture(self, picture):
-        # Taille de l'image
-        w = picture.image.size[0]
-        h = picture.image.size[1]
-        
         self.baseScene.clear()
         self.baseScene.addPixmap(picture.getPixmap())
         self.baseScene.update()
     
     # Affiche l'image résultat
     def showResultPicture(self, picture):
-        # Taille de l'image
-        w = picture.image.size[0]
-        h = picture.image.size[1]
-        
         self.resultScene.clear()
         self.resultScene.addPixmap(picture.getPixmap())
         self.resultScene.update()
@@ -87,10 +81,18 @@ class MainWindows(QtGui.QMainWindow):
             print "Pas encore d'image résultat ..."
             return
         
-        self.basePicture = self.resultPicture
+        self.basePicture.setImage(self.resultPicture.image.copy())
         
         # Affiche l'image
         self.showBasePicture(self.basePicture)
+    
+    # Gestion des touches
+    def keyPressEvent(self, event):
+        #print "Touche :", event.key()
+        
+        # Touche windows
+        if event.key() == QtCore.Qt.Key_Meta:
+            self.switchResult2Base()
     
     # Désactive les mode particuliers
     def setNoMode(self):
@@ -114,13 +116,13 @@ class MainWindows(QtGui.QMainWindow):
             # Dépassement des X
             if x < 0:
                 x = 0
-            elif x >= self.basePicture.image.size[0]:
+            elif x > self.basePicture.image.size[0]:
                 x = self.basePicture.image.size[0] - 1
             
             # Dépassement des Y
             if y < 0:
                 y = 0
-            elif y >= self.basePicture.image.size[1]:
+            elif y > self.basePicture.image.size[1]:
                 y = self.basePicture.image.size[1] - 1
                 
             self.roiCorner.append((x, y))
@@ -136,8 +138,11 @@ class MainWindows(QtGui.QMainWindow):
         roi = self.basePicture.getROI(self.roiCorner[0], self.roiCorner[1])
         self.roiCorner = []
         
+        if roi == 0:
+            return
+        
         # Affiche l'image
-        self.resultPicture.setImage(roi)
+        self.resultPicture.setImage(roi.copy())
         self.showResultPicture(self.resultPicture)
 
 
