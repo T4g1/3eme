@@ -3,7 +3,6 @@
 
 import sys, os, time
 from PyQt4 import QtCore, QtGui
-import Image, ImageQt
 from layout.windowsLayout import Ui_MainWindow
 from dialog.DialogModifTaille import DialogModifTaille
 from dialog.DialogModifPalette import DialogModifPalette
@@ -132,7 +131,7 @@ class MainWindows(QtGui.QMainWindow):
             self.onRoiClick(x, y)
         elif self.colorPickerActivated:
             color = self.basePicture.getPixel(x, y)
-            self.dialogModifPalette.setPickedColor(color)
+            self.dialogModifPalette.setPickedColor((x, y), color)
     
     # Clic enfoncé sur l'image source
     def basePictureOnMouseRelease(self, mouseEvent):
@@ -143,6 +142,9 @@ class MainWindows(QtGui.QMainWindow):
     
     # Donne les coordonnées de l'event sur la scéne
     def getRealPos(self, mouseEvent):
+        if self.basePicture.image == 0:
+            return (0, 0)
+        
         # Récupére les coordonées sur la scéne
         pos = self.ui.baseView.mapToScene(mouseEvent.pos())
         x = int(pos.x())

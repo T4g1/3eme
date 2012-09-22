@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'dialogModifTaille.ui'
 #
-# Created: Thu Sep 20 23:55:10 2012
+# Created: Sat Sep 22 00:59:50 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!

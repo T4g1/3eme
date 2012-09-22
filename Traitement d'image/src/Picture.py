@@ -11,16 +11,35 @@ import Image, ImageQt
 class Picture():
     def __init__(self):
         self.image = 0
-        self.data = []
+        self.data = []                  # Couleur de chaque pixel
     
     # Ouvre une image
     def open(self, filename):
+        print "Ouverture de l'image ..."
         self.setImage(Image.open(filename))
     
     # Donne une image
     def setImage(self, image):
         self.image = image
         self.data = list(self.image.getdata())
+        
+        print "Mode :", self.image.mode
+    
+    # Modifie une couleur de la palette
+    def setPaletteColor(self, oldColor, newColor):
+        # Niveau de gris
+        if self.image.mode == "L":
+            if type(newColor) != type(0):
+                print "Erreur: Color doit être en niveau de gris !", newColor
+                return
+            
+            # Remplace la couleur
+            for index, value in enumerate(self.data):
+                if value == oldColor:
+                    self.data[index] = newColor
+        
+            # Recrée l'image
+            self.image.putdata(self.data)
     
     # Modifie la taille de l'image
     def setSize(self, w, h):
@@ -43,26 +62,17 @@ class Picture():
             
             data.extend(self.data[first:first + quantity])
             data.extend([data[-1]] * reste)
-        """ Version 1
-            for x in range(w):
-                # Si le point voulu n'existait pas sur l'image de base
-                if x >= self.getSize()[0] or y >= self.getSize()[1]:
-                    data.append(data[-1])
-                    continue
-                
-                i = (y * self.getSize()[0]) + x
-                data.append(self.data[i])
-        """
         
         # Création de la nouvelle image
-        resized = Image.new(self.image.mode, (w, h))
-        resized.putdata(data)
-        
-        return resized
-        
+        image = Image.new(self.image.mode, (w, h))
+        image.putdata(data)
+        self.setImage(image)
+    
     # Donne une image Qt depuis une image PIL
     def getQtImage(self):
-        self.QtImage = ImageQt.ImageQt(self.image)
+        # Bug dans PIL: conversion d'une image indexée/grayscale vers QImage -> image blanche
+        # On convrtit donc l'image en RGB pour contourner le probléme
+        self.QtImage = ImageQt.ImageQt(self.image.convert("RGB"))
         return QtGui.QImage(self.QtImage)
     
     # Donne un pixmap affichable dans Qt
@@ -121,7 +131,7 @@ class Picture():
                 data.append(self.data[(y * self.image.size[0]) + x])
         
         # Crée la ROI
-        self.roi = Image.new(self.image.mode, (w, h))
-        self.roi.putdata(data)
+        roi = Image.new(self.image.mode, (w, h))
+        roi.putdata(data)
         
-        return self.roi
+        return roi

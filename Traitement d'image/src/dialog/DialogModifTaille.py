@@ -24,6 +24,10 @@ class DialogModifTaille(QtGui.QDialog):
     
     # Affiche le dialogue
     def show(self, size):
+        if self.parent.basePicture.image == 0:
+            print "Operation interdite sans image"
+            return
+        
         # Affiche les dimensions actuelles
         self.ui.inputWidth.setText("%d" % size[0])
         self.ui.inputHeight.setText("%d" % size[1])
@@ -47,9 +51,8 @@ class DialogModifTaille(QtGui.QDialog):
             w = 0
             h = 0
         
-        newImage = self.parent.basePicture.setSize(w, h)
-        if newImage != 0:
-            self.parent.resultPicture.setImage(newImage.copy())
-            self.parent.showResultPicture()
+        self.parent.resultPicture.setImage(self.parent.basePicture.image)
+        self.parent.resultPicture.setSize(w, h)
+        self.parent.showResultPicture()
         
         self.close()

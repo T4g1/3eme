@@ -34,12 +34,12 @@
     <rect>
      <x>20</x>
      <y>10</y>
-     <width>46</width>
-     <height>13</height>
+     <width>81</width>
+     <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Rouge :</string>
+    <string>Rouge (0-255) :</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -47,12 +47,12 @@
     <rect>
      <x>20</x>
      <y>40</y>
-     <width>46</width>
-     <height>13</height>
+     <width>71</width>
+     <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Vert :</string>
+    <string>Vert (0-255) :</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
@@ -60,12 +60,15 @@
     <rect>
      <x>20</x>
      <y>70</y>
-     <width>46</width>
-     <height>13</height>
+     <width>71</width>
+     <height>16</height>
     </rect>
    </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
    <property name="text">
-    <string>Bleu :</string>
+    <string>Bleu (0-255) :</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="inputRed">
@@ -96,6 +99,88 @@
      <width>113</width>
      <height>20</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>10</y>
+     <width>46</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>X :</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>40</y>
+     <width>46</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Y :</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="inputX">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>10</y>
+     <width>51</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="inputY">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>40</y>
+     <width>51</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>120</y>
+     <width>131</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Niveau de gris (0 - 255) :</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="inputGray">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>120</y>
+     <width>113</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>100</y>
+     <width>46</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>ou</string>
    </property>
   </widget>
  </widget>
