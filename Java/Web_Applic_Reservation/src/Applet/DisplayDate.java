@@ -12,11 +12,13 @@ import java.util.TimeZone;
  *
  * @author delskev
  */
-public class DisplayDate extends javax.swing.JPanel implements Runnable {
+public class DisplayDate extends javax.swing.JPanel
+        implements Runnable, RandomGenerator {
     private Date dateHeure;
     private String myDate;
     private String pays;
     private int refreshTime;    // Rafraichir la date toutes les x secondes
+    private int randomNumber;
     
     
     /**
@@ -29,6 +31,8 @@ public class DisplayDate extends javax.swing.JPanel implements Runnable {
     public DisplayDate(String zone) {
         setPays(zone);
         setRefreshTime(1);
+        
+        randomNumber = 0;
         
         initComponents();
         showCurrentTime();
@@ -65,11 +69,15 @@ public class DisplayDate extends javax.swing.JPanel implements Runnable {
 
     @Override
     public void run() {
-        showCurrentTime();
+        while(true) {
+            showCurrentTime();
         
-        try { 
-            Thread.sleep(refreshTime * 1000);
-        } catch(InterruptedException e) {
+            generateRandomNumber();
+
+            try { 
+                Thread.sleep(refreshTime * 1000);
+            } catch(InterruptedException e) {
+            }
         }
     }
     
@@ -129,4 +137,21 @@ public class DisplayDate extends javax.swing.JPanel implements Runnable {
         return refreshTime;
     }
     //</editor-fold>
+
+    /**
+     * Génére le nombre aléatoire
+     */
+    private synchronized void generateRandomNumber() {
+        randomNumber = (int) (Math.random() * 1000);
+    }
+    
+    /**
+     * Donne le nombre généré aléatoirement
+     * 
+     * @return      Nombre généré aléatoirement
+     */
+    @Override
+    public synchronized int getRandomNumber() {
+        return randomNumber;
+    }
 }

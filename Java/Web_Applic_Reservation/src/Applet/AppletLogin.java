@@ -15,6 +15,7 @@ import javax.swing.JApplet;
  */
 public class AppletLogin extends javax.swing.JApplet {
     private HashMap login;
+    private Totalisateur totalisateur;
     
     /**
      * Initializes the applet AppletLogin
@@ -47,14 +48,30 @@ public class AppletLogin extends javax.swing.JApplet {
                     // Initialise les user/password
                     login = new HashMap();
                     
-                    // Lance les thread de gestion de l'heure
+                    // Configure les label
                     displayDateBX.setPays("Europe/Brussels");
                     displayDateNY.setPays("America/New York");
                     displayDateTKO.setPays("Asia/Tokyo");
-                    Thread t1 = new Thread(displayDateBX);
-                    Thread t2 = new Thread(displayDateNY);
-                    Thread t3 = new Thread(displayDateTKO);
-                    t1.start();t2.start();t3.start();
+                    
+                    // Configure le Totalistateur
+                    totalisateur = new Totalisateur(chanceLabel, chanceNumber);
+                    totalisateur.addGenerator(displayDateBX);
+                    totalisateur.addGenerator(displayDateNY);
+                    totalisateur.addGenerator(displayDateTKO);
+                    
+                    // Thread de gestion de l'heure
+                    Thread threadDateBX = new Thread(displayDateBX);
+                    Thread threadDateNY = new Thread(displayDateNY);
+                    Thread threadDateTKO = new Thread(displayDateTKO);
+                    
+                    // Thread pour la génération du numéro magique
+                    Thread threadTotalisateur = new Thread(totalisateur);
+                    
+                    // Lance les thread
+                    threadDateBX.start();
+                    threadDateNY.start();
+                    threadDateTKO.start();
+                    threadTotalisateur.start();
                 }
             });
         } catch (Exception ex) {
@@ -83,6 +100,8 @@ public class AppletLogin extends javax.swing.JApplet {
         displayDateBX = new Applet.DisplayDate();
         displayDateNY = new Applet.DisplayDate();
         displayDateTKO = new Applet.DisplayDate();
+        chanceLabel = new javax.swing.JLabel();
+        chanceNumber = new javax.swing.JLabel();
 
         jLabel2.setText("Mot de passe:");
 
@@ -108,40 +127,53 @@ public class AppletLogin extends javax.swing.JApplet {
 
         jLabel5.setText("Tokyo:");
 
+        chanceLabel.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
+        chanceLabel.setText("Numéro de chance - réduction de 10%");
+
+        chanceNumber.setText("jLabel7");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(bouttonLogin)
-                            .addGap(18, 18, 18)
-                            .addComponent(bouttonGenerer))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1)
-                                .addComponent(jLabel2))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(champNom, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
-                                .addComponent(champPassword))))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(displayDateBX, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel5)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(displayDateTKO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(displayDateNY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(61, Short.MAX_VALUE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(bouttonLogin)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(bouttonGenerer))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel1)
+                                        .addComponent(jLabel2))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(champNom, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                                        .addComponent(champPassword))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(displayDateBX, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel5)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(displayDateTKO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(displayDateNY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addComponent(chanceLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(150, 150, 150)
+                        .addComponent(chanceNumber)))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,8 +202,15 @@ public class AppletLogin extends javax.swing.JApplet {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(displayDateTKO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
+                .addGap(18, 18, 18)
+                .addComponent(chanceLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chanceNumber)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        chanceLabel.getAccessibleContext().setAccessibleName("chanceLabel");
+        chanceNumber.getAccessibleContext().setAccessibleName("chanceNumber");
     }// </editor-fold>//GEN-END:initComponents
 
     private void bouttonGenererActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouttonGenererActionPerformed
@@ -227,7 +266,7 @@ public class AppletLogin extends javax.swing.JApplet {
      */
     private String getPassword() {
         return champPassword.getText();
-    } 
+    }
 
     /**
      * Permet de recevoir le mot de passe
@@ -251,6 +290,8 @@ public class AppletLogin extends javax.swing.JApplet {
     private javax.swing.JButton bouttonLogin;
     private javax.swing.JTextField champNom;
     private javax.swing.JPasswordField champPassword;
+    private javax.swing.JLabel chanceLabel;
+    private javax.swing.JLabel chanceNumber;
     private Applet.DisplayDate displayDateBX;
     private Applet.DisplayDate displayDateNY;
     private Applet.DisplayDate displayDateTKO;
