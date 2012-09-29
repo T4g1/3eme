@@ -11,7 +11,8 @@ import javax.swing.JApplet;
  * @author T4g1
  */
 public class GenerateMDP extends javax.swing.JApplet {
-
+    private String username;
+    
     /**
      * Initializes the applet GenerateMDP
      */
@@ -114,19 +115,31 @@ public class GenerateMDP extends javax.swing.JApplet {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bouttonGenererActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouttonGenererActionPerformed
+        String password = getPassword();
+        // Si le mot de passe fait au moins 3 caractéres
+        if(password.length() < 3) {
+            System.out.println("Le mot de passe est trop court (3 car. min.)");
+            return;
+        }
+                
+        // Si aucun username n'est entré, on arrete la
+        if(username.equals("")) {
+            System.out.println("Le nom d'utilisateur est vide");
+            return;
+        }
+        
         JApplet friend = (JApplet)getAppletContext().getApplet("appletLogin");
         AppletLogin al = (AppletLogin)friend;
         
-        al.setPassword(getPassword());
+        al.adduser(username, getPassword());
     }//GEN-LAST:event_bouttonGenererActionPerformed
 
-    
     /**
      * Donne le mot de passe entré dans le champ
      * 
      * @return      Mot de passe saisit
      */
-    public String getPassword() {
+    private String getPassword() {
         return champPassword.getText();
     }   
     
@@ -137,7 +150,8 @@ public class GenerateMDP extends javax.swing.JApplet {
      * @param username      Nom d'utilisateur
      */
     public void setUsername(String username) {
-        labelNom.setText(username);
+        this.username = username;
+        labelNom.setText(this.username);
     }
     
     

@@ -6,8 +6,7 @@ package Applet;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.HashMap;
 import javax.swing.JApplet;
 
 /**
@@ -15,7 +14,8 @@ import javax.swing.JApplet;
  * @author T4g1
  */
 public class AppletLogin extends javax.swing.JApplet {
-
+    private HashMap login;
+    
     /**
      * Initializes the applet AppletLogin
      */
@@ -33,13 +33,7 @@ public class AppletLogin extends javax.swing.JApplet {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AppletLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AppletLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AppletLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(AppletLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -49,6 +43,11 @@ public class AppletLogin extends javax.swing.JApplet {
             java.awt.EventQueue.invokeAndWait(new Runnable() {
                 public void run() {
                     initComponents();
+                    
+                    // Initialise les user/password
+                    login = new HashMap();
+                    
+                    // Lance les thread de gestion de l'heure
                     displayDateBX.setPays("Europe/Brussels");
                     displayDateNY.setPays("America/New York");
                     displayDateTKO.setPays("Asia/Tokyo");
@@ -176,16 +175,39 @@ public class AppletLogin extends javax.swing.JApplet {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bouttonGenererActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouttonGenererActionPerformed
+        String username = getUserName();
+        
+        // Si l'username existe, on ne peut pas lui créer un password
+        if(login.containsKey(username)) {
+            System.out.println("Le nom d'utilisateur est déjà utilisé");
+            return;
+        }
+        
         JApplet friend = (JApplet)getAppletContext().getApplet("generateMdp");
         GenerateMDP gm = (GenerateMDP)friend;
-        
-        gm.setUsername(getUserName());
+
+        gm.setUsername(username);
     }//GEN-LAST:event_bouttonGenererActionPerformed
 
     private void bouttonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouttonLoginActionPerformed
+        String username = getUserName();
+        String password = getPassword();
+        
+        // Si l'utilisateur n'existe pas
+        if(!login.containsKey(username)) {
+            System.out.println("Le nom d'utilisateur n'existe pas");
+            return;
+        }
+        
+        // Si le mot de passe ne correspond pas
+        if(!login.get(username).equals(password)) {
+            System.out.println("Le mot de passe donné est incorrect");
+            return;
+        }
+        
         try {
             getAppletContext().showDocument(
-                    new URL("http://localhost:8090/java1/Bonjour.html"));
+                    new URL("http://localhost:8090/Bonjour.html"));
         } catch (MalformedURLException ex) { }
     }//GEN-LAST:event_bouttonLoginActionPerformed
 
@@ -194,16 +216,33 @@ public class AppletLogin extends javax.swing.JApplet {
      * 
      * @return      Nom saisit
      */
-    public String getUserName() {
+    private String getUserName() {
         return champNom.getText();
-    }                                         
+    } 
+    
+    /**
+     * Donne le mot de passe entré dans le champ
+     * 
+     * @return      Password saisit
+     */
+    private String getPassword() {
+        return champPassword.getText();
+    } 
 
     /**
      * Permet de recevoir le mot de passe
      * 
      * @param password      Mot de passe
      */
-    public void setPassword(String password) {
+    public void adduser(String username, String password) {
+        // Si l'utilisateur existe déjà
+        if(login.containsKey(username)) {
+            System.out.println("Le nom d'utilisateur est déjà utilisé");
+            return;
+        }
+        
+        login.put(username, password);
+        champNom.setText(username);
         champPassword.setText(password);
     }
     

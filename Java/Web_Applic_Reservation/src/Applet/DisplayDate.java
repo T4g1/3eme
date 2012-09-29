@@ -7,40 +7,31 @@ package Applet;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.TimeZone;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author delskev
  */
 public class DisplayDate extends javax.swing.JPanel implements Runnable {
-
-    
     private Date dateHeure;
     private String myDate;
-    private int pause;
     private String pays;
+    private int refreshTime;    // Rafraichir la date toutes les x secondes
+    
+    
     /**
      * Creates new form DisplayDate
      */
     public DisplayDate() {
-        initComponents();
-        
-        dateHeure = new Date();
-        setPays("Europe/Brussels");
-        TimeZone pstTime = TimeZone.getTimeZone("Europe/Brussels");
-        DateFormat df = DateFormat.getTimeInstance(DateFormat.DEFAULT); 
-        setMyDate(df.format(dateHeure));
+        this("Europe/Brussels");
     }
-
+    
     public DisplayDate(String zone) {
-        initComponents();
+        setPays(zone);
+        setRefreshTime(1);
         
-        dateHeure = new Date();
-        TimeZone pstTime = TimeZone.getTimeZone(zone);
-        DateFormat df = DateFormat.getTimeInstance(DateFormat.DEFAULT); 
-        setMyDate(df.format(dateHeure));
+        initComponents();
+        showCurrentTime();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -74,94 +65,68 @@ public class DisplayDate extends javax.swing.JPanel implements Runnable {
 
     @Override
     public void run() {
-        try {
-            while(true){
-                dateHeure = new Date();
-                TimeZone pstTime = TimeZone.getTimeZone(getPays());
-                DateFormat df = DateFormat.getTimeInstance(DateFormat.DEFAULT); 
-                df.setTimeZone(pstTime);
-                setMyDate(df.format(dateHeure));
-                
-                display.setText(myDate);
-                Thread.sleep(pause*1000);
-            }
-        } catch (InterruptedException ex) {
-                Logger.getLogger(DisplayDate.class.getName()).log(Level.SEVERE, null, ex);
+        showCurrentTime();
+        
+        try { 
+            Thread.sleep(refreshTime * 1000);
+        } catch(InterruptedException e) {
         }
+    }
+    
+    /**
+     * Affiche l'heure courante dans le label
+     */
+    public final void showCurrentTime() {
+        dateHeure = new Date();
+        
+        TimeZone pstTime = TimeZone.getTimeZone(getPays());
+        DateFormat df = DateFormat.getTimeInstance(DateFormat.DEFAULT); 
+        df.setTimeZone(pstTime);
+        
+        setMyDate(df.format(dateHeure));
+
+        display.setText(myDate);
     }
 
     //<editor-fold defaultstate="collapsed" desc="get and set">
-    
-    
-    /**
-     * @return the dateHeure
-     */
-    public Date getDateHeure() {
-        return dateHeure;
-    }
-
-    /**
-     * @param dateHeure the dateHeure to set
-     */
-    public void setDateHeure(Date dateHeure) {
-        this.dateHeure = dateHeure;
-    }
-
-    /**
-     * @return the myDate
-     */
-    public String getMyDate() {
-        return myDate;
-    }
-
     /**
      * @param myDate the myDate to set
      */
-    public void setMyDate(String myDate) {
+    private void setMyDate(String myDate) {
         this.myDate = myDate;
-    }
-
-    /**
-     * @return the pause
-     */
-    public int getPause() {
-        return pause;
-    }
-
-    /**
-     * @param pause the pause to set
-     */
-    public void setPause(int pause) {
-        this.pause = pause;
     }
 
     /**
      * @return the pays
      */
-    public String getPays() {
+    public final String getPays() {
         return pays;
     }
 
     /**
      * @param pays the pays to set
      */
-    public void setPays(String pays) {
+    public final void setPays(String pays) {
         this.pays = pays;
     }
 
     /**
-     * @return the jLabel1
+     * Modifie la valeur de refreshTime
+     * 
+     * @param refreshTime     Nouvelle valeur
      */
-    public javax.swing.JLabel getjLabel1() {
-        return display;
+    public final void setRefreshTime(int refreshTime) {
+        this.refreshTime = refreshTime;
     }
-
+    
     /**
-     * @param jLabel1 the jLabel1 to set
+     * Donne la valeur de refreshTime
+     * 
+     * @return      Temps d'attente en seconde entre chaque
+     *              mise a jour de l'heure affichée
      */
-    public void setjLabel1(javax.swing.JLabel jLabel1) {
-        this.display = jLabel1;
+    public int getRefresh() {
+        return refreshTime;
     }
     //</editor-fold>
-    
 }
