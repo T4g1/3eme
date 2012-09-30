@@ -4,8 +4,8 @@
  */
 package Bean;
 
+import java.io.Serializable;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  *
  * @author T4g1
  */
-public class BeanDBAccess {
+public class BeanDBAccess implements Serializable {
     protected Connection connection = null;
     
     /**
@@ -56,27 +56,6 @@ public class BeanDBAccess {
         
         return true;
     }
-
-    /**
-     * Donne la connection a la BDD
-     * 
-     * @param url           URL de la BDD
-     * @param username      Nom d'utilisateur
-     * @param password      Mot de passe
-     * 
-     * @return              Connection a la BDD
-     */
-    public boolean connect(
-            String url, String username, String password) {
-        try {
-            connection = DriverManager.getConnection(url, username, password);
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(BeanDBAccess.class.getName()).log(
-                    Level.SEVERE, null, ex);
-            return false;
-        }
-    }
     
     /**
      * Termine la connection en cours
@@ -94,32 +73,18 @@ public class BeanDBAccess {
      * Exécute la requête donnée
      * 
      * @param query         Requête que l'on souhaite exectuer
-     * @param args          Arguments de la requête
      * 
      * @return              Résultat de la requête
      */
-    public ResultSet executeQuery(String query, ArrayList args) {
+    public ResultSet executeQuery(String query) {
         try {
-            PreparedStatement statement = connection.prepareStatement(query);
-            
-            // Applique les arguments à la query
-            for(int i=0; i<args.size(); i++) {
-                String arg = (String)args.get(i);
-                statement.setString(i+1, arg);
-            }
-            
-            return statement.executeQuery();
+            Statement statement = connection.createStatement();
+            return statement.executeQuery(query);
         } catch (SQLException ex) {
             Logger.getLogger(BeanDBAccess.class.getName()).log(
                     Level.SEVERE, null, ex);
             return null;
         }
-    }
-    
-    public ResultSet executeQuery(String query) {
-        ArrayList args = new ArrayList();
-        
-        return executeQuery(query, args);
     }
     
     /**
@@ -135,13 +100,15 @@ public class BeanDBAccess {
             String query = "SELECT COUNT(*) AS countEntry FROM " + table;
             
             ResultSet resultSet = executeQuery(query);
-            
-            resultSet.next();
-            return resultSet.getInt("countEntry");
+            if(resultSet != null) {
+                resultSet.next();
+                return resultSet.getInt("countEntry");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(BeanDBAccess.class.getName()).log(
                     Level.SEVERE, null, ex);
-            return -1;
         }
+        
+        return -1;
     }
 }

@@ -19,17 +19,24 @@ import java.util.logging.Logger;
 public class TestBean {
     public static void main(String[] args){
         try {
-            BeanDBAccessMySQL beanDBAccess;
-            beanDBAccess = (BeanDBAccessMySQL)Beans.instantiate(
+            BeanDBAccessMySQL dbaMysql;
+            BeanDBAccessCSV dbaCSV;
+            
+            dbaMysql = (BeanDBAccessMySQL)Beans.instantiate(
                     null, "Bean.BeanDBAccessMySQL");
+            dbaCSV = (BeanDBAccessCSV)Beans.instantiate(
+                    null, "Bean.BeanDBAccessCSV");
             
             // Connexion a la BDD
-            beanDBAccess.init();
+            dbaMysql.init();
+            dbaCSV.init();
             
-            System.out.println(beanDBAccess.count("chambres"));
+            System.out.println("Chambres: " + dbaMysql.count("chambres"));
+            System.out.println("Agents: " + dbaCSV.count("F_AGENTS"));
             
             // Deconnexion
-            beanDBAccess.disconnect();
+            dbaMysql.disconnect();
+            dbaCSV.disconnect();
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(TestBean.class.getName()).log(
                     Level.SEVERE, null, ex);

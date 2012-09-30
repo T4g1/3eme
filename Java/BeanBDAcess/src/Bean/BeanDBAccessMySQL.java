@@ -4,8 +4,8 @@
  */
 package Bean;
 
-import java.io.Serializable;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  * 
  * @author T4g1
  */
-public class BeanDBAccessMySQL extends BeanDBAccess implements Serializable {
+public class BeanDBAccessMySQL extends BeanDBAccess {
     private final String DRIVER = "com.mysql.jdbc.Driver";
     private final String USERNAME = "root";
     private final String PASSWORD = "";
@@ -33,7 +33,7 @@ public class BeanDBAccessMySQL extends BeanDBAccess implements Serializable {
      */
     @Override
     public boolean init() {
-        String url = buildURL(HOST, PORT, DBNAME);
+        String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DBNAME;
         
         // Initialise le driver
         if(!initDriver(DRIVER)) {
@@ -48,59 +48,57 @@ public class BeanDBAccessMySQL extends BeanDBAccess implements Serializable {
         return true;
     }
 
-    //<editor-fold defaultstate="collapsed" desc="Accesseurs">
     /**
-     * Donne le DRIVER utilisé
+     * Donne la connection a la BDD
      * 
-     * @return  Driver utilisé
+     * @param url           URL de la BDD
+     * @param username      Nom d'utilisateur
+     * @param password      Mot de passe
+     * 
+     * @return              Connection a la BDD
      */
-    public String getDRIVER() {
-        return DRIVER;
+    public boolean connect(
+            String url, String username, String password) {
+        try {
+            connection = DriverManager.getConnection(url, username, password);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(BeanDBAccess.class.getName()).log(
+                    Level.SEVERE, null, ex);
+            return false;
+        }
     }
-
+    
     /**
-     * Donne le USERNAME utilisé
+     * Exécute la requête donnée
      * 
-     * @return  Username utilisé
-     */
-    public String getUSERNAME() {
-        return USERNAME;
-    }
-
-    /**
-     * Donne le PASSWORD utilisé
+     * @param query         Requête que l'on souhaite exectuer
+     * @param args          Arguments de la requête
      * 
-     * @return  PASSWORD utilisé
+     * @return              Résultat de la requête
      */
-    public String getPASSWORD() {
-        return PASSWORD;
+    public ResultSet executeQuery(String query, ArrayList args) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            
+            // Applique les arguments à la query
+            for(int i=0; i<args.size(); i++) {
+                String arg = (String)args.get(i);
+                statement.setString(i+1, arg);
+            }
+            
+            return statement.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(BeanDBAccess.class.getName()).log(
+                    Level.SEVERE, null, ex);
+            return null;
+        }
     }
-
-    /**
-     * Donne le HOST utilisé
-     * 
-     * @return  HOST utilisé
-     */
-    public String getHOST() {
-        return HOST;
+    
+    @Override
+    public ResultSet executeQuery(String query) {
+        ArrayList args = new ArrayList();
+        
+        return executeQuery(query, args);
     }
-
-    /**
-     * Donne le PORT utilisé
-     * 
-     * @return  PORT utilisé
-     */
-    public String getPORT() {
-        return PORT;
-    }
-
-    /**
-     * Donne le nom de BDD utilisé
-     * 
-     * @return  Nom de BDD utilisé
-     */
-    public String getDBNAME() {
-        return DBNAME;
-    }
-    // </editor-fold>
 }
