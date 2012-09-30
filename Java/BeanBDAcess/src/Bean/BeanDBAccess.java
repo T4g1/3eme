@@ -5,6 +5,7 @@
 package Bean;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,7 +15,6 @@ import java.util.logging.Logger;
  */
 public class BeanDBAccess {
     protected Connection connection = null;
-    protected Statement statement = null;
     
     /**
      * Constructeur par défaut
@@ -87,6 +87,61 @@ public class BeanDBAccess {
         } catch (SQLException ex) {
             Logger.getLogger(BeanDBAccess.class.getName()).log(
                     Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
+     * Exécute la requête donnée
+     * 
+     * @param query         Requête que l'on souhaite exectuer
+     * @param args          Arguments de la requête
+     * 
+     * @return              Résultat de la requête
+     */
+    public ResultSet executeQuery(String query, ArrayList args) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            
+            // Applique les arguments à la query
+            for(int i=0; i<args.size(); i++) {
+                String arg = (String)args.get(i);
+                statement.setString(i+1, arg);
+            }
+            
+            return statement.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(BeanDBAccess.class.getName()).log(
+                    Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public ResultSet executeQuery(String query) {
+        ArrayList args = new ArrayList();
+        
+        return executeQuery(query, args);
+    }
+    
+    /**
+     * Donne le nombre d'enregistrements dans la table donnée
+     * 
+     * @param table     Table dont on souhaite connaître
+     *                  le nombre d'enregistrements
+     * 
+     * @return          Nombre d'enregistrements, -1 si erreur
+     */
+    public int count(String table) {
+        try {
+            String query = "SELECT COUNT(*) AS countEntry FROM " + table;
+            
+            ResultSet resultSet = executeQuery(query);
+            
+            resultSet.next();
+            return resultSet.getInt("countEntry");
+        } catch (SQLException ex) {
+            Logger.getLogger(BeanDBAccess.class.getName()).log(
+                    Level.SEVERE, null, ex);
+            return -1;
         }
     }
 }
