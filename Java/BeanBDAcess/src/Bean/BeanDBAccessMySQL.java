@@ -5,19 +5,22 @@
 package Bean;
 
 import java.io.Serializable;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Gére les connexions a une base de données MySQL
  * 
  * @author T4g1
  */
-public class BeanDBAccessMySQL implements Serializable {
+public class BeanDBAccessMySQL extends BeanDBAccess implements Serializable {
     private final String DRIVER = "com.mysql.jdbc.Driver";
     private final String USERNAME = "root";
     private final String PASSWORD = "";
     private final String HOST = "127.0.0.1";
     private final String PORT = "3306";
-    private final String DATABASE_NAME = "BD_HOTELS";
+    private final String DBNAME = "BD_HOTELS";
     
     /**
      * Constructeur par défaut
@@ -28,8 +31,21 @@ public class BeanDBAccessMySQL implements Serializable {
     /**
      * Initialise la connection MySQL
      */
+    @Override
     public boolean init() {
-        return false;
+        String url = buildURL(HOST, PORT, DBNAME);
+        
+        // Initialise le driver
+        if(!initDriver(DRIVER)) {
+            return false;
+        }
+        
+        // Connection a la BDD
+        if(!connect(url, USERNAME, PASSWORD)) {
+            return false;
+        }
+        
+        return true;
     }
 
     //<editor-fold defaultstate="collapsed" desc="Accesseurs">
@@ -83,8 +99,8 @@ public class BeanDBAccessMySQL implements Serializable {
      * 
      * @return  Nom de BDD utilisé
      */
-    public String getDATABASE_NAME() {
-        return DATABASE_NAME;
+    public String getDBNAME() {
+        return DBNAME;
     }
     // </editor-fold>
 }
