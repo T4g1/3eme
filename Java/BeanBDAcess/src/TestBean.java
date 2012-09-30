@@ -34,10 +34,32 @@ public class TestBean {
             System.out.println("Chambres: " + dbaMysql.count("chambres"));
             System.out.println("Agents: " + dbaCSV.count("F_AGENTS"));
             
+            ResultSet resultSet;
+            
+            System.out.println("Contenu de la table 'chambres' (cuvette = 2):");
+            resultSet = dbaMysql.selectAll("chambres", "cuvette = 2");
+            while(resultSet.next()) {
+                System.out.print(resultSet.getInt("numero") + ", ");
+                System.out.print(resultSet.getInt("douche") + ", ");
+                System.out.print(resultSet.getInt("baignoire") + ", ");
+                System.out.print(resultSet.getString("cuvette") + ", ");
+                System.out.print(resultSet.getInt("nb_occupants") + ", ");
+                System.out.println(resultSet.getInt("prix_htva"));
+            }
+            
+            System.out.println("Contenu de la table 'F_AGENTS' :");
+            resultSet = dbaCSV.selectAll("F_AGENTS");
+            while(resultSet.next()) {
+                System.out.print(resultSet.getString("nom") + ", ");
+                System.out.print(resultSet.getString("prenom") + ", ");
+                System.out.print(resultSet.getInt("niveau") + ", ");
+                System.out.println(resultSet.getString("password"));
+            }
+            
             // Deconnexion
             dbaMysql.disconnect();
             dbaCSV.disconnect();
-        } catch (IOException | ClassNotFoundException ex) {
+        } catch (SQLException | IOException | ClassNotFoundException ex) {
             Logger.getLogger(TestBean.class.getName()).log(
                     Level.SEVERE, null, ex);
         }

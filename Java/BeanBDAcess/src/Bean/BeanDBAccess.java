@@ -30,15 +30,6 @@ public class BeanDBAccess implements Serializable {
     }
     
     /**
-     * Construit l'URL vers la BDD voulue
-     * 
-     * @return      URL de la BDD
-     */
-    protected String buildURL(String host, String port, String dbName) {
-        return "jdbc:mysql://" + host + ":" + port + "/" + dbName;
-    }
-    
-    /**
      * Initialise le driver donné
      * 
      * @param driver    Driver que l'on souhaite charger
@@ -110,5 +101,26 @@ public class BeanDBAccess implements Serializable {
         }
         
         return -1;
+    }
+    
+    /**
+     * Donne les enregistrements de la table donnée
+     * 
+     * @param table         Table dont on souhaite récuperer les enregistrements
+     * @param condition     Contenu de la clause WHERE
+     * 
+     * @return              ResultSet contenant les enregistrements
+     */
+    public ResultSet selectAll(String table, String condition) {
+        String query = "SELECT * FROM " + table;
+        if(!condition.equals("")) {
+            query += " WHERE " + condition;
+        }
+        
+        return executeQuery(query);
+    }
+    
+    public ResultSet selectAll(String table) {
+        return selectAll(table, "");
     }
 }
