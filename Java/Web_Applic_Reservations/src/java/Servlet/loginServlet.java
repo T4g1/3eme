@@ -4,8 +4,14 @@
  */
 package Servlet;
 
+import Bean.BeanDBAccessCSV;
+import Vues.Vues;
+import java.beans.Beans;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author T4g1
  */
 public class loginServlet extends HttpServlet {
-
+    private PrintWriter out;
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -27,23 +33,71 @@ public class loginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(
+            HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException 
+    {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet loginServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet loginServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {            
-            out.close();
+        out = response.getWriter();
+        
+        String action = request.getParameter("action");
+
+        // Vérifie l'action
+        if(action.equals("login"))
+        {
+            onLogin(request);
         }
+        
+        out.close();
+    }
+    
+    /**
+     * Appellée lorsque l'on veut se logger (action login)
+     * 
+     * @param request       Requête recue
+     */
+    private void onLogin(HttpServletRequest request) {
+        // Récupére les informations de connexion
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        
+        // Login réussit
+        if(verifyLogin(username, password))
+        {
+            Vues.showLoginSuccess(out, username);
+        }
+        // Login échoué
+        else
+        {
+            Vues.showLoginFailed(out);
+        }
+    }
+    
+    /**
+     * Vérifie le couple user/pass
+     * 
+     * @param username      Nom d'utilisateur
+     * @param password      Mot de passe
+     * 
+     * @return              true si l'utilisateur a donné les bonnes
+     *                      informations, false sinon
+     */
+    private boolean verifyLogin(String username, String password)
+    {
+        try {
+            BeanDBAccessCSV dba = 
+                    (BeanDBAccessCSV)Beans.instantiate(null, "Bean.BeanDBAccessCSV");
+            dba.init();
+            
+            // Sélectionne les informations de l'utilisateur
+            ResultSet result = dba.selectAll("F_AGENTS", "username=" + username);
+            return password.equals(result.getString("password"));
+        } catch (Exception ex) {
+            Logger.getLogger(
+                    loginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return false;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -50,8 +50,7 @@ public class TestBean {
             System.out.println("Contenu de la table 'F_AGENTS' :");
             resultSet = dbaCSV.selectAll("F_AGENTS");
             while(resultSet.next()) {
-                System.out.print(resultSet.getString("nom") + ", ");
-                System.out.print(resultSet.getString("prenom") + ", ");
+                System.out.print(resultSet.getString("username") + ", ");
                 System.out.print(resultSet.getInt("niveau") + ", ");
                 System.out.println(resultSet.getString("password"));
             }
