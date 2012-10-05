@@ -27,7 +27,10 @@ public class BeanDBAccessCSV extends BeanDBAccess {
      */
     @Override
     public boolean init() {
-        String url = "jdbc:relique:csv:F:\\3eme\\Java\\BDD";
+        //url t4g1
+        //String url = "jdbc:relique:csv:F:\\3eme\\Java\\BDD";
+        //chemin delskev
+        String url = "D:\\Ecole\\Kevin\\Réseaux_et_Technologies_Internet\\gitApplic\\3eme\\Java\\BDD";
         
         // Initialise le driver
         if(!initDriver(DRIVER)) {
