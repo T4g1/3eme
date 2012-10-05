@@ -37,17 +37,23 @@ public class loginServlet extends HttpServlet {
             HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
+        //préparation du header pour la réponse
         response.setContentType("text/html;charset=UTF-8");
+        //création du fichier de réponse
         out = response.getWriter();
+        Vues.addHtmlHeader(out);
         
         String action = request.getParameter("action");
-
         // Vérifie l'action
-        if(action.equals("login"))
+        if( action.equals("login"))
         {
             onLogin(request);
         }
-        
+        else{
+            Vues.addLoginError(out, request);
+        }
+        //finition du fichier + fermeture
+        Vues.addHtmlBottom(out);
         out.close();
     }
     
@@ -64,12 +70,13 @@ public class loginServlet extends HttpServlet {
         // Login réussit
         if(verifyLogin(username, password))
         {
-            Vues.showLoginSuccess(out, username);
+            Vues.addLoginSuccess(out, username);
         }
         // Login échoué
         else
         {
             Vues.showLoginFailed(out);
+            Vues.addmessage(out, "bad username/password");
         }
     }
     
@@ -90,11 +97,13 @@ public class loginServlet extends HttpServlet {
             dba.init();
             
             // Sélectionne les informations de l'utilisateur
-            ResultSet result = dba.selectAll("F_AGENTS", "username=" + username);
+            ResultSet result = dba.selectAll("F_AGENTS", "username='" + username+"'");
+            result.next();
             return password.equals(result.getString("password"));
         } catch (Exception ex) {
             Logger.getLogger(
                     loginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Vues.addmessage(out, "impossible de se connecter à la base de données !");
         }
         
         return false;

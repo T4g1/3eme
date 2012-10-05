@@ -5,6 +5,7 @@
 package Vues;
 
 import java.io.PrintWriter;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -18,14 +19,8 @@ public class Vues {
      */
     public static void showLoginFailed(PrintWriter out)
     {
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<title>Login: Refusé</title>");
-        out.println("</head>");
-        out.println("<body>");
+        
         out.println("<p>Login échoué</p>");
-        out.println("</body>");
-        out.println("</html>");
     }
     
     /**
@@ -33,16 +28,42 @@ public class Vues {
      * 
      * @param out   Sortie du code HTML
      */
-    public static void showLoginSuccess(PrintWriter out, String username)
+    public static void addLoginSuccess(PrintWriter out, String username)
     {
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<title>Login: Accepté</title>");
-        out.println("</head>");
-        out.println("<body>");
         out.println("<p>Login réussit</p>");
         out.println("<p>Bienvenue, " + username + "</p>");
-        out.println("</body>");
-        out.println("</html>");
+        
     }
+    
+    public static void addLoginError(PrintWriter out, HttpServletRequest request)
+    {
+        
+        out.println("<p>Une erreur c'est produite, nous ne parvenons pas à vous identifiez</p>");
+        out.println("<p>nombre de parametre reçus: </p>");
+        out.println("<p>action = "+request.getParameter("action")+ "</p>");
+        out.println("<p>username = "+request.getParameter("username")+ "</p>");
+        out.println("<p>password = "+request.getParameter("password")+ "</p>");
+        
+    }
+    
+    
+    
+    public static void addmessage(PrintWriter out, String message){
+        out.println("<p>Trace Message: "+message+ "</p>");    
+    }
+    
+    public static void addHtmlHeader(PrintWriter out){
+        out.println("<html>");
+        out.println("<head>");
+        out.println("</head>");
+        out.println("<body>");        
+    
+    }
+    
+    public static void addHtmlBottom(PrintWriter out){
+        out.println("</body>");
+        out.println("</html>");        
+    
+    }
+    
 }
