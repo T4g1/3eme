@@ -7,9 +7,11 @@ package Servlet;
 import Bean.BeanDBAccessCSV;
 import Vues.Vues;
 import java.beans.Beans;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -91,21 +93,32 @@ public class loginServlet extends HttpServlet {
      */
     private boolean verifyLogin(String username, String password)
     {
-        try {
+       try {
+            
             BeanDBAccessCSV dba = 
                     (BeanDBAccessCSV)Beans.instantiate(null, "Bean.BeanDBAccessCSV");
-            dba.init();
             
-            // Sélectionne les informations de l'utilisateur
-            ResultSet result = dba.selectAll("F_AGENTS", "username='" + username+"'");
-            result.next();
-            return password.equals(result.getString("password"));
-        } catch (Exception ex) {
-            Logger.getLogger(
-                    loginServlet.class.getName()).log(Level.SEVERE, null, ex);
-            Vues.addmessage(out, "impossible de se connecter à la base de données !");
+            
+            if( dba.init("jdbc:relique:csv:D:\\Serveur\\apache-tomcat-7.0.30\\webapps\\BDD") ){
+                // Sélectionne les informations de l'utilisateur
+                ResultSet result = dba.selectAll("F_AGENTS", "username='" + username+"'");
+                result.next();
+
+                Vues.addmessage(out, "resultat: "+result.getString("username")+" | "+ result.getString("password"));
+                return password.equals(result.getString("password"));
+            }
+            
+            
         }
-        
+        catch (SQLException ex) {
+            Vues.addmessage(out, "Erreur de connexion: "+ ex.getMessage());
+        } 
+        catch (IOException ex) {
+            Vues.addmessage(out, "Erreur de connexion: "+ ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Vues.addmessage(out, "Erreur de connexion: "+ ex.getMessage());
+        }
+       
         return false;
     }
 
