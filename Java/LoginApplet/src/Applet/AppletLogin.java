@@ -6,6 +6,7 @@ package Applet;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import javax.swing.JApplet;
 
@@ -231,23 +232,40 @@ public class AppletLogin extends javax.swing.JApplet {
     private void bouttonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouttonLoginActionPerformed
         String username = getUserName();
         String password = getPassword();
-        
+        /*
         // Si l'utilisateur n'existe pas
         if(!login.containsKey(username)) {
             System.out.println("Le nom d'utilisateur n'existe pas");
             return;
         }
-        
+        * 
         // Si le mot de passe ne correspond pas
         if(!login.get(username).equals(password)) {
             System.out.println("Le mot de passe donné est incorrect");
             return;
         }
-        
+        */
         try {
+            //préparation de l'url de ocntacte de la servlet
+            URL currentPage = getDocumentBase();
+            String protocole = currentPage.getProtocol();
+            String host = currentPage.getHost();
+            int port = currentPage.getPort();
+            URL servlet = new URL(protocole, host, port, "/Web_Applic_Reservations/loginServlet");
+            String param = "?action="+URLEncoder.encode("login")+"&username="+URLEncoder.encode(this.getUserName())+"&password="+URLEncoder.encode(this.getPassword());
+           /*
+            //Création de l'url pour faire appel à la servlet
+            String urlServlet = "http://localhost:8090/Web_Applic_Reservations/loginServlet";
+            String param = "?action="+URLEncoder.encode("login")+"?username="+URLEncoder.encode(this.getUserName())+"?password="+URLEncoder.encode(this.getPassword());
+            System.out.println("je fais appel à ma servlet: "+ urlServlet+param);
+            * 
+            */
+            //Appel à la servlet
             getAppletContext().showDocument(
-                    new URL("http://localhost:8090/Bonjour.html"));
-        } catch (MalformedURLException ex) { }
+                    new URL(servlet+param));
+        } catch (MalformedURLException ex) { 
+            System.out.println("url mal formatté");
+        }
     }//GEN-LAST:event_bouttonLoginActionPerformed
 
     /**
