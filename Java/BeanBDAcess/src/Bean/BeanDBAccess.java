@@ -25,7 +25,7 @@ public class BeanDBAccess implements Serializable {
     /**
      * Initialise la connection MySQL
      */
-    public boolean init() {
+    public boolean init(String purl) {
         return false;
     }
     

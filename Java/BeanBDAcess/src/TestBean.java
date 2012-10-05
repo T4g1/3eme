@@ -28,8 +28,8 @@ public class TestBean {
                     null, "Bean.BeanDBAccessCSV");
             
             // Connexion a la BDD
-            dbaMysql.init();
-            dbaCSV.init();
+            dbaMysql.init("");
+            dbaCSV.init("jdbc:relique:csv:D:\\Serveur\\apache-tomcat-7.0.30\\webapps\\BDD");
             
             System.out.println("Chambres: " + dbaMysql.count("chambres"));
             System.out.println("Agents: " + dbaCSV.count("F_AGENTS"));
@@ -54,7 +54,9 @@ public class TestBean {
                 System.out.print(resultSet.getInt("niveau") + ", ");
                 System.out.println(resultSet.getString("password"));
             }
-            
+            ResultSet result = dbaCSV.selectAll("F_AGENTS", "username='" + "paul"+"'");
+            result.next();
+            System.out.println("resultat keke: "+result.getString("username"));
             // Deconnexion
             dbaMysql.disconnect();
             dbaCSV.disconnect();
