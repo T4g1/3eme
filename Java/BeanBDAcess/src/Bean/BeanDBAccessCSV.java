@@ -27,11 +27,13 @@ public class BeanDBAccessCSV extends BeanDBAccess {
      */
     @Override
     public boolean init() {
+        String fp = System.getProperty("file.separator");
         //url t4g1
-        //String url = "jdbc:relique:csv:F:\\3eme\\Java\\BDD";
+        //String url = "jdbc:relique:csv:F:"+fp+"3eme"+fp+"Java"+fp+"BDD";
         //chemin delskev
-        String url = "jdbc:relique:csv:D:\\Ecole\\Kevin\\Réseaux_et_Technologies_Internet\\gitApplic\\3eme\\Java\\BDD\\";
-        
+        //String url = "jdbc:relique:csv:D:"+fp+"Ecole"+fp+"Kevin"+fp+"Réseaux_et_Technologies_Internet"+fp+"gitApplic"+fp+"3eme"+fp+"Java"+fp+"BDD"+fp;
+        //pour mettre la bd au même niveau que le .war sur le serveur 
+        String url = "jdbc:relique:csv:."+fp;
         // Initialise le driver
         if(!initDriver(DRIVER)) {
             return false;
