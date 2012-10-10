@@ -1,0 +1,2 @@
+fichier.i = source code après pré-processeur
+fichier

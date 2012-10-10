@@ -1,0 +1,20 @@
+dossier outils:
+
+source -> Preprocesseur -> compiler -> optimizer -> code generator -> assembler -> Object File -> Linker -> load File
+   code source	     
+   
+   
+voir ce qui ce passe après les .h
+
+après l'assembleur voir ce que l'optimisateur fait.
+
+on peut observer le fichier après assemblage.
+
+utiliser gcc pour regarder tout les fichiers intermédiaire
+
+on travail à chaque étape.
+
+block diagram of the C Cross-compiler with separate assembler and linker
+
+
+exemple i++ suivis de i--

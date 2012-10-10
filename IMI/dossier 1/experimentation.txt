@@ -1,0 +1,15 @@
+1)Doc Gcc
+2)faire le prog.
+3)pensez l'optimisation
+4)analysez programme objet
+5)voir l'impacte des librairies
+6)Voir le résultats de l'exécutable
+
+Resultat:
+---------
+
+gcc -save-temp main.c main.h
+
+#include windows.h
+  ajoute environ 15.000 lignes dans le fichier *.i
+
