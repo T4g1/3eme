@@ -1,0 +1,67 @@
+$ mkifs -v fichier.bld img.ifs
+  Offset   Size    Entry   Ramoff Target=Host
+  400000    400        0      --- /usr/qnx632/target/qnx6/x86/boot/sys/bios.boot
+
+  400400    100     ----      --- Startup-header
+  400500   e408   403c08      --- /tmp/DAA806376
+  40e508     5c     ----      --- Image-header
+  40e564    278     ----      --- Image-directory
+  40e7dc     ec     ----      --- proc/boot/.script=/tmp/CAA806376
+  40f000  45000 f002e498      --- proc/boot/procnto=/tmp/EAA806376
+  454000  5e000    34792      --- proc/boot/libc.so.2=/usr/qnx632/target/qnx6/x8
+6/lib/libc.so
+    ----    ---     ----      --- proc/boot/libc.so=libc.so.2
+  4b2000   47d4  8048c50      --- proc/boot/ls=/usr/qnx632/target/qnx6/x86/bin/l
+s
+  4b7000   1ddb  80484c0      --- proc/boot/cat=/usr/qnx632/target/qnx6/x86/bin/
+cat
+  4b9000   d0dc  804935c      --- proc/boot/pidin=/usr/qnx632/target/qnx6/x86/bi
+n/pidin
+  4c7000   1891  804842c      --- proc/boot/pwd=/usr/qnx632/target/qnx6/x86/bin/
+pwd
+  4c9000   1674  8048384      --- proc/boot/main.out=/fs/hd10-dos-1/D1_sysEm/mai
+n.out
+  4cb000  10336  8049c30      --- proc/boot/devc-con=/usr/qnx632/target/qnx6/x86
+/sbin/devc-con
+  4dc000   2e42  8048ae8      --- proc/boot/uesh=/usr/qnx632/target/qnx6/x86/bin
+/uesh
+  4dee42   1a5d     ----      --- etc/termcap=/etc/termcap
+  4e08a0      4     ----      --- Image-trailer
+  
+  /********************************************************************************/
+  
+  $ dumpifs img.ifs
+   Offset     Size  Name
+        0      400  *.boot
+      400      100  Startup-header flags1=0xd fl
+      500     e008  startup.*
+     e508       5c  Image-header mountpoint=/
+     e564      278  Image-directory
+     ----     ----  Root-dirent
+     e7dc       ec  proc/boot/.script
+     f000    45000  proc/boot/procnto
+    54000    5e000  proc/boot/libc.so.2
+     ----        9  proc/boot/libc.so -> libc.so
+    b2000     47d4  proc/boot/ls
+    b7000     1ddb  proc/boot/cat
+    b9000     d0dc  proc/boot/pidin
+    c7000     1891  proc/boot/pwd
+    c9000     1674  proc/boot/main.out
+    cb000    10336  proc/boot/devc-con
+    dc000     2e42  proc/boot/uesh
+    dee42     1a5d  etc/termcap
+Checksums: image=0x419c85e4 startup=0xcbb25932
+
+
+  /********************************************************************************/
+  # dinit -f img.ifs /dev/fd0
+Using loader /usr/qnx632/target/qnx6/x86/boot/sys/ipl-diskpc2-flop
+Disk '/dev/fd0' contains 2880 blocks (1440K).
+#
+
+(avec +compress)
+# ls -l img.ifs
+-rw-rw-rw-  1 root      root         483656 Oct 02 00:52 img.ifs
+(sans +compress)
+# ls -l img.ifs
+-rw-rw-rw-  1 root      root         919716 Oct 02 00:59 img.ifs

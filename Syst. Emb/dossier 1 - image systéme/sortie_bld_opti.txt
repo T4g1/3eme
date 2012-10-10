@@ -1,0 +1,48 @@
+# mkifs -v fichieroptimise.bld img.ifs
+  Offset   Size    Entry   Ramoff Target=Host
+  400000    400        0      --- /usr/qnx632/target/qnx6/x86/boot/sys/bios.boot
+  400400    100     ----      --- Startup-header
+  400500   e408   403c08      --- /tmp/DAA974881
+  40e508     5c     ----      --- Image-header
+  40e564    1b8     ----      --- Image-directory
+  40e71c     b8     ----      --- proc/boot/.script=/tmp/CAA974881
+  40f000  45000 f002e498      --- proc/boot/procnto=/tmp/EAA974881
+  454000  5e000    34792      --- proc/boot/libc.so.2=/usr/qnx632/target/qnx6/x86/lib/libc.so
+    ----    ---     ----      --- proc/boot/libc.so=libc.so.2
+  4b2000   1674  8048384      --- proc/boot/main.out=/fs/hd10-dos-1/D1_sysEm/main.out
+  4b4000  10336  8049c30      --- proc/boot/devc-con=/usr/qnx632/target/qnx6/x86/sbin/devc-con
+  4c5000   2e42  8048ae8      --- proc/boot/uesh=/usr/qnx632/target/qnx6/x86/bin/uesh
+  4c7e42   1a5d     ----      --- etc/termcap=/etc/termcap
+  4c98a0      4     ----      --- Image-trailer
+# dumpifs img.ifs
+   Offset     Size  Name
+        0      400  *.boot
+      400      100  Startup-header flags1=0xd flags2=0 paddr_bias=0
+      500     e008  startup.*
+     e508       5c  Image-header mountpoint=/
+     e564      1b8  Image-directory
+     ----     ----  Root-dirent
+     e71c       b8  proc/boot/.script
+     f000    45000  proc/boot/procnto
+    54000    5e000  proc/boot/libc.so.2
+     ----        9  proc/boot/libc.so -> libc.so.2
+    b2000     1674  proc/boot/main.out
+    b4000    10336  proc/boot/devc-con
+    c5000     2e42  proc/boot/uesh
+    c7e42     1a5d  etc/termcap
+Checksums: image=0x5a2c77b8 startup=0xcbb5b8a2
+
+# dinit -f img.ifs /dev/fd0
+Using loader /usr/qnx632/target/qnx6/x86/boot/sys/ipl-diskpc2-flop
+Disk '/dev/fd0' contains 2880 blocks (1440K).
+#
+
+(not compress)
+# ls -l img.ifs
+-rw-rw-rw-  1 root      root         825508 Oct 02 01:11 img.ifs
+#
+
+(compress)
+# ls -l img.ifs
+-rw-rw-rw-  1 root      root         451052 Oct 02 01:10 img.ifs
+#
