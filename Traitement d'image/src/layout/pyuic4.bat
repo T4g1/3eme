@@ -1,0 +1,9 @@
+@python "C:\Python27\Lib\site-packages\PyQt4\uic\pyuic.py" windowsLayout.ui -o windowsLayout.py
+@python "C:\Python27\Lib\site-packages\PyQt4\uic\pyuic.py" dialogModifTaille.ui -o dialogModifTaille.py
+@python "C:\Python27\Lib\site-packages\PyQt4\uic\pyuic.py" dialogModifPalette.ui -o dialogModifPalette.py
+@python "C:\Python27\Lib\site-packages\PyQt4\uic\pyuic.py" dialogExpansion.ui -o dialogExpansion.py
+@python "C:\Python27\Lib\site-packages\PyQt4\uic\pyuic.py" dialogThresholdSimple.ui -o dialogThresholdSimple.py
+@python "C:\Python27\Lib\site-packages\PyQt4\uic\pyuic.py" dialogThresholdMultiple.ui -o dialogThresholdMultiple.py
+@python "C:\Python27\Lib\site-packages\PyQt4\uic\pyuic.py" dialogHistogramme.ui -o dialogHistogramme.py
+@python "C:\Python27\Lib\site-packages\PyQt4\uic\pyuic.py" dialogFiltre.ui -o dialogFiltre.py
+@python "C:\Python27\Lib\site-packages\PyQt4\uic\pyuic.py" dialogAutre.ui -o dialogAutre.py
