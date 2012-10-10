@@ -1,0 +1,59 @@
+# Buildfile pour tests sur disquette de boot pour syst embarques
+# Affiche "Hello world"
+# bios pour le meme cpu que l'host de developemment
+# compress pour image compressée
+[virtual=x86,bios +compress] .bootstrap = {
+	startup-bios -s 64k -A
+	PATH=/proc/boot LD_LIBRARY_PATH=/proc/boot:/usr/lib:/lib procnto
+}
+[+script] .script = {
+# symlink this critical library. Some apps search it there
+#procmgr_symlink is internal equivalent to "ln -s"
+
+procmgr_symlink ../../proc/boot/libc.so /usr/lib/ldqnx.so.2
+
+# start console driver with two virtual consoles
+# accessible at ctrl+alt+1 and ctrl+alt+2
+
+devc-con -n2 &
+
+# start shell on the consoles
+#open stdin,stdout,stderr directed to con1
+
+reopen /dev/con1
+
+# start shell as session leadertaire
+
+[+session] TERM=qansi uesh &
+
+#open stdin,stdout,stderr directed to con2
+
+reopen /dev/con2
+/proc/boot/main.out &
+# start shell as session leader
+[+session] TERM=qansi uesh &
+
+}
+
+#Files to be included
+#these will end up in /proc/boot
+libc.so
+
+#This is an example of explicitely specifying path of
+# destination and source
+
+/etc/termcap=/etc/termcap
+
+#Executable programs to be loaded
+[code=uip data=copy perms=+r,+x]
+ls
+cat
+pidin
+pwd
+
+# elem
+/fs/hd10-dos-1/D1_sysEm/main.out
+
+devc-con
+# uesh is a tiny shell, use "ksh" if you have enough space
+uesh
