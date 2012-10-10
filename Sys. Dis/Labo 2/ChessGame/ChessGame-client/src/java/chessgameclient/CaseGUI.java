@@ -11,6 +11,9 @@ import javax.swing.JPanel;
  * @author T4g1
  */
 public class CaseGUI extends JPanel {
+    private static final int CASE_WIDTH = 50;
+    private static final int CASE_HEIGHT = 71;
+    
     private int x;
     private int y;
     
@@ -69,6 +72,24 @@ public class CaseGUI extends JPanel {
      */
     public int getCaseY() {
         return y;
+    }
+
+    /**
+     * Donne la largeur d'une case
+     * 
+     * @return      Largeur d'une case
+     */
+    public static int getCaseWidth() {
+        return CASE_WIDTH;
+    }
+
+    /**
+     * Donne la largeur d'une case
+     * 
+     * @return      Largeur d'une case
+     */
+    public static int getCaseHeight() {
+        return CASE_HEIGHT;
     }
     
     //</editor-fold>

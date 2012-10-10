@@ -5,6 +5,7 @@
 package chessgameclient;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
 
@@ -13,7 +14,7 @@ import javax.swing.JPanel;
  * @author T4g1
  */
 public class GameGUI extends javax.swing.JFrame {
-private static final int GRID_WIDTH = 8;
+    private static final int GRID_WIDTH = 8;
     private static final int GRID_HEIGHT = 8;
     
     private CaseGUI[][] l_case = new CaseGUI[GRID_WIDTH][GRID_HEIGHT];
@@ -51,6 +52,14 @@ private static final int GRID_WIDTH = 8;
         
         // Ajoute l'échiquier dans la fenêtre
         add(echiquier);
+        
+        // Modifie les dimensions de la fenêtre
+        Dimension window_size = new Dimension();
+        window_size.width = GRID_WIDTH * CaseGUI.getCaseWidth();
+        window_size.height = GRID_HEIGHT * CaseGUI.getCaseHeight();
+        
+        setSize(window_size);
+        setResizable(false);
     }
     
     //</editor-fold>
@@ -64,26 +73,17 @@ private static final int GRID_WIDTH = 8;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setText("yo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(0, 388, Short.MAX_VALUE))
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(122, 122, 122)
-                .addComponent(jLabel1)
-                .addContainerGap(164, Short.MAX_VALUE))
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         pack();
@@ -124,6 +124,5 @@ private static final int GRID_WIDTH = 8;
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
