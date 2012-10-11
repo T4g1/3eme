@@ -1,29 +1,31 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Servlet;
 
 import Bean.BeanDBAccessCSV;
+import Session.UserInfoRemote;
 import Vues.Vues;
 import java.beans.Beans;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Servlet gérant le login du client
+ * 
  * @author T4g1
  */
 public class loginServlet extends HttpServlet {
     private PrintWriter out;
+    
+    @EJB
+    private static UserInfoRemote userinfo;
+    
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -38,8 +40,6 @@ public class loginServlet extends HttpServlet {
             HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        ServletContext sc = this.getServletContext();
-        
         //préparation du header pour la réponse
         response.setContentType("text/html;charset=UTF-8");
         
@@ -52,7 +52,7 @@ public class loginServlet extends HttpServlet {
             (action.equals("adduser") && onAdduser(request)))
         {
             //redirige sur la page lorsqu'on est loggé
-            RequestDispatcher rd = sc.getRequestDispatcher("/userpanel.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("userpanel.jsp");
             rd.forward(request, response);
         }
         else
@@ -97,8 +97,8 @@ public class loginServlet extends HttpServlet {
                     
                     dba.executeQuery(query);
                     
-                    // TODO
-                    // session.logged = true
+                    // Log l'utilisateur
+                    userinfo.setLogged(true);
                 
                     return true;
                 }
@@ -127,10 +127,9 @@ public class loginServlet extends HttpServlet {
         
         // Login réussit
         if(verifyLogin(username, password))
-        {     
-            // TODO
-            // session.logged = true
-            
+        {
+            // Log l'utilisateur
+            userinfo.setLogged(true);
             
             return true;
         }

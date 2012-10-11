@@ -4,6 +4,8 @@
     Author     : T4g1
 --%>
 
+<jsp:useBean id="userinfo" scope="session" class="Session.UserInfo">
+</jsp:useBean>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +14,14 @@
         <title>Pannel d'utilisateur</title>
     </head>
     <body>
-        <h1>Vous êtes authentifié</h1>
+        <%
+        if(!userinfo.isLogged())
+        {
+            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+            rd.forward(request, response);
+        }
+        %>
+        
+        <h1>Authentification réussie !</h1>
     </body>
 </html>
