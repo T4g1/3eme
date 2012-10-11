@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,29 +38,30 @@ public class loginServlet extends HttpServlet {
             HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
+        ServletContext sc = this.getServletContext();
+        
         //préparation du header pour la réponse
         response.setContentType("text/html;charset=UTF-8");
         
-        //création du fichier de réponse
         out = response.getWriter();
         Vues.begin(out);
         
         // Vérifie l'action
         String action = request.getParameter("action");
-        if( action.equals("login"))
+        if( (action.equals("login") && onLogin(request)) ||
+            (action.equals("adduser") && onAdduser(request)))
         {
-            //redirection vers la page contenant les 3 options
-            if(onLogin(request))
-                response.sendRedirect("http://localhost:8090/Web_Applic_Reservations/OptionPage.html");
+            //redirige sur la page lorsqu'on est loggé
+            RequestDispatcher rd = sc.getRequestDispatcher("/userpanel.jsp");
+            rd.forward(request, response);
         }
-        else if( action.equals("adduser"))
+        else
         {
-            onAdduser(request);
+            // Réponse
+            Vues.showLoginFailed(out);
         }
         
-        //finition du fichier + fermeture
         Vues.end(out);
-        
         out.close();
     }
     
@@ -80,10 +83,9 @@ public class loginServlet extends HttpServlet {
             
             if(dba.init()) {
                 // Verifie si l'user existe deja
-                if(dba.count("F_AGENTS", "username='" + username+"'") != 0)
+                if(dba.count("F_AGENTS", "username='" + username + "'") != 0)
                 {
                     Vues.showAddUserFailed(out);
-                    return false;
                 }
                 
                 // Ajout dans la base de données
