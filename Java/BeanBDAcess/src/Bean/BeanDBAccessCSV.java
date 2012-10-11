@@ -28,18 +28,14 @@ public class BeanDBAccessCSV extends BeanDBAccess {
      * Initialise la connection MySQL
      */
     @Override
-    public boolean init(String purl) {
-        String fp = System.getProperty("file.separator");
-        //url t4g1
-        //String url = "jdbc:relique:csv:F:"+fp+"3eme"+fp+"Java"+fp+"BDD";
-        //chemin delskev
-        //url = "jdbc:relique:csv:D:"+fp+"Ecole"+fp+"Kevin"+fp+"Réseaux_et_Technologies_Internet"+fp+"gitApplic"+fp+"3eme"+fp+"Java"+fp+"BDD"+fp;
-        //pour mettre la bd au même niveau que le .war sur le serveur 
+    public boolean init() {
+        // Création de l'URL
+        String sep = System.getProperty("file.separator");
         
-        //url = "jdbc:relique:csv:";
-        //url += new File(System.getProperty("user.dir") ).getParent()+ fp+ "webapps"+fp+"BDD"+fp;
-        //url = "jdbc:relique:csv:http://localhost:8090/BDD/F_AGENTS.csv";
-        url = purl;
+        url = "jdbc:relique:csv:";
+        url += new File(System.getProperty("user.dir")).getParent();
+        url += sep + "webapps" + sep + "BDD";
+        
         // Initialise le driver
         if(!initDriver(DRIVER)) {
             return false;

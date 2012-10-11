@@ -25,7 +25,7 @@ public class BeanDBAccess implements Serializable {
     /**
      * Initialise la connection MySQL
      */
-    public boolean init(String purl) {
+    public boolean init() {
         return false;
     }
     
@@ -83,12 +83,17 @@ public class BeanDBAccess implements Serializable {
      * 
      * @param table     Table dont on souhaite connaître
      *                  le nombre d'enregistrements
+     * @param condition     Contenu de la clause WHERE
      * 
      * @return          Nombre d'enregistrements, -1 si erreur
      */
-    public int count(String table) {
+    public int count(String table, String condition) {
         try {
             String query = "SELECT COUNT(*) AS countEntry FROM " + table;
+            if(!condition.equals(""))
+            {
+                query += " WHERE " + condition;
+            }
             
             ResultSet resultSet = executeQuery(query);
             if(resultSet != null) {
@@ -103,6 +108,10 @@ public class BeanDBAccess implements Serializable {
         return -1;
     }
     
+    public int count(String table) {
+        return count(table, "");
+    }
+    
     /**
      * Donne les enregistrements de la table donnée
      * 
@@ -113,7 +122,8 @@ public class BeanDBAccess implements Serializable {
      */
     public ResultSet selectAll(String table, String condition) {
         String query = "SELECT * FROM " + table;
-        if(!condition.equals("")) {
+        if(!condition.equals(""))
+        {
             query += " WHERE " + condition;
         }
         

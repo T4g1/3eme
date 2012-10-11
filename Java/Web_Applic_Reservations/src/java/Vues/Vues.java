@@ -28,14 +28,25 @@ public class Vues {
      * 
      * @param out   Sortie du code HTML
      */
-    public static void addLoginSuccess(PrintWriter out, String username)
+    public static void showLoginSuccess(PrintWriter out, String username)
     {
         out.println("<p>Login réussit</p>");
         out.println("<p>Bienvenue, " + username + "</p>");
         
     }
     
-    public static void addLoginError(PrintWriter out, HttpServletRequest request)
+    /**
+     * Affiche une erreur d'ajout d'utilisateur
+     * 
+     * @param out   Sortie du code HTML
+     */
+    public static void showAddUserFailed(PrintWriter out)
+    {
+        out.println("<p>Ajout d'utilisateur impossible, nom déjà prit</p>");
+        
+    }
+    
+    public static void showLoginError(PrintWriter out, HttpServletRequest request)
     {
         
         out.println("<p>Une erreur c'est produite, nous ne parvenons pas à vous identifiez</p>");
@@ -48,11 +59,11 @@ public class Vues {
     
     
     
-    public static void addmessage(PrintWriter out, String message){
+    public static void addMessage(PrintWriter out, String message){
         out.println("<p>Trace Message: "+message+ "</p>");    
     }
     
-    public static void addHtmlHeader(PrintWriter out){
+    public static void begin(PrintWriter out){
         out.println("<html>");
         out.println("<head>");
         out.println("</head>");
@@ -60,7 +71,7 @@ public class Vues {
     
     }
     
-    public static void addHtmlBottom(PrintWriter out){
+    public static void end(PrintWriter out){
         out.println("</body>");
         out.println("</html>");        
     

@@ -4,10 +4,12 @@
  */
 package Applet;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JApplet;
 
 /**
@@ -15,7 +17,7 @@ import javax.swing.JApplet;
  * @author T4g1
  */
 public class AppletLogin extends javax.swing.JApplet {
-    private HashMap login;
+    private URL servletURL;
     private Totalisateur totalisateur;
     
     /**
@@ -43,11 +45,26 @@ public class AppletLogin extends javax.swing.JApplet {
         /* Create and display the applet */
         try {
             java.awt.EventQueue.invokeAndWait(new Runnable() {
+                @Override
                 public void run() {
                     initComponents();
                     
-                    // Initialise les user/password
-                    login = new HashMap();
+                    // URL de contact pour le servlet
+                    URL currentPage = getDocumentBase();
+                    
+                    String protocol = currentPage.getProtocol();
+                    String host = currentPage.getHost();
+                    int port = currentPage.getPort();
+                    
+                    try {
+                        servletURL = new URL(
+                                protocol, host, port,
+                                "/Web_Applic_Reservations/loginServlet"
+                        );
+                    } catch (MalformedURLException ex) {
+                        Logger.getLogger(AppletLogin.class.getName()).log(
+                                Level.SEVERE, null, ex);
+                    }
                     
                     // Configure les label
                     displayDateBX.setPays("Europe/Brussels");
@@ -75,8 +92,9 @@ public class AppletLogin extends javax.swing.JApplet {
                     threadTotalisateur.start();
                 }
             });
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (InterruptedException | InvocationTargetException ex) {
+            Logger.getLogger(AppletLogin.class.getName()).log(
+                                Level.SEVERE, null, ex);
         }
     }
 
@@ -217,12 +235,6 @@ public class AppletLogin extends javax.swing.JApplet {
     private void bouttonGenererActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouttonGenererActionPerformed
         String username = getUserName();
         
-        // Si l'username existe, on ne peut pas lui créer un password
-        if(login.containsKey(username)) {
-            System.out.println("Le nom d'utilisateur est déjà utilisé");
-            return;
-        }
-        
         JApplet friend = (JApplet)getAppletContext().getApplet("generateMdp");
         GenerateMDP gm = (GenerateMDP)friend;
 
@@ -232,39 +244,17 @@ public class AppletLogin extends javax.swing.JApplet {
     private void bouttonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouttonLoginActionPerformed
         String username = getUserName();
         String password = getPassword();
-        /*
-        // Si l'utilisateur n'existe pas
-        if(!login.containsKey(username)) {
-            System.out.println("Le nom d'utilisateur n'existe pas");
-            return;
-        }
-        * 
-        // Si le mot de passe ne correspond pas
-        if(!login.get(username).equals(password)) {
-            System.out.println("Le mot de passe donné est incorrect");
-            return;
-        }
-        */
+        
         try {
-            //préparation de l'url de ocntacte de la servlet
-            URL currentPage = getDocumentBase();
-            String protocole = currentPage.getProtocol();
-            String host = currentPage.getHost();
-            int port = currentPage.getPort();
-            URL servlet = new URL(protocole, host, port, "/Web_Applic_Reservations/loginServlet");
-            String param = "?action="+URLEncoder.encode("login")+"&username="+URLEncoder.encode(this.getUserName())+"&password="+URLEncoder.encode(this.getPassword());
-           /*
-            //Création de l'url pour faire appel à la servlet
-            String urlServlet = "http://localhost:8090/Web_Applic_Reservations/loginServlet";
-            String param = "?action="+URLEncoder.encode("login")+"?username="+URLEncoder.encode(this.getUserName())+"?password="+URLEncoder.encode(this.getPassword());
-            System.out.println("je fais appel à ma servlet: "+ urlServlet+param);
-            * 
-            */
+            String param = "?action=login";
+            param += "&username=" + URLEncoder.encode(username);
+            param += "&password=" + URLEncoder.encode(password);
+           
             //Appel à la servlet
             getAppletContext().showDocument(
-                    new URL(servlet+param));
+                    new URL(servletURL + param));
         } catch (MalformedURLException ex) { 
-            System.out.println("url mal formatté");
+            System.out.println("URL mal formattée");
         }
     }//GEN-LAST:event_bouttonLoginActionPerformed
 
@@ -292,13 +282,18 @@ public class AppletLogin extends javax.swing.JApplet {
      * @param password      Mot de passe
      */
     public void adduser(String username, String password) {
-        // Si l'utilisateur existe déjà
-        if(login.containsKey(username)) {
-            System.out.println("Le nom d'utilisateur est déjà utilisé");
-            return;
+        try {
+            String param = "?action=adduser";
+            param += "&username=" + URLEncoder.encode(username);
+            param += "&password=" + URLEncoder.encode(password);
+           
+            //Appel à la servlet
+            getAppletContext().showDocument(
+                    new URL(servletURL + param));
+        } catch (MalformedURLException ex) { 
+            System.out.println("URL mal formattée");
         }
         
-        login.put(username, password);
         champNom.setText(username);
         champPassword.setText(password);
     }

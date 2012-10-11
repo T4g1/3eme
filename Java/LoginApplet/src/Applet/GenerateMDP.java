@@ -4,6 +4,7 @@
  */
 package Applet;
 
+import java.lang.reflect.InvocationTargetException;
 import javax.swing.JApplet;
 
 /**
@@ -44,12 +45,12 @@ public class GenerateMDP extends javax.swing.JApplet {
         /* Create and display the applet */
         try {
             java.awt.EventQueue.invokeAndWait(new Runnable() {
+                @Override
                 public void run() {
                     initComponents();
                 }
             });
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (InterruptedException | InvocationTargetException ex) {
         }
     }
 

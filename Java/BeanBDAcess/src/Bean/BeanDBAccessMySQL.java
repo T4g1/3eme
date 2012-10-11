@@ -32,7 +32,7 @@ public class BeanDBAccessMySQL extends BeanDBAccess {
      * Initialise la connection MySQL
      */
     @Override
-    public boolean init(String purl) {
+    public boolean init() {
         String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DBNAME;
         
         // Initialise le driver

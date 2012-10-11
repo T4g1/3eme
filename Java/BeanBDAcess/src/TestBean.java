@@ -28,8 +28,8 @@ public class TestBean {
                     null, "Bean.BeanDBAccessCSV");
             
             // Connexion a la BDD
-            dbaMysql.init("");
-            dbaCSV.init("jdbc:relique:csv:D:\\Serveur\\apache-tomcat-7.0.30\\webapps\\BDD");
+            dbaMysql.init();
+            dbaCSV.init();
             
             System.out.println("Chambres: " + dbaMysql.count("chambres"));
             System.out.println("Agents: " + dbaCSV.count("F_AGENTS"));
