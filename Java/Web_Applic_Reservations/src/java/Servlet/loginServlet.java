@@ -47,7 +47,9 @@ public class loginServlet extends HttpServlet {
         String action = request.getParameter("action");
         if( action.equals("login"))
         {
-            onLogin(request);
+            //redirection vers la page contenant les 3 options
+            if(onLogin(request))
+                response.sendRedirect("http://localhost:8090/Web_Applic_Reservations/OptionPage.html");
         }
         else if( action.equals("adduser"))
         {
@@ -126,6 +128,7 @@ public class loginServlet extends HttpServlet {
         {     
             // TODO
             // session.logged = true
+            
             
             return true;
         }
