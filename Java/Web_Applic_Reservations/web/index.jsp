@@ -15,10 +15,10 @@
         <h1>Page de login</h1>
         
         <p>
-            <APPLET code="Applet/AppletLogin.class" archive="LoginApplet.jar" name="appletLogin" width=500 height=600 align="middle"></APPLET>
+            <APPLET code="Applet/AppletLogin.class" archive="LoginApplet.jar" name="appletLogin" width=500 height=500 align="middle"></APPLET>
         </p>
         <p>
-            <APPLET code="Applet/GenerateMDP.class" archive="LoginApplet.jar" name="generateMdp" width=500 height=600 align="middle"></APPLET>
+            <APPLET code="Applet/GenerateMDP.class" archive="LoginApplet.jar" name="generateMdp" width=500 height=500 align="middle"></APPLET>
         </p>
     </body>
 </html>

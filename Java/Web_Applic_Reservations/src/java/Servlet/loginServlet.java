@@ -1,7 +1,7 @@
 package Servlet;
 
 import Bean.BeanDBAccessCSV;
-import Session.UserInfoRemote;
+import Session.UserInfo;
 import Vues.Vues;
 import java.beans.Beans;
 import java.io.IOException;
@@ -9,11 +9,13 @@ import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.ejb.EJB;
+import javax.naming.InitialContext;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet gérant le login du client
@@ -21,10 +23,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author T4g1
  */
 public class loginServlet extends HttpServlet {
+    public static final String USER_INFO_KEY = "USER_INFO_KEY";
+    private UserInfo userinfo;
     private PrintWriter out;
-    
-    @EJB
-    private static UserInfoRemote userinfo;
     
     /**
      * Processes requests for both HTTP
@@ -38,10 +39,12 @@ public class loginServlet extends HttpServlet {
      */
     protected void processRequest(
             HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
+            throws ServletException, IOException {
         //préparation du header pour la réponse
         response.setContentType("text/html;charset=UTF-8");
+        
+        // Récupére les informations utilisateur
+        userinfo = getUserInfo(request);
         
         out = response.getWriter();
         Vues.begin(out);
@@ -54,11 +57,6 @@ public class loginServlet extends HttpServlet {
             //redirige sur la page lorsqu'on est loggé
             RequestDispatcher rd = request.getRequestDispatcher("userpanel.jsp");
             rd.forward(request, response);
-        }
-        else
-        {
-            // Réponse
-            Vues.showLoginFailed(out);
         }
         
         Vues.end(out);
@@ -151,8 +149,7 @@ public class loginServlet extends HttpServlet {
      * @return              true si l'utilisateur a donné les bonnes
      *                      informations, false sinon
      */
-    private boolean verifyLogin(String username, String password)
-    {
+    private boolean verifyLogin(String username, String password) {
        try {
             BeanDBAccessCSV dba = (BeanDBAccessCSV)Beans.instantiate(
                     null, "Bean.BeanDBAccessCSV");
@@ -180,6 +177,25 @@ public class loginServlet extends HttpServlet {
         }
        
         return false;
+    }
+    
+    /**
+     * Récupére les informations utilisateur
+     * 
+     * @param request       Requete recue par le servlet
+     * 
+     * @return              Les informations utilisateur
+     */
+    private UserInfo getUserInfo(HttpServletRequest request) {
+        HttpSession httpSession = request.getSession(true);
+        UserInfo userInfo = (UserInfo)httpSession.getAttribute(USER_INFO_KEY);
+        if (userInfo == null) {
+            userInfo = new UserInfo();
+            
+            httpSession.setAttribute(USER_INFO_KEY, userInfo);
+        }
+        
+        return userInfo;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

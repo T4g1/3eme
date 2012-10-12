@@ -5,14 +5,13 @@
 package Session;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Stateful;
 
 /**
- *
+ * Informations de l'utilisateur
+ * 
  * @author T4g1
  */
-@Stateful
-public class UserInfo implements UserInfoRemote {
+public class UserInfo {
     private boolean logged;
     
     /**
@@ -30,7 +29,6 @@ public class UserInfo implements UserInfoRemote {
      * 
      * @return      true s'il est loggué, false sinon
      */
-    @Override
     public boolean isLogged() {
         return logged;
     }
@@ -44,7 +42,6 @@ public class UserInfo implements UserInfoRemote {
      * 
      * @param value         Nouvelle valeur
      */
-    @Override
     public void setLogged(boolean value) {
         logged = value;
     }

@@ -4,8 +4,7 @@
     Author     : T4g1
 --%>
 
-<jsp:useBean id="userinfo" scope="session" class="Session.UserInfo">
-</jsp:useBean>
+<%@page import="Servlet.loginServlet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,6 +14,8 @@
     </head>
     <body>
         <%
+        Session.UserInfo userinfo = (Session.UserInfo)
+                session.getAttribute(loginServlet.USER_INFO_KEY);
         if(!userinfo.isLogged())
         {
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
