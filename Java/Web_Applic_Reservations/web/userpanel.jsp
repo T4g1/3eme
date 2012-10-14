@@ -4,6 +4,16 @@
     Author     : T4g1
 --%>
 
+<%
+// Verifie que l'utilisateur est loggé
+Session.UserInfo userinfo = (Session.UserInfo)
+        session.getAttribute(loginServlet.USER_INFO_KEY);
+if(!userinfo.isLogged())
+{
+    RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+    rd.forward(request, response);
+}
+%>
 <%@page import="Servlet.loginServlet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,15 +24,32 @@
     </head>
     <body>
         <%
-        Session.UserInfo userinfo = (Session.UserInfo)
-                session.getAttribute(loginServlet.USER_INFO_KEY);
-        if(!userinfo.isLogged())
+        // Regarde quelle page est demandée
+        String where = (String)request.getParameter("where");
+        if(where == null)
         {
+            where = "acceuil";
+        }
+        
+        // Inclut la page demandée
+        if(where.equals("listing"))
+        {
+            %><%@ include file="includes/listing.jsp" %><%
+        }
+        else if(where.equals("logoff"))
+        {
+            // Vide le caddie
+            
+            // Se déconnecte
+            userinfo.setLogged(false);
+            
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
             rd.forward(request, response);
         }
+        else
+        {
+            %><%@ include file="includes/acceuil.jsp" %><%
+        }
         %>
-        
-        <h1>Authentification réussie !</h1>
     </body>
 </html>
