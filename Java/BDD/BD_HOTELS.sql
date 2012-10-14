@@ -6,13 +6,14 @@ CREATE SCHEMA IF NOT EXISTS `bd_hotels` DEFAULT CHARACTER SET latin1 COLLATE lat
 USE `bd_hotels` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`voyageurs`
+-- Table `bd_hotels`.`voyageurs`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `bd_hotels`.`voyageurs` (
   `id` INT(4) NOT NULL ,
   `nom` VARCHAR(255) NOT NULL ,
   `prenom` VARCHAR(255) NOT NULL ,
   `numero_client` INT(4) NULL ,
+  `password` VARCHAR(255) NOT NULL ,
   `adresse_domicile` VARCHAR(255) NULL ,
   `email` VARCHAR(255) NULL ,
   PRIMARY KEY (`id`) )
@@ -20,7 +21,7 @@ ENGINE = MyISAM;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`voyageurs-accompagnants`
+-- Table `bd_hotels`.`voyageurs-accompagnants`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `bd_hotels`.`voyageurs-accompagnants` (
   `id` INT(4) NOT NULL ,
@@ -34,7 +35,7 @@ ENGINE = MyISAM;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`chambres`
+-- Table `bd_hotels`.`chambres`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `bd_hotels`.`chambres` (
   `numero` INT(5) NOT NULL ,
@@ -48,7 +49,7 @@ ENGINE = MyISAM;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`reservations`
+-- Table `bd_hotels`.`reservations`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `bd_hotels`.`reservations` (
   `id` VARCHAR(255) NOT NULL ,
@@ -62,7 +63,7 @@ ENGINE = MyISAM;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`activites`
+-- Table `bd_hotels`.`activites`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `bd_hotels`.`activites` (
   `id` INT NOT NULL ,
