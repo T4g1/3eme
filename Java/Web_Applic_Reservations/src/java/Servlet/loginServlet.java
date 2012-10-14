@@ -1,6 +1,6 @@
 package Servlet;
 
-import Bean.BeanDBAccessCSV;
+import Bean.BeanDBAccessMySQL;
 import Session.UserInfo;
 import Vues.Vues;
 import java.beans.Beans;
@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.ejb.EJB;
-import javax.naming.InitialContext;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -76,29 +74,32 @@ public class loginServlet extends HttpServlet {
         String password = request.getParameter("password");
         
         try {
-            BeanDBAccessCSV dba = (BeanDBAccessCSV)Beans.instantiate(
-                    null, "Bean.BeanDBAccessCSV");
+            BeanDBAccessMySQL dba = (BeanDBAccessMySQL)Beans.instantiate(
+                    null, "Bean.BeanDBAccessMySQL");
             
             if(dba.init()) {
                 // Verifie si l'user existe deja
-                if(dba.count("F_AGENTS", "username='" + username + "'") != 0)
+                if(dba.count("voyageurs", "username='" + username + "'") != 0)
                 {
                     Vues.showAddUserFailed(out);
                 }
                 
                 // Ajout dans la base de données
                 else {
-                    String query = "INSERT INTO F_AGENTS";
-                    query += " ('username', 'password')";
+                    String query = "INSERT INTO voyageurs";
+                    query += " (id, username, password)";
                     query += " VALUES ";
-                    query += "('" + username + "', '" + password + "')";
+                    query += "(NULL, '" + username + "', '" + password + "');";
                     
-                    dba.executeQuery(query);
+                    if(dba.executeUpdate(query))
+                    {
+                        // Log l'utilisateur
+                        userinfo.setLogged(true);
+                        
+                        return true;
+                    }
                     
-                    // Log l'utilisateur
-                    userinfo.setLogged(true);
-                
-                    return true;
+                    Vues.addMessage(out, "Echec de la commande: " + query);
                 }
             }
         }
@@ -151,15 +152,14 @@ public class loginServlet extends HttpServlet {
      */
     private boolean verifyLogin(String username, String password) {
        try {
-            BeanDBAccessCSV dba = (BeanDBAccessCSV)Beans.instantiate(
-                    null, "Bean.BeanDBAccessCSV");
+            BeanDBAccessMySQL dba = (BeanDBAccessMySQL)Beans.instantiate(
+                    null, "Bean.BeanDBAccessMySQL");
             
             if(dba.init()) {
                 // Sélectionne les informations de l'utilisateur
-                ResultSet result = dba.selectAll("F_AGENTS", "username='" + username+"'");
+                ResultSet result = dba.selectAll("voyageurs", "username='" + username+"'");
                 result.next();
-
-                Vues.addMessage(out, "resultat: " + result.getString("username")+" | "+ result.getString("password"));
+                
                 return password.equals(result.getString("password"));
             }
             else
