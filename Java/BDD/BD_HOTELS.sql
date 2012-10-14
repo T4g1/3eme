@@ -1,80 +1,55 @@
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+DROP DATABASE `bd_hotels`;
+CREATE DATABASE `bd_hotels` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `bd_hotels`;
 
-CREATE SCHEMA IF NOT EXISTS `bd_hotels` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
-USE `bd_hotels` ;
+CREATE TABLE IF NOT EXISTS `accompagnants` (
+  `id` int(4) NOT NULL,
+  `nom` varchar(255) NOT NULL,
+  `prenom` varchar(255) NOT NULL,
+  `adresse_domicile` varchar(255) DEFAULT NULL,
+  `titulaire` int(4) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_voyageurs-accompagnants_voyageurs_idx` (`titulaire`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- -----------------------------------------------------
--- Table `bd_hotels`.`voyageurs`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `bd_hotels`.`voyageurs` (
-  `id` INT(4) NOT NULL ,
-  `nom` VARCHAR(255) NOT NULL ,
-  `prenom` VARCHAR(255) NOT NULL ,
-  `numero_client` INT(4) NULL ,
-  `password` VARCHAR(255) NOT NULL ,
-  `adresse_domicile` VARCHAR(255) NULL ,
-  `email` VARCHAR(255) NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = MyISAM;
+CREATE TABLE IF NOT EXISTS `activites` (
+  `id` int(11) NOT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `nb_max` int(4) DEFAULT NULL,
+  `prix_htva` int(6) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+CREATE TABLE IF NOT EXISTS `chambres` (
+  `numero` int(5) NOT NULL,
+  `douche` tinyint(1) DEFAULT '1',
+  `baignoire` tinyint(1) DEFAULT '1',
+  `cuvette` tinyint(1) DEFAULT '1',
+  `nb_occupants` int(4) DEFAULT NULL,
+  `prix_htva` int(6) DEFAULT NULL,
+  PRIMARY KEY (`numero`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- -----------------------------------------------------
--- Table `bd_hotels`.`voyageurs-accompagnants`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `bd_hotels`.`voyageurs-accompagnants` (
-  `id` INT(4) NOT NULL ,
-  `nom` VARCHAR(255) NOT NULL ,
-  `prenom` VARCHAR(255) NOT NULL ,
-  `adresse_domicile` VARCHAR(255) NULL ,
-  `titulaire` INT(4) NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX `fk_voyageurs-accompagnants_voyageurs_idx` (`titulaire` ASC) )
-ENGINE = MyISAM;
+CREATE TABLE IF NOT EXISTS `reservations` (
+  `id` varchar(255) NOT NULL,
+  `chambre` int(5) DEFAULT NULL,
+  `paye` tinyint(1) DEFAULT '0',
+  `titulaire` int(4) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_reservations_voyageurs1_idx` (`titulaire`),
+  KEY `fk_reservations_chambres1_idx` (`chambre`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
--- -----------------------------------------------------
--- Table `bd_hotels`.`chambres`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `bd_hotels`.`chambres` (
-  `numero` INT(5) NOT NULL ,
-  `douche` TINYINT(1) NULL DEFAULT 1 ,
-  `baignoire` TINYINT(1) NULL DEFAULT 1 ,
-  `cuvette` TINYINT(1) NULL DEFAULT 1 ,
-  `nb_occupants` INT(4) NULL ,
-  `prix_htva` INT(6) NULL ,
-  PRIMARY KEY (`numero`) )
-ENGINE = MyISAM;
-
-
--- -----------------------------------------------------
--- Table `bd_hotels`.`reservations`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `bd_hotels`.`reservations` (
-  `id` VARCHAR(255) NOT NULL ,
-  `chambre` INT(5) NULL ,
-  `paye` TINYINT(1) NULL DEFAULT 0 ,
-  `titulaire` INT(4) NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX `fk_reservations_voyageurs1_idx` (`titulaire` ASC) ,
-  INDEX `fk_reservations_chambres1_idx` (`chambre` ASC) )
-ENGINE = MyISAM;
-
-
--- -----------------------------------------------------
--- Table `bd_hotels`.`activites`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `bd_hotels`.`activites` (
-  `id` INT NOT NULL ,
-  `type` VARCHAR(255) NULL ,
-  `nb_max` INT(4) NULL ,
-  `prix_htva` INT(6) NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = MyISAM;
-
-
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+CREATE TABLE IF NOT EXISTS `voyageurs` (
+  `id` int(4) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `nom` varchar(255) DEFAULT NULL,
+  `prenom` varchar(255) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `adresse` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
