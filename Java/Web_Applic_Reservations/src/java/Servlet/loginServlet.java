@@ -13,7 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * Servlet gérant le login du client
@@ -21,7 +20,6 @@ import javax.servlet.http.HttpSession;
  * @author T4g1
  */
 public class loginServlet extends HttpServlet {
-    public static final String USER_INFO_KEY = "USER_INFO_KEY";
     private UserInfo userinfo;
     private PrintWriter out;
     
@@ -42,7 +40,7 @@ public class loginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         // Récupére les informations utilisateur
-        userinfo = getUserInfo(request);
+        userinfo = UserInfo.getUserInfo(request);
         
         out = response.getWriter();
         Vues.begin(out);
@@ -52,9 +50,8 @@ public class loginServlet extends HttpServlet {
         if( (action.equals("login") && onLogin(request)) ||
             (action.equals("adduser") && onAdduser(request)))
         {
-            //redirige sur la page lorsqu'on est loggé
-            RequestDispatcher rd = request.getRequestDispatcher("userpanel.jsp");
-            rd.forward(request, response);
+            userinfo.setPage("userpanel");
+            Vues.redirect(request, response, "index");
         }
         
         Vues.end(out);
@@ -177,25 +174,6 @@ public class loginServlet extends HttpServlet {
         }
        
         return false;
-    }
-    
-    /**
-     * Récupére les informations utilisateur
-     * 
-     * @param request       Requete recue par le servlet
-     * 
-     * @return              Les informations utilisateur
-     */
-    private UserInfo getUserInfo(HttpServletRequest request) {
-        HttpSession httpSession = request.getSession(true);
-        UserInfo userInfo = (UserInfo)httpSession.getAttribute(USER_INFO_KEY);
-        if (userInfo == null) {
-            userInfo = new UserInfo();
-            
-            httpSession.setAttribute(USER_INFO_KEY, userInfo);
-        }
-        
-        return userInfo;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

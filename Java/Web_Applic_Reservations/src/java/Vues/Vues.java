@@ -4,8 +4,12 @@
  */
 package Vues;
 
+import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -72,5 +76,30 @@ public class Vues {
     public static void end(PrintWriter out) {
         out.println("</body>");
         out.println("</html>");        
+    }
+    
+    /**
+     * Redirige sur la page donnée
+     * 
+     * @param request       Requete recue
+     * @param response      Reponse recue
+     * @param page          Page voulue
+     */
+    public static void redirect(
+            HttpServletRequest request, HttpServletResponse response, 
+            String page) throws ServletException, IOException {
+        RequestDispatcher rd = request.getRequestDispatcher(page + ".jsp");
+        rd.forward(request, response);
+    }
+    
+    /**
+     * Donne le titre de la page donnée
+     * 
+     * @param page          Page dont on veut le titre
+     * 
+     * @return              Titre de la page
+     */
+    public static String getPageTitle(String page) {
+        return "Mon super site de vacance";
     }
 }
