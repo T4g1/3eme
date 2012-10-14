@@ -79,6 +79,24 @@ public class BeanDBAccess implements Serializable {
     }
     
     /**
+     * Exécute la requête donnée (INSERT, UPDATE)
+     * 
+     * @param query         Requête que l'on souhaite exectuer
+     * 
+     * @return              true si requête ok, false sinon
+     */
+    public boolean executeUpdate(String query) {
+        try {
+            Statement statement = connection.createStatement();
+            return statement.executeUpdate(query) == 1;
+        } catch (SQLException ex) {
+            Logger.getLogger(BeanDBAccess.class.getName()).log(
+                    Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    /**
      * Donne le nombre d'enregistrements dans la table donnée
      * 
      * @param table     Table dont on souhaite connaître
