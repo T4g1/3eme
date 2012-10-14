@@ -20,7 +20,7 @@ public class BeanDBAccessMySQL extends BeanDBAccess {
     private final String PASSWORD = "";
     private final String HOST = "127.0.0.1";
     private final String PORT = "3306";
-    private final String DBNAME = "BD_HOTELS";
+    private final String DBNAME = "bd_hotels";
     
     /**
      * Constructeur par défaut
