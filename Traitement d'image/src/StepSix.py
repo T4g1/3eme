@@ -14,7 +14,7 @@ def erosion(data, w, h):
     # parcrout l'image
     for x in range(1, w-1):
         for y in range(1, h-1):
-            # Remplace le pixel par le max dans son voissinage
+            # Remplace le pixel par le min dans son voissinage
             temp[(y * w) + x] = min([
                 data[((y-1) * w) + (x-1)],
                 data[((y-1) * w) + x],
