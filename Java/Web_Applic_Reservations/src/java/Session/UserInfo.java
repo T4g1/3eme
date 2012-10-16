@@ -4,7 +4,16 @@
  */
 package Session;
 
+import Bean.BeanDBAccessMySQL;
 import Vues.Vues;
+import java.beans.Beans;
+import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,6 +26,8 @@ import javax.servlet.http.HttpSession;
 public class UserInfo {
     public static final String USER_INFO_KEY = "USER_INFO_KEY";
     private boolean logged;
+    private int id;
+    private List<Integer> caddie;
     private String page;
     
     /**
@@ -25,7 +36,9 @@ public class UserInfo {
     @PostConstruct
     private void initialize() {
         logged = false;
-        page = "acceuil";
+        page = "";
+        id = 0;
+        caddie = new ArrayList<Integer>();
     }
     
     /**
@@ -48,10 +61,113 @@ public class UserInfo {
     }
     
     /**
+     * Ajoute la chambre dont le numéro est donné au caddie
+     * 
+     * @param numero        Numero de la chambre voulue
+     * 
+     * @return              true si chambre commandée, false sinon
+     */
+    public boolean commander(int numero) {
+        try {
+            BeanDBAccessMySQL dba = (BeanDBAccessMySQL)Beans.instantiate(
+                    null, "Bean.BeanDBAccessMySQL");
+            
+            if(dba.init()) {
+                // Si la chambre est déjà réservée
+                if(dba.count("reservations", "chambre='" + numero + "'") != 0)
+                {
+                    return false;
+                }
+                
+                // Insére la reservation
+                String query = "INSERT INTO reservations";
+                query += " (id, chambre, titulaire)";
+                query += " VALUES ";
+                query += "(NULL, " + numero + ", " + id + ");";
+
+                if(dba.executeUpdate(query))
+                {
+                    // Place la chmabre dans le caddie
+                    caddie = getCaddie();
+                    caddie.add(numero);
+
+                    return true;
+                }
+            }
+        }
+        catch (IOException ex) { }
+        catch (ClassNotFoundException ex) { }
+       
+        return false;
+    }
+    
+    /**
      * Annule le caddie actuel du client
      */
-    public void cancelCaddie() {
-        // TODO
+    public boolean cancelCaddie() {
+        // Annule chaque commande non payée du client
+        try {
+            BeanDBAccessMySQL dba = (BeanDBAccessMySQL)Beans.instantiate(
+                    null, "Bean.BeanDBAccessMySQL");
+            
+            if(!dba.init())
+            {
+                return false;
+            }
+            
+            // Annule chaque commande
+            String query = "DELETE FROM reservations WHERE paye=0 AND ";
+            query += "titulaire=" + id + ";";
+
+            if(!dba.executeUpdate(query))
+            {
+                return false;
+            }
+        }
+        catch (IOException ex)
+        {
+            return false;
+        }
+        catch (ClassNotFoundException ex)
+        {
+            return false;
+        }
+        
+        caddie.clear();
+        
+        return true;
+    }
+    
+    /**
+     * Paye le caddie actuel du client
+     */
+    public boolean payerCaddie() {
+        try {
+            BeanDBAccessMySQL dba = (BeanDBAccessMySQL)Beans.instantiate(
+                    null, "Bean.BeanDBAccessMySQL");
+            
+            if(!dba.init())
+            {
+                return false;
+            }
+            
+            // Paye toutes les commandes
+            String query = "UPDATE reservations SET paye=1";
+            query += " WHERE paye=0 AND titulaire=" + id + ";";
+
+            if(!dba.executeUpdate(query))
+            {
+                return false;
+            }
+        } catch (IOException ex) {
+            return false;
+        } catch (ClassNotFoundException ex) {
+            return false;
+        }
+        
+        caddie.clear();
+        
+        return true;
     }
     
     //<editor-fold defaultstate="collapsed" desc="Accesseurs">
@@ -83,6 +199,43 @@ public class UserInfo {
         return Vues.getPageTitle(page);
     }
     
+    /**
+     * Donne le caddie du joueur
+     * 
+     * @return      Caddie du joueur
+     */
+    public List<Integer> getCaddie() {
+        if(caddie == null)
+        {
+            caddie = new ArrayList<Integer>();
+        }
+        
+        // Ajoute les réservation non payées au caddie
+        try {
+            BeanDBAccessMySQL dba = (BeanDBAccessMySQL)Beans.instantiate(
+                    null, "Bean.BeanDBAccessMySQL");
+            
+            if(dba.init()) {
+                ResultSet result = dba.selectAll(
+                        "reservations", "paye=0 AND titulaire=" + id);
+                
+                while(result.next())
+                {
+                    int chambre = result.getInt("chambre");
+                    if(caddie.indexOf(chambre) == -1)
+                    {
+                        caddie.add(result.getInt("chambre"));
+                    }
+                }
+            }
+        }
+        catch (SQLException ex) { }
+        catch (IOException ex) { }
+        catch (ClassNotFoundException ex) { }
+        
+        return caddie;
+    }
+    
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Mutateurs">
@@ -103,6 +256,15 @@ public class UserInfo {
      */
     public void setPage(String value) {
         page = value;
+    }
+    
+    /**
+     * Modifie l'id du client
+     * 
+     * @param value         Nouvel id
+     */
+    public void setId(int value) {
+        id = value;
     }
     
     //</editor-fold>

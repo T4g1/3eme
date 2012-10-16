@@ -50,6 +50,60 @@ public class controlServlet extends HttpServlet {
             
             userinfo.setPage("index");
         }
+        else if(action.equals("commander"))
+        {
+            try {
+                int numero = Integer.parseInt(request.getParameter("numero"));
+            
+                if(userinfo.commander(numero))
+                {
+                    request.setAttribute("message", "Ajout au caddie réussit");
+                }
+                else
+                {
+                    request.setAttribute("message", 
+                            "Erreur: Impossible d'ajouter cette chambre");
+                }
+            } catch(NumberFormatException e) {
+                request.setAttribute("message",
+                        "Erreur: Numero de chambre invalide");
+            }
+        }
+        else if(action.equals("caddie"))
+        {
+            userinfo.setPage("caddie");
+        }
+        else if(action.equals("payer"))
+        {
+            if(userinfo.payerCaddie())
+            {
+                request.setAttribute("message", 
+                            "Caddie payé");
+            }
+            else
+            {
+                request.setAttribute("message", 
+                            "Erreur: Payement impossible");
+            }
+            
+            userinfo.setPage("caddie");
+        }
+        // Annule les commandes en cours non payées
+        else if(action.equals("annuler"))
+        {
+            if(userinfo.cancelCaddie())
+            {
+                request.setAttribute("message", 
+                            "Caddie annulé");
+            }
+            else
+            {
+                request.setAttribute("message", 
+                            "Erreur: Annulation impossible");
+            }
+            
+            userinfo.setPage("caddie");
+        }
         else
         {
             userinfo.setPage("userpanel");

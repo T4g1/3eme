@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 public class loginServlet extends HttpServlet {
     private UserInfo userinfo;
     private PrintWriter out;
+    private String message;
     
     /**
      * Processes requests for both HTTP
@@ -42,20 +42,19 @@ public class loginServlet extends HttpServlet {
         // Récupére les informations utilisateur
         userinfo = UserInfo.getUserInfo(request);
         
-        out = response.getWriter();
-        Vues.begin(out);
-        
         // Vérifie l'action
         String action = request.getParameter("action");
         if( (action.equals("login") && onLogin(request)) ||
             (action.equals("adduser") && onAdduser(request)))
         {
             userinfo.setPage("userpanel");
-            Vues.redirect(request, response, "index");
+        }
+        else
+        {
+            request.setAttribute("message", "Erreur: " + message);
         }
         
-        Vues.end(out);
-        out.close();
+        Vues.redirect(request, response, "index");
     }
     
     /**
@@ -78,7 +77,7 @@ public class loginServlet extends HttpServlet {
                 // Verifie si l'user existe deja
                 if(dba.count("voyageurs", "username='" + username + "'") != 0)
                 {
-                    Vues.showAddUserFailed(out);
+                    message = "Utilisateur déjà présent dans la BDD";
                 }
                 
                 // Ajout dans la base de données
@@ -88,22 +87,41 @@ public class loginServlet extends HttpServlet {
                     query += " VALUES ";
                     query += "(NULL, '" + username + "', '" + password + "');";
                     
-                    if(dba.executeUpdate(query))
+                    if(!dba.executeUpdate(query))
                     {
-                        // Log l'utilisateur
-                        userinfo.setLogged(true);
-                        
-                        return true;
+                        message = "AddUser: Execution de la requete SQL échoué";
+                        return false;
                     }
                     
-                    Vues.addMessage(out, "Echec de la commande: " + query);
+                    // Récupére l'Id du voyageur
+                    ResultSet result = dba.selectAll("voyageurs", 
+                            "username='" + username + "'");
+                    
+                    if(!result.next())
+                    {
+                        message = "Impossible de récuperer l'id du voyageur";
+                        return false;
+                    }
+                    
+                    int id = result.getInt("id");
+                    
+                    // Log l'utilisateur
+                    userinfo.setId(id);
+                    userinfo.setLogged(true);
+
+                    return true;
                 }
             }
-        }
-        catch (IOException ex) {
-            Vues.addMessage(out, "Erreur de connexion: "+ ex.getMessage());
+            else
+            {
+                message = "BDD impossible à initialiser";
+            }
+        } catch (SQLException ex) {
+            message = "AddUser: SQLException";
+        } catch (IOException ex) {
+            message = "AddUser: IOException";
         } catch (ClassNotFoundException ex) {
-            Vues.addMessage(out, "Erreur de connexion: "+ ex.getMessage());
+            message = "AddUser: ClassNotFoundException";
         }
         
         return false;
@@ -121,21 +139,7 @@ public class loginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         
-        // Login réussit
-        if(verifyLogin(username, password))
-        {
-            // Log l'utilisateur
-            userinfo.setLogged(true);
-            
-            return true;
-        }
-        // Login échoué
-        else
-        {
-            Vues.showLoginFailed(out);
-        }
-        
-        return false;
+        return verifyLogin(username, password);
     }
     
     /**
@@ -155,22 +159,33 @@ public class loginServlet extends HttpServlet {
             if(dba.init()) {
                 // Sélectionne les informations de l'utilisateur
                 ResultSet result = dba.selectAll("voyageurs", "username='" + username+"'");
-                result.next();
-                
-                return password.equals(result.getString("password"));
+                if(result.next())
+                {
+                    if(password.equals(result.getString("password")))
+                    {
+                        userinfo.setId(result.getInt("id"));
+                        userinfo.setLogged(true);
+                        
+                        return true;
+                    }
+                }
+                else
+                {
+                    message = "Utilisateur inexistant";
+                }
             }
             else
             {
-                Vues.addMessage(out, "Connexion impossible");
+                message = "BDD impossible à initialiser";
             }
         }
         catch (SQLException ex) {
-            Vues.addMessage(out, "Erreur de connexion: "+ ex.getMessage());
+            message = "verifyLogin: SQLException";
         } 
         catch (IOException ex) {
-            Vues.addMessage(out, "Erreur de connexion: "+ ex.getMessage());
+            message = "verifyLogin: IOException";
         } catch (ClassNotFoundException ex) {
-            Vues.addMessage(out, "Erreur de connexion: "+ ex.getMessage());
+            message = "verifyLogin: ClassNotFoundException";
         }
        
         return false;

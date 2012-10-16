@@ -1,5 +1,12 @@
 <section>
     <article>
+        <%
+        String message = (String)request.getAttribute("message");
+        if(message != null)
+        {
+            %><h1><%= message %></h1><%
+        }
+        %>
         <jsp:include page='<%= userinfo.getPage() + ".jsp" %>' />
     </article>
     <aside>
