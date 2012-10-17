@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Session;
 
 import Bean.BeanDBAccessMySQL;
@@ -12,8 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -85,10 +79,6 @@ public class UserInfo {
 
                 if(dba.executeUpdate(query))
                 {
-                    // Place la chambre dans le caddie
-                    caddie = getCaddie();
-                    caddie.add(numero);
-
                     return true;
                 }
             }
@@ -131,8 +121,6 @@ public class UserInfo {
             return false;
         }
         
-        caddie.clear();
-        
         return true;
     }
     
@@ -162,8 +150,6 @@ public class UserInfo {
         } catch (ClassNotFoundException ex) {
             return false;
         }
-        
-        caddie.clear();
         
         return true;
     }
@@ -203,10 +189,7 @@ public class UserInfo {
      * @return      Caddie du joueur
      */
     public List<Integer> getCaddie() {
-        if(caddie == null)
-        {
-            caddie = new ArrayList<Integer>();
-        }
+        List<Integer> caddie = new ArrayList<Integer>();
         
         // Ajoute les réservation non payées au caddie
         try {
@@ -220,10 +203,7 @@ public class UserInfo {
                 while(result.next())
                 {
                     int chambre = result.getInt("chambre");
-                    if(caddie.indexOf(chambre) == -1)
-                    {
-                        caddie.add(result.getInt("chambre"));
-                    }
+                    caddie.add(result.getInt("chambre"));
                 }
             }
         }
