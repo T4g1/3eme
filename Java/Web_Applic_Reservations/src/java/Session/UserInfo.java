@@ -27,7 +27,6 @@ public class UserInfo {
     public static final String USER_INFO_KEY = "USER_INFO_KEY";
     private boolean logged;
     private int id;
-    private List<Integer> caddie;
     private String page;
     
     /**
@@ -38,7 +37,6 @@ public class UserInfo {
         logged = false;
         page = "";
         id = 0;
-        caddie = new ArrayList<Integer>();
     }
     
     /**
@@ -87,7 +85,7 @@ public class UserInfo {
 
                 if(dba.executeUpdate(query))
                 {
-                    // Place la chmabre dans le caddie
+                    // Place la chambre dans le caddie
                     caddie = getCaddie();
                     caddie.add(numero);
 
