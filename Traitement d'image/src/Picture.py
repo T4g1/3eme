@@ -8,6 +8,7 @@ from common import *
 from GrayScaleStepFour import *
 from StepSix import *
 from Filtres import *
+from EdgeThining import *
 
 
 ##
@@ -32,6 +33,11 @@ class Picture():
     # Applique l'erosion sur l'image
     def erosion(self):
         self.data = erosion(self.data, self.image.size[0], self.image.size[1])
+        self.image.putdata(self.data)
+    
+    # Applique l'ammaincissement des contours
+    def edgeThining(self):
+        self.data = edgeThining(self.data, self.image.size[0], self.image.size[1])
         self.image.putdata(self.data)
     
     # Applique une dilatation sur l'image
@@ -72,6 +78,9 @@ class Picture():
             self.image.putdata(self.data)
         elif filtre == "roberts":
             self.data = roberts(self.data, w, h)
+            self.image.putdata(self.data)
+        elif filtre == "laplacien":
+            self.data = laplace(self.data, w, h)
             self.image.putdata(self.data)
         else:
             for kernel in l_filtres[filtre]:
