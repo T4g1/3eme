@@ -97,24 +97,13 @@ class MainWindows(QtGui.QMainWindow):
         self.ui.actionOuverture.triggered.connect(lambda: self.dialogAutre.applyFilter(u"Ouverture", 1))
         self.ui.actionFermeture.triggered.connect(lambda: self.dialogAutre.applyFilter(u"Fermeture", 1))
         
-        self.ui.actionAffiner.triggered.connect(self.applyAffinage)
+        # self.ui.actionHysteresis.triggered.connect(lambda: self.dialogAutre.applyFilter(u"Fermeture", 1))
         
         self.ui.actionApplicationAvanceeAutre.triggered.connect(self.dialogAutre.show)
         
         # Image ouverte des le depart
-        self.openPicture("./picture/grayscale/lenna.bmp")
+        self.openPicture("./picture/grayscale/sacrecoeur.jpg")
     
-    # Applique l'affinnage
-    def applyAffinage(self):
-        self.resultPicture.setImage(self.basePicture.image.copy())
-        
-        oldData = []
-        while oldData != self.resultPicture.data:
-            oldData = list(self.resultPicture.data)
-            self.resultPicture.edgeThining()
-        
-        self.showResultPicture()
-        
     # Demande une image et la charge
     def promptImage(self):
         filename = QtGui.QFileDialog.getOpenFileName(

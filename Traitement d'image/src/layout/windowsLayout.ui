@@ -174,7 +174,7 @@
     <property name="title">
      <string>Affinage des contours</string>
     </property>
-    <addaction name="actionAffiner"/>
+    <addaction name="hysteresis"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuImage"/>
@@ -321,9 +321,9 @@
     <string>Application avancée ...</string>
    </property>
   </action>
-  <action name="actionAffiner">
+  <action name="hysteresis">
    <property name="text">
-    <string>Affiner</string>
+    <string>Seuillage par Hystérésis</string>
    </property>
   </action>
  </widget>

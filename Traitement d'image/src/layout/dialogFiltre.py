@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'dialogFiltre.ui'
 #
-# Created: Wed Oct 17 11:41:35 2012
+# Created: Fri Sep 28 20:56:15 2012
 #      by: PyQt4 UI code generator 4.9.4
 #
 # WARNING! All changes made in this file will be lost!

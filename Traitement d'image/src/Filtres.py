@@ -26,50 +26,10 @@ def gaussian_grid(size=5):
 l_filtres = {
         u"moyen": [ImageFilter.Kernel((3, 3), [1] * 9, 9)],
         u"gaussien": [ImageFilter.Kernel((size, size), gaussian_grid(size))],
+        u"laplacien": [ImageFilter.Kernel((3, 3), [0, 1, 0, 1, -4, 1, 0, 1, 0])],
 }
 
-# Filtre de Laplace
-# 0  1 0
-# 1 -4 1
-# 0  1 0
-def laplace(data, w, h):
-    newData = [0] * w * h
-
-    for y in range(1, h - 2):
-        for x in range(1, w - 2):
-            line1 = ((y-1) * w) + x
-            line2 = (y * w) + x
-            line3 = ((y+1) * w) + x
-            a = (data[line1] +\
-                data[line2 - 1] - 4 * data[line2] + data[line2 + 1] +\
-                data[line3])
-
-            pixel = a
-            if pixel < 0:
-                pixel = 0
-            elif pixel > 255:
-                pixel = 255
-
-            newData[(y * w) + x] = pixel
-
-    return newData
-
 # Filtre de Kirsh
-# -1 0 1
-# -1 0 1
-# -1 0 1
-
-# -1 -1 -1
-#  0  0  0
-#  1  1  1
-
-#  0  1  1
-# -1  0  1
-# -1 -1  0
-
-#  0 -1 -1
-#  1  0 -1
-#  1  1  0
 def kirsh(data, w, h):
     newData = [0] * w * h
 
@@ -101,11 +61,6 @@ def kirsh(data, w, h):
     return newData
 
 # Filtre de Roberts
-# 1 0
-# 0 1
-# et
-# 0 1
-# 1 0
 def roberts(data, w, h):
     newData = [0] * w * h
 

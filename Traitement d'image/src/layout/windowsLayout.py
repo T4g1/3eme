@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'windowsLayout.ui'
 #
-# Created: Wed Oct 17 11:41:29 2012
+# Created: Fri Sep 28 20:56:09 2012
 #      by: PyQt4 UI code generator 4.9.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -82,8 +82,6 @@ class Ui_MainWindow(object):
         self.menuFiltres.setObjectName(_fromUtf8("menuFiltres"))
         self.menuAutres = QtGui.QMenu(self.menubar)
         self.menuAutres.setObjectName(_fromUtf8("menuAutres"))
-        self.menuAffinage_des_contours = QtGui.QMenu(self.menubar)
-        self.menuAffinage_des_contours.setObjectName(_fromUtf8("menuAffinage_des_contours"))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtGui.QStatusBar(MainWindow)
         self.statusbar.setObjectName(_fromUtf8("statusbar"))
@@ -140,8 +138,6 @@ class Ui_MainWindow(object):
         self.actionFermeture.setObjectName(_fromUtf8("actionFermeture"))
         self.actionApplicationAvanceeAutre = QtGui.QAction(MainWindow)
         self.actionApplicationAvanceeAutre.setObjectName(_fromUtf8("actionApplicationAvanceeAutre"))
-        self.actionAffiner = QtGui.QAction(MainWindow)
-        self.actionAffiner.setObjectName(_fromUtf8("actionAffiner"))
         self.menuFile.addAction(self.actionOuvrir)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionQuitter)
@@ -171,14 +167,12 @@ class Ui_MainWindow(object):
         self.menuAutres.addAction(self.actionFermeture)
         self.menuAutres.addSeparator()
         self.menuAutres.addAction(self.actionApplicationAvanceeAutre)
-        self.menuAffinage_des_contours.addAction(self.actionAffiner)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuImage.menuAction())
         self.menubar.addAction(self.menuThreshold.menuAction())
         self.menubar.addAction(self.menuHistogramme.menuAction())
         self.menubar.addAction(self.menuFiltres.menuAction())
         self.menubar.addAction(self.menuAutres.menuAction())
-        self.menubar.addAction(self.menuAffinage_des_contours.menuAction())
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -196,7 +190,6 @@ class Ui_MainWindow(object):
         self.menuHistogramme.setTitle(QtGui.QApplication.translate("MainWindow", "Histogramme", None, QtGui.QApplication.UnicodeUTF8))
         self.menuFiltres.setTitle(QtGui.QApplication.translate("MainWindow", "Filtres", None, QtGui.QApplication.UnicodeUTF8))
         self.menuAutres.setTitle(QtGui.QApplication.translate("MainWindow", "Autres", None, QtGui.QApplication.UnicodeUTF8))
-        self.menuAffinage_des_contours.setTitle(QtGui.QApplication.translate("MainWindow", "Affinage des contours", None, QtGui.QApplication.UnicodeUTF8))
         self.actionQuitter.setText(QtGui.QApplication.translate("MainWindow", "Quitter", None, QtGui.QApplication.UnicodeUTF8))
         self.actionQuitter.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+Q", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSauver.setText(QtGui.QApplication.translate("MainWindow", "Sauver", None, QtGui.QApplication.UnicodeUTF8))
@@ -225,5 +218,4 @@ class Ui_MainWindow(object):
         self.actionOuverture.setText(QtGui.QApplication.translate("MainWindow", "Ouverture", None, QtGui.QApplication.UnicodeUTF8))
         self.actionFermeture.setText(QtGui.QApplication.translate("MainWindow", "Fermeture", None, QtGui.QApplication.UnicodeUTF8))
         self.actionApplicationAvanceeAutre.setText(QtGui.QApplication.translate("MainWindow", "Application avancée ...", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionAffiner.setText(QtGui.QApplication.translate("MainWindow", "Affiner", None, QtGui.QApplication.UnicodeUTF8))
 
