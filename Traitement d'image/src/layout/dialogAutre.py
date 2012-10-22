@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'dialogAutre.ui'
 #
-# Created: Fri Sep 28 20:56:15 2012
-#      by: PyQt4 UI code generator 4.9.4
+# Created: Mon Oct 22 19:34:20 2012
+#      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
 
