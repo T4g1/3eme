@@ -88,7 +88,9 @@ public class BeanDBAccess implements Serializable {
     public boolean executeUpdate(String query) {
         try {
             Statement statement = connection.createStatement();
-            return statement.executeUpdate(query) == 1;
+            statement.executeUpdate(query);
+            
+            return true;
         } catch (SQLException ex) {
             Logger.getLogger(BeanDBAccess.class.getName()).log(
                     Level.SEVERE, null, ex);
