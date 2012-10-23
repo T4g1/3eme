@@ -97,12 +97,18 @@ class MainWindows(QtGui.QMainWindow):
         self.ui.actionOuverture.triggered.connect(lambda: self.dialogAutre.applyFilter(u"Ouverture", 1))
         self.ui.actionFermeture.triggered.connect(lambda: self.dialogAutre.applyFilter(u"Fermeture", 1))
         
-        # self.ui.actionHysteresis.triggered.connect(lambda: self.dialogAutre.applyFilter(u"Fermeture", 1))
+        self.ui.actionAffiner.triggered.connect(self.affiner)
         
         self.ui.actionApplicationAvanceeAutre.triggered.connect(self.dialogAutre.show)
         
         # Image ouverte des le depart
         self.openPicture("./picture/grayscale/sacrecoeur.jpg")
+    
+    # Affine les contours de l'image
+    def affiner(self):
+        self.resultPicture.setImage(self.basePicture.image.copy())
+        self.resultPicture.affiner()
+        self.showResultPicture()
     
     # Demande une image et la charge
     def promptImage(self):
