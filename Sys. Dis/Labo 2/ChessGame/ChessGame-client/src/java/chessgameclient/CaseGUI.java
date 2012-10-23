@@ -1,21 +1,24 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package chessgameclient;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import piece.Piece;
 
 /**
- *
+ * Gére une case du plateau de jeu
  * @author T4g1
  */
 public class CaseGUI extends JPanel {
     private static final int CASE_WIDTH = 50;
     private static final int CASE_HEIGHT = 71;
-    
+
+    private GameGUI parent;
     private int x;
     private int y;
+    private Piece piece;
     
     //<editor-fold defaultstate="collapsed" desc="Constructeurs">
     
@@ -25,10 +28,21 @@ public class CaseGUI extends JPanel {
      * @param x     Position en x de la case
      * @param y     Position en y de la case
      */
-    public CaseGUI(int x, int y)
+    public CaseGUI(GameGUI parent, int x, int y)
     {
+        this.parent = parent;
+        
         this.x = x;
         this.y = y;
+        this.piece = null;
+        
+        // Ajoute un mouse listenner pour les clic utilisateurs
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                onClic();
+            }
+        });
     }
     
     /**
@@ -43,15 +57,35 @@ public class CaseGUI extends JPanel {
     //</editor-fold>
     
     /**
+     * Retire les piéces sur la case
+     */
+    public void removePiece()
+    {
+        removeAll();
+        piece = null;
+    }
+    
+    /**
      * Ajoute une piéce sur la case
      * 
-     * @return      True si l'ajout est ok, false sinon
+     * @param piece     Ajoute la piéce sur la case
      */
-    public boolean addPiece()
+    public void addPiece(Piece piece)
     {
-        //add(new JLabel(new ImageIcon(filename)));
+        add(new JLabel(new ImageIcon(
+                "C:\\Users\\T4g1\\Desktop\\3eme\\Sys. Dis\\Labo 2\\" +
+                "piecesimages\\" + piece.getFilename(piece.getEquipe())
+        )));
         
-        return true;
+        this.piece = piece;
+    }
+    
+    /**
+     * Fonction appellée lorsqu'on clique sur la case
+     */
+    public void onClic()
+    {
+        parent.onClic(this);
     }
 
     //<editor-fold defaultstate="collapsed" desc="Accesseurs">
@@ -90,6 +124,15 @@ public class CaseGUI extends JPanel {
      */
     public static int getCaseHeight() {
         return CASE_HEIGHT;
+    }
+
+    /**
+     * Donne le type de piece qui est sur la case
+     * 
+     * @return      Type de la piéce qui est sur la case
+     */
+    public Piece getPiece() {
+        return piece;
     }
     
     //</editor-fold>
