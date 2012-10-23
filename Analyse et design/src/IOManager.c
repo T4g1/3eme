@@ -1,5 +1,5 @@
-#include "IOManager.h"
-
+#include<piod_qnx_v2.2.h>
+#include<appio.h>
 
 /**
  * Lit les capteurs pour la station 1
@@ -65,5 +65,5 @@ int read(int fd)
  */
 void write(int fd, int value)
 {
-    devctl(fd, WRITE_CAPTEUR, &value, sizeof(value), NULL);
+    devctl(fd, WRITE_ACTUATEUR, &value, sizeof(value), NULL);
 }

@@ -1,14 +1,11 @@
 #include "station2.h"
 
-int fd;
-int capteurs;
-int actuateurs;
+#include "common.h"
 
 
 int main(void)
 {
-    // Connexion a la station 2
-    int fd = open("/dev/pio_d48", O_RDWR);
+    init();
     
     // Boucle principale
     while(1) {
@@ -16,7 +13,7 @@ int main(void)
         processPiece();
     }
     
-    close(fd);
+    close();
     
     return 0;
 }
@@ -27,16 +24,18 @@ int main(void)
  */
 void reinitialise()
 {
-    capteurs = readCapteurs(fd);
-    
     // Coussin d'air éteint ?
-    // TODO
+    setActuateur(COUSSIN_AIR, OFF);
     
     // Position du pousseur de piéce
-    // TODO
+    setActuateur(PP, OFF);
+    wait(PP_RENTRE, TRUE);
     
     // Position de l'ascenseur
-    // TODO
+    setActuateur(ASC_MONTE, OFF);
+    setActuateur(ASC_DESCEND, ON);
+    wait(ASC_BAS, TRUE);
+    setActuateur(ASC_DESCEND, OFF);
     
     // Préviens la station 1 qu'on attend une piéce
     // TODO

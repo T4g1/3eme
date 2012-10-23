@@ -6,6 +6,6 @@
 #define __BITMANAGER__
 
 int getBit(int value, int bit);
-int setBit(int value, int bit, int bitValue);
+int setBit(int* value, int bit, int bitValue);
 
 #endif
