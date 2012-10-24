@@ -7,6 +7,7 @@ package chessgameclient;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
@@ -18,8 +19,8 @@ import piece.Piece.Equipe;
  * @author T4g1
  */
 public class GameGUI extends javax.swing.JFrame {
-    private static final int GRID_WIDTH = 8;
-    private static final int GRID_HEIGHT = 8;
+    public static final int GRID_WIDTH = 8;
+    public static final int GRID_HEIGHT = 8;
     
     private CaseGUI[][] l_case = new CaseGUI[GRID_WIDTH][GRID_HEIGHT];
     private JPanel echiquier = new JPanel(
@@ -27,6 +28,7 @@ public class GameGUI extends javax.swing.JFrame {
     
     private List<Piece> l_piece;
     private CaseGUI selectedCase;
+    private List<Point> highlighted;
     
     //<editor-fold defaultstate="collapsed" desc="Constructeurs">
     
@@ -41,20 +43,17 @@ public class GameGUI extends javax.swing.JFrame {
         {
             for(int x=0; x<GRID_WIDTH; x++)
             {
-                // Donne la position de la case a cette derniére
-                l_case[x][y] = new CaseGUI(this, x, y);
-                
-                // Modifie la couleur de la case
+                // Crée la case
                 if((x + y) % 2 == 0)
                 {
-                    l_case[x][y].setBackground(Color.WHITE);
+                    l_case[x][y] = new CaseGUI(this, x, y, Color.WHITE);
                 }
                 else
                 {
-                    l_case[x][y].setBackground(Color.BLACK);
+                    l_case[x][y] = new CaseGUI(this, x, y, Color.BLACK);
                 }
         
-                // AJoute la case sur l'échéquier
+                // Ajoute la case sur l'échéquier
                 echiquier.add(l_case[x][y]);
             }
         }
@@ -187,12 +186,42 @@ public class GameGUI extends javax.swing.JFrame {
     {
         // Premier clic
         if(selectedCase == null) {
-            if(_case.getPiece() != null)
+            if(_case.getPiece() != null) {
                 selectedCase = _case;
+                
+                highlighted = _case.getPiece().whereCanItGo(l_case);
+                for(Point p: highlighted) {
+                    l_case[(int)p.getX()][(int)p.getY()].highlight(true);
+                }
+            }
         }
         else {
-            moveTo(_case);
+            // Si on peut s'y rendre
+            if(_case.isHighlighted()) {
+                moveTo(_case);
+                
+                shtudownHighlightedCase();
+            } else {
+                shtudownHighlightedCase();
+                
+                selectedCase = null;
+                
+                onClic(_case);
+            }
         }
+    }
+    
+    /**
+     * Eteint les cases mise en évidence
+     */
+    private void shtudownHighlightedCase()
+    {
+        // Eteint les cases
+        for(Point p: highlighted) {
+            l_case[(int)p.getX()][(int)p.getY()].highlight(false);
+        }
+        
+        highlighted = new ArrayList<Point>();
     }
     
     /**
@@ -202,6 +231,13 @@ public class GameGUI extends javax.swing.JFrame {
      */
     public void moveTo(CaseGUI _case)
     {
+        Piece piece = selectedCase.getPiece();
         
+        piece.setX(_case.getCaseX());
+        piece.setY(_case.getCaseY());
+        
+        selectedCase.removePiece();
+        _case.removePiece();            // Prise de piéce
+        _case.addPiece(piece);
     }
 }

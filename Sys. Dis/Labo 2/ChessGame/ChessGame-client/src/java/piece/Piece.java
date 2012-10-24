@@ -1,7 +1,6 @@
 package piece;
 
 import chessgameclient.CaseGUI;
-import chessgameclient.GameGUI;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,6 +102,30 @@ public class Piece {
         else {
             return "6a.gif";
         }
+    }
+    
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Mutateur">
+    
+    /**
+     * Modifie la coordonée en x de la piéce
+     * 
+     * @param x         Nouvelle coordonée
+     */
+    public void setX(int x)
+    {
+        this.x = x;
+    }
+    
+    /**
+     * Modifie la coordonée en y de la piéce
+     * 
+     * @param y         Nouvelle coordonée
+     */
+    public void setY(int y)
+    {
+        this.y = y;
     }
     
     //</editor-fold>

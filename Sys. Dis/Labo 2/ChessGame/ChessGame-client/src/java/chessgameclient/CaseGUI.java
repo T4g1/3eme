@@ -1,5 +1,6 @@
 package chessgameclient;
 
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
@@ -14,27 +15,37 @@ import piece.Piece;
 public class CaseGUI extends JPanel {
     private static final int CASE_WIDTH = 50;
     private static final int CASE_HEIGHT = 71;
+    private static final Color highlightColor = Color.RED;
 
     private GameGUI parent;
     private int x;
     private int y;
     private Piece piece;
     
+    private Color backgroundColor;
+    
     //<editor-fold defaultstate="collapsed" desc="Constructeurs">
     
     /**
      * Initialise une case en lui donnant sa position
      * 
-     * @param x     Position en x de la case
-     * @param y     Position en y de la case
+     * @param parent            Classe parent de la case
+     * @param x                 Position en x de la case
+     * @param y                 Position en y de la case
+     * @param backgroundColor   Couleur de fond
      */
-    public CaseGUI(GameGUI parent, int x, int y)
+    public CaseGUI(GameGUI parent, int x, int y, Color backgroundColor)
     {
         this.parent = parent;
         
         this.x = x;
         this.y = y;
         this.piece = null;
+        
+        this.backgroundColor = backgroundColor;
+        
+        // Modifie la couleur de fond
+        setBackground(backgroundColor);
         
         // Ajoute un mouse listenner pour les clic utilisateurs
         addMouseListener(new MouseAdapter() {
@@ -62,6 +73,8 @@ public class CaseGUI extends JPanel {
     public void removePiece()
     {
         removeAll();
+        updateUI();
+        
         piece = null;
     }
     
@@ -76,6 +89,7 @@ public class CaseGUI extends JPanel {
                 "C:\\Users\\T4g1\\Desktop\\3eme\\Sys. Dis\\Labo 2\\" +
                 "piecesimages\\" + piece.getFilename(piece.getEquipe())
         )));
+        updateUI();
         
         this.piece = piece;
     }
@@ -86,6 +100,30 @@ public class CaseGUI extends JPanel {
     public void onClic()
     {
         parent.onClic(this);
+    }
+    
+    /**
+     * Met la case en évidence ou la réinitialise
+     * 
+     * @param state     true si on veut activer le highlight
+     */
+    public void highlight(boolean state)
+    {
+        if(state) {
+            setBackground(highlightColor);
+        } else {
+            setBackground(backgroundColor);
+        }
+    }
+    
+    /**
+     * Indique si la case est highlighted ou non
+     * 
+     * @return      true si la case est rouge
+     */
+    public boolean isHighlighted()
+    {
+        return getBackground() == highlightColor;
     }
 
     //<editor-fold defaultstate="collapsed" desc="Accesseurs">
