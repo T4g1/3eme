@@ -25,7 +25,7 @@
 #define PP1_SORTIT      9  /* byte 1 */  // PP1 sortit
 #define PP2_SORTIT      10 /* byte 1 */  // PP2 sortit
 #define PP3_SORTIT      11 /* byte 1 */  // PP3 sortit
-#define BRAS_DROITE     12 /* byte 1 */  // Bras à gauche
+#define BRAS_GAUCHE     12 /* byte 1 */  // Bras à gauche
 #define PIECE_ASPIRE    13 /* byte 1 */  // Piece aspirée
 
 #endif
