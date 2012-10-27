@@ -12,12 +12,10 @@ const struct sigevent* isr_handler(void *arg, int id);
 
 struct sigevent event;
 int interruptID;
-
+int nb_int = 0;
 
 int main(void)
 {
-    TraceEvent(_NTO_TRACE_STOP);
-   
     // Demande les permisisons pour effectuer les IO
     if(ThreadCtl( _NTO_TCTL_IO, 0) == -1) {
         printf("Permissions d'IO refusées\n");
@@ -29,14 +27,13 @@ int main(void)
     interruptID = InterruptAttach(IRQ1, isr_handler, NULL, 0, _NTO_INTR_FLAGS_END);
     
     // Boucle principale
-    //while(1) {
+    while(nb_int < 20) {
         // Attente d'une saisie d'une interruption
         InterruptWait(NULL, NULL);
         
-        printf("Le thread a recu l'interruption\n");
-    //}
+        printf("Le thread a recu l'interruption: %d\n", nb_int);
+    }
     
-    TraceEvent(_NTO_TRACE_STOP);
     InterruptDetach(interruptID);
     printf("Fin du programme\n");
 }
@@ -46,7 +43,7 @@ int main(void)
  */
 const struct sigevent* isr_handler(void *arg, int id)
 {
-    TraceEvent();
-    
+    nb_int++;
+	
     return &event;
 }

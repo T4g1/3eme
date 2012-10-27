@@ -1,0 +1,149 @@
+# qcc ihParallel.c -v
+cc: looking for gcc_ntox86 in /usr/qnx632/host/qnx6/x86/etc/qcc/gcc/2.95.3/gcc_ntox86++.conf
+cc: looking for gcc_ntox86 in /usr/qnx632/host/qnx6/x86/etc/qcc/gcc/2.95.3/gcc_ntox86.conf
+/usr/qnx632/host/qnx6/x86/usr/lib/gcc-lib/ntox86/2.95.3/cpp0 -nostdinc -D__LANGUAGE_C -D_LANGUAGE_C -D__QNX__ -D__QNXNTO__ -D__GNUC__=2 -D__GNUC_MINOR__=95 -D__unix__ -D__unix -D__ELF__ -D__X86__ -D__i386__ -D__LITTLEENDIAN__ -Acpu(386) -Acpu(i386) -Amachine(i386) -Asystem(unix) -Asystem(nto) -Asystem(qnx) -Asystem(qnxnto) -idirafter /usr/qnx632/target/qnx6/usr/include -lang-c ihParallel.c -o - | \
+ /usr/qnx632/host/qnx6/x86/usr/lib/gcc-lib/ntox86/2.95.3/cc1 -quiet -dumpbase ihParallel.c -o - | \
+ /usr/qnx632/host/qnx6/x86/usr/bin/ntox86-as -o ihParallel.o
+/usr/qnx632/host/qnx6/x86/usr/bin/ntox86-ld -b elf32-i386 -m i386nto --dynamic-linker /usr/lib/ldqnx.so.2 -rpath-link /usr/qnx632/target/qnx6/x86/lib:/usr/qnx632/target/qnx6/x86/usr/lib:/usr/qnx632/target/qnx6/x86/lib/gcc/2.95.3:/usr/qnx632/target/qnx6/x86/opt/lib /usr/qnx632/target/qnx6/x86/lib/crt1.o /usr/qnx632/target/qnx6/x86/lib/crti.o /usr/qnx632/target/qnx6/x86/lib/crtbegin.o ihParallel.o -o a.out -Y/usr/qnx632/target/qnx6/x86/lib:/usr/qnx632/target/qnx6/x86/usr/lib:/usr/qnx632/target/qnx6/x86/opt/lib -L/usr/qnx632/host/qnx6/x86/usr/lib/gcc-lib/ntox86/2.95.3 -L/usr/qnx632/target/qnx6/x86/lib/gcc/2.95.3 -L/usr/qnx632/target/qnx6/usr/ntox86/lib -L/usr/qnx632/target/qnx6/x86/lib -L/usr/qnx632/target/qnx6/x86/usr/lib -L/usr/qnx632/target/qnx6/x86/opt/lib /usr/qnx632/host/qnx6/x86/usr/lib/gcc-lib/ntox86/2.95.3/libgcc.a -lc -dn -Bstatic -lc /usr/qnx632/host/qnx6/x86/usr/lib/gcc-lib/ntox86/2.95.3/libgcc.a /usr/qnx632/target/qnx6/x86/lib/crtend.o /usr/qnx632/target/qnx6/x86/lib/crtn.o
+cc: unlinking ihParallel.o
+#
+
+# env
+_=/usr/bin/env
+QNX_CONFIGURATION=/etc/qnx
+PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/photon/bin:/usr/photon/appbuilder:/opt/X11R6/bin:/usr/X11R6/bin:/usr/local/bin:/opt/bin:/opt/sbin:/usr/qnx632/host/qnx6/x86/usr/bin:/usr/qnx632/host/qnx6/x86/usr/sbin:/usr/qnx632/host/qnx6/x86/sbin:/usr/qnx632/host/qnx6/x86/bin:/usr/qnx632/host/qnx6/x86/usr/photon/appbuilder
+PHOTON=/dev/photon
+ABLPATH=/usr/photon/translations
+SHELL=/bin/sh
+MAKEFLAGS=-I/usr/qnx632/target/qnx6/usr/include
+PHFONT=/dev/phfont
+PHIG=1
+HOSTNAME=QNX_RT_2
+TMPDIR=/tmp
+QNX_HELP_HOME_PAGE=/usr/qnx632/target/qnx6/usr/help/product/momentics/bookset.html
+PHTK_PATH=/usr/photon
+PROCESSOR=x86
+LD_LIBRARY_PATH=/proc/boot:/lib:/usr/lib:/lib/dll:/opt/lib:/usr/photon/lib:/usr/photon/dll:/usr/local/lib:/
+opt/X11R6/lib:/usr/X11R6/lib
+PHWM=pwm
+HOME=/root
+DISPLAY=127.1:0
+QNX_HOST=/usr/qnx632/host/qnx6/x86
+USER_NAME=/dev/photon
+QNX_TARGET=/usr/qnx632/target/qnx6
+PHINSTANCE=1
+TERM=qansi-m
+PHOTON2_PATH=/usr/photon
+ABLANG=en_US
+PHOTON_PATH=/usr/photon
+QNX_HELP_PATH=/usr/qnx632/target/qnx6/usr/help/product
+FONTSLEUTH=/dev/fontsleuthctrl
+PHSTART=1
+SYSNAME=nto
+LOGNAME=root
+#
+
+# ./a.out
+0: -> 355.38; = 357.99
+1: -> 5.70; = 1727.83
+2: -> 6.07; = 172.49
+3: -> 5.98; = 1432.68
+4: -> 4.97; = 2498.34
+5: -> 5.71; = 931.53
+6: -> 6.42; = 2248.00
+7: -> 5.36; = 680.30
+8: -> 4.65; = 1986.38
+9: -> 5.17; = 824.56
+10: -> 4.76; = 1242.75
+11: -> 5.75; = 2478.52
+12: -> 5.02; = 889.48
+13: -> 4.81; = 2176.08
+14: -> 5.82; = 1082.08
+15: -> 5.61; = 1537.35
+16: -> 5.74; = 2857.46
+17: -> 4.90; = 1298.95
+18: -> 5.63; = 2855.10
+19: -> 4.47; = 1012.88
+20: -> 5.69; = 1837.52
+21: -> 5.16; = 276.06
+22: -> 5.30; = 1579.35
+23: -> 4.93; = 22.93
+24: -> 5.77; = 1317.03
+25: -> 4.55; = 2238.90
+26: -> 5.03; = 680.40
+27: -> 5.61; = 1986.70
+28: -> 4.60; = 420.38
+29: -> 5.87; = 1708.14
+30: -> 5.87; = 620.25
+31: -> 6.17; = 1062.48
+32: -> 4.49; = 2372.11
+33: -> 5.16; = 767.66
+34: -> 5.33; = 2145.05
+35: -> 6.07; = 529.96
+36: -> 4.95; = 1909.97
+37: -> 7.11; = 345.73
+38: -> 5.94; = 1902.97
+39: -> 6.29; = 2898.10
+40: -> 5.49; = 1356.22
+41: -> 4.87; = 2773.81
+42: -> 6.13; = 1188.90
+43: -> 6.30; = 3508.36
+44: -> 4.77; = 946.60
+45: -> 5.80; = 2296.84
+46: -> 5.83; = 718.62
+47: -> 5.43; = 1920.18
+48: -> 6.48; = 424.09
+49: -> 6.76; = 2690.49
+50: -> 6.55; = 2318.99
+51: -> 4.57; = 933.55
+52: -> 4.53; = 1964.33
+53: -> 5.09; = 414.77
+54: -> 6.33; = 1813.64
+55: -> 4.38; = 405.24
+56: -> 5.45; = 2188.61
+57: -> 5.34; = 2225.31
+58: -> 5.67; = 761.06
+59: -> 4.40; = 1982.47
+60: -> 5.70; = 522.08
+61: -> 6.39; = 2159.49
+62: -> 4.70; = 2630.76
+63: -> 5.74; = 1155.09
+64: -> 6.41; = 2370.99
+65: -> 5.52; = 927.46
+66: -> 5.92; = 1652.81
+67: -> 6.40; = 99.56
+68: -> 4.73; = 1434.68
+69: -> 6.48; = 3104.34
+70: -> 5.44; = 780.46
+71: -> 7.25; = 2290.64
+72: -> 4.41; = 554.11
+73: -> 6.44; = 988.43
+74: -> 6.10; = 197.31
+75: -> 6.49; = 1522.95
+76: -> 5.91; = 2832.88
+77: -> 5.80; = 1492.98
+78: -> 6.64; = 2458.91
+79: -> 6.55; = 983.45
+80: -> 5.70; = 2219.53
+81: -> 5.68; = 749.12
+82: -> 4.98; = 1585.81
+83: -> 6.74; = 27.49
+84: -> 5.28; = 1363.01
+85: -> 6.41; = 2962.61
+86: -> 5.55; = 831.05
+87: -> 6.20; = 2318.23
+88: -> 6.08; = 579.25
+89: -> 4.76; = 1991.76
+90: -> 5.03; = 442.87
+91: -> 5.56; = 1814.64
+92: -> 5.14; = 255.38
+93: -> 5.35; = 1663.63
+94: -> 5.84; = 100.08
+95: -> 5.57; = 1524.61
+96: -> 4.78; = 2954.85
+97: -> 6.12; = 1415.90
+98: -> 4.83; = 2746.10
+99: -> 4.80; = 1791.64
+Moyenne: -> 9.07; = 1492.414063
+-> envoi, = total
+#
