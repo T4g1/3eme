@@ -1,7 +1,10 @@
-#include<piod_qnx_v2.2.h>
-#include<appio.h>
+#ifndef NOT_REALENV
+#include "lib/pioD48_qnx_v2.2.h"
+#include "lib/appio.h"
+#endif
 
 #include <time.h>           /* nanosleep */
+#include <fcntl.h>          /* O_RDWR */
 
 #include "BitManager.h"     /* Manipulation et interrogation des station via des entiers */
 #include "IOManager.h"      /* Manipulation de bit sur des variables entiére */
@@ -14,14 +17,22 @@ int actuateurs = 0;
 /**
  * Initialise la connexion à la station
  */
-void init()
+void initLink()
 {
 #ifndef PROFIBUS
+	#ifdef NOT_REALENV
+    write(1, "O_RDWR", 6);
+    #else
     fd = open("/dev/pio_d48", O_RDWR);
-#elif
-    int status;
+    #endif
+#else
+    short status;
     
+    #ifdef NOT_REALENV
+    write(1, "INIT", 4);
+    #else
     IO_Init(1, &status);
+    #endif
 #endif
 }
 
@@ -29,14 +40,18 @@ void init()
 /**
  * Termine la connexion à la station
  */
-void close()
+void closeLink()
 {
 #ifndef PROFIBUS
     close(fd);
-#elif
-    int status;
+#else
+    short status;
     
+    #ifdef NOT_REALENV
+    write(1, "EXIT", 4);
+    #else
     IO_Exit(1, &status);
+    #endif
 #endif
 }
 
@@ -49,9 +64,9 @@ void close()
 int getCapteur(int bit)
 {
 #ifndef PROFIBUS
-    int capteurs = read(fd);
-#elif
-    int capteurs = read();
+    int capteurs = readStation(fd);
+#else
+    int capteurs = readPROFIBUS();
 #endif
     
     return getBit(capteurs, bit);
@@ -68,9 +83,9 @@ void setActuateur(int bit, int value)
     setBit(&actuateurs, bit, value);
     
 #ifndef PROFIBUS
-    write(fd, *actuateurs);
-#elif
-    write(*actuateurs);
+    writeStation(fd, actuateurs);
+#else
+    writePROFIBUS(actuateurs);
 #endif
 }
 
@@ -83,7 +98,7 @@ void setActuateur(int bit, int value)
 void wait(int bit, int value)
 {
     while(getCapteur(bit) != value)
-        wait(10);
+        waitTime(10);
 }
 
 /**
@@ -91,11 +106,13 @@ void wait(int bit, int value)
  *
  * @param millisecondes     Milliseconde à attendre
  */
-void wait(int millisecondes)
+int waitTime(int millisecondes)
 {
     struct timespec time;
     time.tv_sec = 0;
     time.tv_nsec = millisecondes * 1000000;
     
-    nanosleep(time, NULL);
+    nanosleep(&time, NULL);
+    
+    return 0;
 }

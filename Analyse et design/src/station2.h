@@ -8,7 +8,7 @@
 #define COUSSIN_AIR     18 /* PA */     // Active le coussin d'air
 
 // Capteurs
-#deifne ASC_HAUT        9  /* PB */     // Ascenseur en position haute
+#define ASC_HAUT        9  /* PB */     // Ascenseur en position haute
 #define PP_RENTRE       16 /* PA */     // Pousseur en position initiale
 #define ASC_BAS         17 /* PA */     // Ascenseur en position basse
 #define PIECE           20 /* PA */     // Indique si la piéce est présente
