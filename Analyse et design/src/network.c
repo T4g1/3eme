@@ -1,13 +1,7 @@
 #include "network.h"
 
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <sys/types.h>
-#include <netdb.h>
-#include <string.h>
-
 /**
- * Initialise le socket en ecoute sur le port donné
+ * Initialise le socket en ecoute sur le port donne
  *
  * @param s         Socket
  * @param addr      Informations de connection
@@ -15,7 +9,7 @@
  *
  * @return          1 si succes
  */
-int initListen(int *s, sockaddr_in *addr, int port)
+int initListen(int *s, struct sockaddr_in *addr, int port)
 {
     // Ouverture du socket
     if((*s = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
@@ -37,7 +31,7 @@ int initListen(int *s, sockaddr_in *addr, int port)
 }
 
 /**
- * Envoit le message donné
+ * Envoit le message donne
  *
  * @param sock      Socket sur lequel envoyer le message
  * @param host      Adresse de la cible

@@ -11,7 +11,7 @@
 
 void* receiveFrom2(void* arg);
 
-// Indique si on peut envoyer une piéce sur la station 2
+// Indique si on peut envoyer une piece sur la station 2
 int canSend = 0;
 int sockSend;
 
@@ -19,9 +19,9 @@ int sockSend;
 int main(void)
 {
     
-    // Crée un thread qui ecoutera ce que la station 2 lui dira
+    // Cree un thread qui ecoutera ce que la station 2 lui dira
     pthread_t th;
-    if(pthread_create(&th, NULL, thread_receive, NULL) != 0) {
+    if(pthread_create(&th, NULL, receiveFrom2, NULL) != 0) {
         write(1, "Erreur thread\n", 40);
         return 1;
     }
@@ -57,11 +57,11 @@ void reinitialise()
     setActuateur(ASPIRATION, OFF);
     wait(PIECE_ASPIRE, FALSE);
     
-    // Place le bras a gauche pour débloquer la station 2
+    // Place le bras a gauche pour debloquer la station 2
     setActuateur(BRAS_POSITION, OFF);
     wait(BRAS_GAUCHE, TRUE);
     
-    // Place le poussoir principal en position rentrée
+    // Place le poussoir principal en position rentree
     setActuateur(MAIN_P, OFF);
     wait(MAIN_P_RENTRE, TRUE);
     
@@ -78,13 +78,13 @@ void reinitialise()
 }
 
 /**
- * Traite une piéce et l'amménne vers la station 2
+ * Traite une piece et l'ammenne vers la station 2
  */
 void processPiece()
 {
-    // Ameénne le bras a droite
+    // Ameenne le bras a droite
     
-    // Piéce dans le tube 1
+    // Piece dans le tube 1
     if(getCapteur(PIECE_1)) {
         setActuateur(PP1_IN, OFF);
         setActuateur(PP1_OUT, ON);
@@ -94,7 +94,7 @@ void processPiece()
         setActuateur(PP1_IN, ON);
         wait(PP1_RENTRE, TRUE);
     }
-    // Piéce dans le tube 2
+    // Piece dans le tube 2
     else if(getCapteur(PIECE_2)) {
         setActuateur(PP2_IN, OFF);
         setActuateur(PP2_OUT, ON);
@@ -104,7 +104,7 @@ void processPiece()
         setActuateur(PP2_IN, ON);
         wait(PP2_RENTRE, TRUE);
     }
-    // Piéce dans le tube 3
+    // Piece dans le tube 3
     else if(getCapteur(PIECE_3)) {
         setActuateur(PP3_IN, OFF);
         setActuateur(PP3_OUT, ON);
@@ -129,7 +129,7 @@ void* receiveFrom2(void* arg)
     
     initListen(&sockRecv, &addr, PORT_LISTEN_1_2);
     
-    // Réception des données
+    // Reception des donnees
     while(1) {
         addr_len = sizeof(addr);
         

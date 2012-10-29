@@ -1,5 +1,5 @@
 CC=qcc
-CFLAGS=-DLNOT_REALENV
+CFLAGS=-DNOT_REALENV
 LDFLAGS=-l socket -Bstatic lib/libappio.a
 EXEC=station1 station2
 OBJ=network.o IOManager.o BitManager.o

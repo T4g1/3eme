@@ -1,6 +1,7 @@
 #include "station2.h"
 
 #include "common.h"
+#include "network.h"
 
 void* receiveFrom1(void* arg);
 
@@ -11,9 +12,9 @@ int main(void)
 {
     int s;
     
-    // Crée un thread qui ecoutera ce que la station 1 lui dira
+    // Cree un thread qui ecoutera ce que la station 1 lui dira
     pthread_t th;
-    if(pthread_create(&th, NULL, receiveFromStation1, NULL) != 0) {
+    if(pthread_create(&th, NULL, receiveFrom1, NULL) != 0) {
         write(1, "Erreur thread\n", 40);
         return 1;
     }
@@ -23,7 +24,7 @@ int main(void)
         write(1, "Creation de socket echouee\n", 40);
         return 1;
     }
-    
+    for(;;){}
     initLink();
     
     // Boucle principale
@@ -39,14 +40,14 @@ int main(void)
 
 
 /**
- * Passe la station en attente de piéce
+ * Passe la station en attente de piece
  */
 void reinitialise()
 {
-    // Coussin d'air éteint ?
+    // Coussin d'air eteint ?
     setActuateur(COUSSIN_AIR, OFF);
     
-    // Position du pousseur de piéce
+    // Position du pousseur de piece
     setActuateur(PP, OFF);
     wait(PP_RENTRE, TRUE);
     
@@ -56,18 +57,18 @@ void reinitialise()
     wait(ASC_BAS, TRUE);
     setActuateur(ASC_DESCEND, OFF);
     
-    // Préviens la station 1 qu'on attend une piéce
+    // Previens la station 1 qu'on attend une piece
     SendTo(sockSend, ADDR_STATION_1, PORT_LISTEN_1_2, "ATTEND", 7);
 }
 
 /**
- * Réalise le parcourt avec la piéce courante
+ * Realise le parcourt avec la piece courante
  */
 void processPiece()
 {
     // TODO
     
-    // Préviens la station 3 qu'on lui donne une piéce
+    // Previens la station 3 qu'on lui donne une piece
     // TODO
 }
 
@@ -82,7 +83,7 @@ void* receiveFrom1(void* arg)
     
     initListen(&sockRecv, &addr, PORT_LISTEN_2_1);
     
-    // Réception des données
+    // Reception des donnees
     while(1) {
         addr_len = sizeof(addr);
         
