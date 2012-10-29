@@ -18,6 +18,6 @@ int getCapteur(int bit);
 void setActuateur(int bit, int value);
 
 void wait(int bit, int value);
-void wait(int time);
+int waitTime(int time);
 
 #endif

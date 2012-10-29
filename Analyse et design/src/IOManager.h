@@ -13,11 +13,11 @@
 #define __IOMANAGER__
 
 // Station 1
-int read();
-void write(int value);
+int readPROFIBUS();
+void writePROFIBUS(int value);
 
 // Station 2, 3 et 4
-int read(int fd);
-void write(int fd, int value);
+int readStation(int fd);
+void writeStation(int fd, int value);
 
 #endif
