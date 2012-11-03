@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <netdb.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "common.h"
 #include "network.h"
@@ -12,32 +13,30 @@
 void* receiveFrom2(void* arg);
 
 // Indique si on peut envoyer une piece sur la station 2
-int canSend = 0;
-int sockSend;
+int canSend = FALSE;
+int station_2;
 
 
 int main(void)
 {
-    
     // Cree un thread qui ecoutera ce que la station 2 lui dira
     pthread_t th;
     if(pthread_create(&th, NULL, receiveFrom2, NULL) != 0) {
-        write(1, "Erreur thread\n", 40);
+        printf("Erreur thread\n");
         return 1;
     }
     
-    // Socket pour envoyer des messages
-    if((sockSend = socket(AF_INET, SOCK_DGRAM, 0)) == -1) {
-        write(1, "Creation de socket echouee\n", 40);
-        return 1;
-    }
+    initSend(&station_2, ADDR_STATION_2, PORT_LISTEN_2_1);
     
     initLink();
     
     // Met le bras a droite
-    setActuateur(BRAS_POSITION, OFF);
+    printf("1\n");
+    wait(PP1_OUT, TRUE);
+    printf("2\n");
+    //setActuateur(BRAS_POSITION, OFF);
     
-    SendTo(sockSend, ADDR_STATION_2, PORT_LISTEN_2_1, "SALUT", 6);
+    //SendTo(station_2, ADDR_STATION_2, PORT_LISTEN_2_1, "SALUT", 5);
     
     // Boucle principale
     while(1) {
@@ -125,16 +124,15 @@ void* receiveFrom2(void* arg)
 {
     char buffer[BUFFER_SIZE];
     struct sockaddr_in addr;
-    int v, sockRecv, addr_len;
+    int v, sockRecv, addr_len, erreur = -1;
     
     initListen(&sockRecv, &addr, PORT_LISTEN_1_2);
     
     // Reception des donnees
     while(1) {
         addr_len = sizeof(addr);
-        
         if ((v = recvfrom(sockRecv, buffer, BUFFER_SIZE, 0, (struct sockaddr *)&addr, &addr_len)) > 0) {
-            write(1, buffer, BUFFER_SIZE);
+            printf("%s\n", buffer);
         }
     }
 }

@@ -2,38 +2,46 @@
 
 #include "common.h"
 #include "network.h"
+#include <stdio.h>
+#include <sys/ioctl.h>
+#include <signal.h>
+#include <unistd.h>
 
+void reinitialise();
+void processPiece();
 void* receiveFrom1(void* arg);
+void* receiveFrom3(void* arg);
+void handlerEnd(int signo);
 
-int sockSend;
-
+int station_1;
+int station_3;
+pthread_t receive_1, receive_3;
 
 int main(void)
 {
-    int s;
+    initSignal(handlerEnd);
     
-    // Cree un thread qui ecoutera ce que la station 1 lui dira
-    pthread_t th;
-    if(pthread_create(&th, NULL, receiveFrom1, NULL) != 0) {
-        write(1, "Erreur thread\n", 40);
+    // Initialise les mutex
+    pthread_mutex_init(&mutex_received, NULL);
+    pthread_mutex_init(&mutex_give, NULL);
+    
+    // Cree un thread qui ecoutera ce que la station 1 et 3 lui dira
+    if(pthread_create(&receive_1, NULL, receiveFrom1, NULL) != 0 ||
+       pthread_create(&receive_3, NULL, receiveFrom3, NULL) != 0) {
+        printf("Erreur thread\n");
         return 1;
     }
     
-    // Socket pour envoyer des messages
-    if((sockSend = socket(AF_INET, SOCK_DGRAM, 0)) == -1) {
-        write(1, "Creation de socket echouee\n", 40);
-        return 1;
-    }
-    for(;;){}
+    initSend(&station_1, ADDR_STATION_1, PORT_LISTEN_1_2);
+    initSend(&station_3, ADDR_STATION_3, PORT_LISTEN_3_2);
+    
     initLink();
-    
+        
     // Boucle principale
     while(1) {
         reinitialise();
         processPiece();
     }
-    
-    closeLink();
     
     return 0;
 }
@@ -58,7 +66,8 @@ void reinitialise()
     setActuateur(ASC_DESCEND, OFF);
     
     // Previens la station 1 qu'on attend une piece
-    SendTo(sockSend, ADDR_STATION_1, PORT_LISTEN_1_2, "ATTEND", 7);
+    SendTo(station_1, ADDR_STATION_1, PORT_LISTEN_1_2, "ATTEND_PIECE", 12);
+    setPieceReceived(FALSE);
 }
 
 /**
@@ -66,10 +75,36 @@ void reinitialise()
  */
 void processPiece()
 {
-    // TODO
+    // Attend que la station 1 nous ai donné une piéce
+    while(!getPieceReceived())
+        waitTime(500);
+    
+    wait(PIECE, TRUE);
+    waitTime(1000);
+
+    // Monte l'ascenseur
+    setActuateur(ASC_DESCEND, OFF);
+    setActuateur(ASC_MONTE, ON);
+    wait(ASC_HAUT, TRUE);
+    setActuateur(ASC_MONTE, OFF);
+    
+    // Attend que la station 3 soit en récéption
+    while(!getCanGivePiece())
+        waitTime(500);
+    
+    // Active le pousseur
+    setActuateur(PP, ON);
+    waitTime(1000);
+    setActuateur(PP, OFF);
+    
+    // Active le coussin
+    setActuateur(COUSSIN_AIR, ON);
+    waitTime(2000);
+    setActuateur(COUSSIN_AIR, OFF);
     
     // Previens la station 3 qu'on lui donne une piece
-    // TODO
+    SendTo(station_3, ADDR_STATION_3, PORT_LISTEN_3_2, "DONNE_PIECE", 11);
+    setCanGivePiece(FALSE);
 }
 
 /**
@@ -79,16 +114,44 @@ void* receiveFrom1(void* arg)
 {
     char buffer[BUFFER_SIZE];
     struct sockaddr_in addr;
-    int v, sockRecv, addr_len;
+    int v, sockRecv, addr_len, erreur = -1;
     
     initListen(&sockRecv, &addr, PORT_LISTEN_2_1);
     
     // Reception des donnees
     while(1) {
         addr_len = sizeof(addr);
-        
         if ((v = recvfrom(sockRecv, buffer, BUFFER_SIZE, 0, (struct sockaddr *)&addr, &addr_len)) > 0) {
-            write(1, buffer, BUFFER_SIZE);
+            printf("%s\n", buffer);
+            
+            // Indique que la station 1 nous a donné une piéce
+            if(strcmp("DONNE_PIECE", buffer)) {
+                setPieceReceived(TRUE);
+        }
+    }
+}
+
+/**
+ * Recoit les messages de la station 3
+ */
+void* receiveFrom3(void* arg)
+{
+    char buffer[BUFFER_SIZE];
+    struct sockaddr_in addr;
+    int v, sockRecv, addr_len, erreur = -1;
+    
+    initListen(&sockRecv, &addr, PORT_LISTEN_2_3);
+    
+    // Reception des donnees
+    while(1) {
+        addr_len = sizeof(addr);
+        if ((v = recvfrom(sockRecv, buffer, BUFFER_SIZE, 0, (struct sockaddr *)&addr, &addr_len)) > 0) {
+            printf("Recu; %s\n", buffer);
+            
+            // Indique que la station 3 attend une piéce
+            if(strcmp("ATTEND_PIECE", buffer)) {
+                setCanGivePiece(TRUE);
+            }
         }
     }
 }

@@ -5,22 +5,22 @@
 
 #include <time.h>           /* nanosleep */
 #include <fcntl.h>          /* O_RDWR */
+#include <stdio.h>
 
+#include "common.h"
 #include "BitManager.h"     /* Manipulation et interrogation des station via des entiers */
-#include "IOManager.h"      /* Manipulation de bit sur des variables entiére */
+#include "IOManager.h"      /* Manipulation de bit sur des variables entiere */
 
 int fd;
 
-int actuateurs = 0;
-
 
 /**
- * Initialise la connexion à la station
+ * Initialise la connexion a la station
  */
 void initLink()
 {
 #ifndef PROFIBUS
-	#ifdef NOT_REALENV
+    #ifdef NOT_REALENV
     write(1, "O_RDWR", 6);
     #else
     fd = open("/dev/pio_d48", O_RDWR);
@@ -38,7 +38,7 @@ void initLink()
 
 
 /**
- * Termine la connexion à la station
+ * Termine la connexion a la station
  */
 void closeLink()
 {
@@ -59,7 +59,7 @@ void closeLink()
  * Lit la valeur des capteurs
  *
  * @param bit           Capteurs que l'on veut
- * @return              Valeur du capteur demandé
+ * @return              Valeur du capteur demande
  */
 int getCapteur(int bit)
 {
@@ -73,13 +73,15 @@ int getCapteur(int bit)
 }
 
 /**
- * Modifie la valeur de l'actuateurs donné
+ * Modifie la valeur de l'actuateurs donne
  *
  * @param bit           Actuateur que l'on veut modifier
  * @param value         Valeur de l'actuateur
  */
 void setActuateur(int bit, int value)
 {
+    static int actuateurs = 0;
+   
     setBit(&actuateurs, bit, value);
     
 #ifndef PROFIBUS
@@ -90,7 +92,7 @@ void setActuateur(int bit, int value)
 }
 
 /**
- * Attend que le capteur prenne la valeur demandée
+ * Attend que le capteur prenne la valeur demandee
  *
  * @param bit       Capteurs que l'on surveille
  * @param value     Valeur que l'on attend
@@ -102,17 +104,95 @@ void wait(int bit, int value)
 }
 
 /**
- * Attend un certain temps donné
+ * Attend un certain temps donne
  *
- * @param millisecondes     Milliseconde à attendre
+ * @param milisec     Milliseconde a attendre
  */
-int waitTime(int millisecondes)
+int waitTime(unsigned long milisec)
 {
-    struct timespec time;
-    time.tv_sec = 0;
-    time.tv_nsec = millisecondes * 1000000;
+    struct timespec req= {0};
     
-    nanosleep(&time, NULL);
+    time_t sec = (int)(milisec / 1000);
+    milisec = milisec - (sec * 1000);
     
-    return 0;
+    req.tv_sec = sec;
+    req.tv_nsec = milisec * 1000000L;
+    
+    while(nanosleep(&req, &req) == -1)
+        continue;
+     
+    return 1;
+}
+
+/**
+ * Prepare l'armement du signal
+ *
+ * @param handler       Fonction handler
+ */
+void initSignal(void (*handler)())
+{
+    struct sigaction act;
+    sigset_t set;
+    // Arme le SIGINT
+    sigemptyset(set);
+    sigaddset(set, SIGINT);
+    
+    act->sa_flags = 0;
+    act->sa_mask = *set;
+    act->sa_handler = handler;
+    sigaction(SIGINT, &act, NULL);
+}
+
+/**
+ * Ferme le programme proprement
+ *
+ * @param signo     Numero de l'intteruption
+ */
+void handlerEnd(int signo)
+{
+    closeLink();
+    
+    // Detruit les mutex
+    pthread_mutex_destroy(&mutex_received);
+    pthread_mutex_destroy(&mutex_give);
+}
+
+/**
+ * Acces a pieceReceived
+ */
+int getPieceReceived()
+{
+    int temp;
+    
+    pthread_mutex_lock(&mutex_received);
+    temp = pieceReceived;
+    pthread_mutex_unlock(&mutex_received);
+    
+    return temp;
+}
+void setPieceReceived(int value)
+{
+    pthread_mutex_lock(&mutex_received);
+    pieceReceived = value; 
+    pthread_mutex_unlock(&mutex_received);
+}
+
+/**
+ * Acces a canGivePiece
+ */
+int getCanGivePiece()
+{
+    int temp;
+    
+    pthread_mutex_lock(&mutex_give);
+    temp = canGivePiece;
+    pthread_mutex_unlock(&mutex_give);
+    
+    return temp;
+}
+void setCanGivePiece(int value)
+{
+    pthread_mutex_lock(&mutex_give);
+    canGivePiece = value; 
+    pthread_mutex_unlock(&mutex_give);
 }

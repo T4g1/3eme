@@ -17,10 +17,10 @@
 #define PORT_LISTEN_4_3       1143
 
 // Adresse IP des station
-#define ADDR_STATION_1          "127.0.0.1"
-#define ADDR_STATION_2          "127.0.0.1"
-#define ADDR_STATION_3          "127.0.0.1"
-#define ADDR_STATION_4          "127.0.0.1"
+#define ADDR_STATION_1          "192.168.1.1"
+#define ADDR_STATION_2          "192.168.1.2"
+#define ADDR_STATION_3          "192.168.1.3"
+#define ADDR_STATION_4          "192.168.1.4"
 
 // Taille maximale des messages reseaux
 #define BUFFER_SIZE           100
