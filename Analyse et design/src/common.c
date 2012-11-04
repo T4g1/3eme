@@ -1,3 +1,5 @@
+#include "common.h"
+
 #ifndef NOT_REALENV
 #include "lib/pioD48_qnx_v2.2.h"
 #include "lib/appio.h"
@@ -6,8 +8,6 @@
 #include <time.h>           /* nanosleep */
 #include <fcntl.h>          /* O_RDWR */
 #include <stdio.h>
-
-#include "common.h"
 #include "BitManager.h"     /* Manipulation et interrogation des station via des entiers */
 #include "IOManager.h"      /* Manipulation de bit sur des variables entiere */
 

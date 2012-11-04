@@ -5,6 +5,10 @@
 #ifndef __COMMON__
 #define __COMMON__
 
+#include <sys/ioctl.h>
+#include <signal.h>         /* signaux */
+#include <unistd.h>
+
 #define ON      1
 #define OFF     0
 

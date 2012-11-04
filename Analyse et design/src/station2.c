@@ -2,20 +2,18 @@
 
 #include "common.h"
 #include "network.h"
+
 #include <stdio.h>
-#include <sys/ioctl.h>
-#include <signal.h>
-#include <unistd.h>
 
 void reinitialise();
 void processPiece();
 void* receiveFrom1(void* arg);
 void* receiveFrom3(void* arg);
-void handlerEnd(int signo);
 
 int station_1;
 int station_3;
 pthread_t receive_1, receive_3;
+
 
 int main(void)
 {
@@ -53,19 +51,23 @@ int main(void)
 void reinitialise()
 {
     // Coussin d'air eteint ?
+    printf("Eteint le coussin d'air ...\n");
     setActuateur(COUSSIN_AIR, OFF);
     
     // Position du pousseur de piece
+    printf("Rentre le pousseur de piece ...\n");
     setActuateur(PP, OFF);
     wait(PP_RENTRE, TRUE);
     
     // Position de l'ascenseur
+    printf("Descend l'ascensseur ...\n");
     setActuateur(ASC_MONTE, OFF);
     setActuateur(ASC_DESCEND, ON);
     wait(ASC_BAS, TRUE);
     setActuateur(ASC_DESCEND, OFF);
     
     // Previens la station 1 qu'on attend une piece
+    printf("Previens la station 1 que l'on attend une piece ...\n");
     SendTo(station_1, ADDR_STATION_1, PORT_LISTEN_1_2, "ATTEND_PIECE", 12);
     setPieceReceived(FALSE);
 }
@@ -75,34 +77,41 @@ void reinitialise()
  */
 void processPiece()
 {
-    // Attend que la station 1 nous ai donné une piéce
+    // Attend que la station 1 nous ai donne une piece
+    printf("Attend que la station 1 nous ai donne une piece ...\n");
     while(!getPieceReceived())
         waitTime(500);
     
+    printf("Attend que la piece soit en place ...\n");
     wait(PIECE, TRUE);
     waitTime(1000);
 
     // Monte l'ascenseur
+    printf("Monte l'ascensseur ...\n");
     setActuateur(ASC_DESCEND, OFF);
     setActuateur(ASC_MONTE, ON);
     wait(ASC_HAUT, TRUE);
     setActuateur(ASC_MONTE, OFF);
     
-    // Attend que la station 3 soit en récéption
+    // Attend que la station 3 soit en reception
+    printf("Attend que la station 3 soit prete a recevoir une piece ...\n");
     while(!getCanGivePiece())
         waitTime(500);
     
     // Active le pousseur
+    printf("Active le pousseur de piece ...\n");
     setActuateur(PP, ON);
     waitTime(1000);
     setActuateur(PP, OFF);
     
     // Active le coussin
+    printf("Active le coussin d'air ...\n");
     setActuateur(COUSSIN_AIR, ON);
     waitTime(2000);
     setActuateur(COUSSIN_AIR, OFF);
     
     // Previens la station 3 qu'on lui donne une piece
+    printf("Previens la station 3 qu'on lui donne une piece ...\n");
     SendTo(station_3, ADDR_STATION_3, PORT_LISTEN_3_2, "DONNE_PIECE", 11);
     setCanGivePiece(FALSE);
 }
@@ -122,9 +131,9 @@ void* receiveFrom1(void* arg)
     while(1) {
         addr_len = sizeof(addr);
         if ((v = recvfrom(sockRecv, buffer, BUFFER_SIZE, 0, (struct sockaddr *)&addr, &addr_len)) > 0) {
-            printf("%s\n", buffer);
+            printf("Recu de la station 1: %s\n", buffer);
             
-            // Indique que la station 1 nous a donné une piéce
+            // Indique que la station 1 nous a donné une piece
             if(strcmp("DONNE_PIECE", buffer)) {
                 setPieceReceived(TRUE);
         }
@@ -146,9 +155,9 @@ void* receiveFrom3(void* arg)
     while(1) {
         addr_len = sizeof(addr);
         if ((v = recvfrom(sockRecv, buffer, BUFFER_SIZE, 0, (struct sockaddr *)&addr, &addr_len)) > 0) {
-            printf("Recu; %s\n", buffer);
+            printf("Recu de la station 3: %s\n", buffer);
             
-            // Indique que la station 3 attend une piéce
+            // Indique que la station 3 attend une piece
             if(strcmp("ATTEND_PIECE", buffer)) {
                 setCanGivePiece(TRUE);
             }
