@@ -52,6 +52,8 @@ public class GameGUI extends javax.swing.JFrame {
                 {
                     l_case[x][y] = new CaseGUI(this, x, y, Color.BLACK);
                 }
+                
+                l_case[x][y].setDragEnabled(true);
         
                 // Ajoute la case sur l'échéquier
                 echiquier.add(l_case[x][y]);
