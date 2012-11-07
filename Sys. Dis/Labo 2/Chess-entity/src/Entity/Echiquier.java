@@ -23,6 +23,7 @@ public class Echiquier implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String nom;
     private Case[][] l_case = new Case[GRID_WIDTH][GRID_HEIGHT];
 
     //<editor-fold defaultstate="collapsed" desc="Accesseur">
