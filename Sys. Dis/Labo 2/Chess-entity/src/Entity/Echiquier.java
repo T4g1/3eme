@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Entity;
 
 import java.io.Serializable;
@@ -16,24 +12,43 @@ import javax.persistence.Id;
  */
 @Entity
 public class Echiquier implements Serializable {
-    public static final int GRID_WIDTH = 8;
-    public static final int GRID_HEIGHT = 8;
-    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nom;
-    private Case[][] l_case = new Case[GRID_WIDTH][GRID_HEIGHT];
+    private Piece[] l_piece = new Piece[16 * 16];
 
-    //<editor-fold defaultstate="collapsed" desc="Accesseur">
+    //<editor-fold defaultstate="collapsed" desc="Accesseurs">
     
     public Long getId() {
         return id;
     }
     
-    public Case getCase(int x, int y) {
-        return l_case[x][y];
+    /**
+     * Donne la piéce à la position donnée
+     * @param x     Absice de la piéce
+     * @param y     Ordonnée de la piéce
+     * @return      Piéce demandée ou null si erreur
+     */
+    public Piece getPiece(int x, int y) {
+        for(Piece piece: l_piece) {
+            if(piece.isAt(x, y)) {
+                return piece;
+            }
+        }
+        
+        return null;
+    }
+    
+    public String getNom() {
+        return nom;
+    }
+    
+    public int getPlayerCount() {
+        // TODO
+        
+        return 0;
     }
     
     //</editor-fold>
@@ -42,6 +57,10 @@ public class Echiquier implements Serializable {
     
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public void setNom(String nom) {
+        this.nom = nom;
     }
     
     //</editor-fold>
