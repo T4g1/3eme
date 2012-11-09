@@ -34,12 +34,12 @@ public class GameUI extends javax.swing.JFrame {
         
         selectedCase = null;
         
-        // Crée toutes les cases du jeu
+        // CrÃ©e toutes les cases du jeu
         for(int y=0; y<GRID_HEIGHT; y++)
         {
             for(int x=0; x<GRID_WIDTH; x++)
             {
-                // Crée la case
+                // CrÃ©e la case
                 if((x + y) % 2 == 0)
                 {
                     l_case[x][y] = new ChessCase(this, x, y, Color.WHITE);
@@ -49,16 +49,16 @@ public class GameUI extends javax.swing.JFrame {
                     l_case[x][y] = new ChessCase(this, x, y, Color.BLACK);
                 }
         
-                // Ajoute la case sur l'échéquier
+                // Ajoute la case sur l'Ã©chÃ©quier
                 echiquier.add(l_case[x][y]);
             }
         }
         
         echiquier.invalidate();
-        // Ajoute l'échiquier dans la fenêtre
+        // Ajoute l'Ã©chiquier dans la fenÃ©tre
         //add(echiquier);
         
-        // Modifie les dimensions de la fenêtre
+        // Modifie les dimensions de la fenÃ©tre
         Dimension window_size = new Dimension();
         window_size.width = GRID_WIDTH * ChessCase.getCaseWidth();
         window_size.height = GRID_HEIGHT * ChessCase.getCaseHeight();
@@ -66,7 +66,7 @@ public class GameUI extends javax.swing.JFrame {
         setSize(window_size);
         setResizable(false);
         
-        // Liste des piéces en jeu
+        // Liste des piÃ©ces en jeu
         /*l_piece = new ArrayList<Piece>();
         
         l_piece.add(new Tour    (0, 0, Equipe.NOIR));
@@ -103,16 +103,16 @@ public class GameUI extends javax.swing.JFrame {
         l_piece.add(new Pion    (6, 6, Equipe.BLANC));
         l_piece.add(new Pion    (7, 6, Equipe.BLANC));
         
-        // Ajoute les piéce sur leurs position de départ
+        // Ajoute les piÃ©ce sur leurs position de dÃ©part
         for(Piece piece: l_piece) {
             l_case[piece.getX()][piece.getY()].addPiece(piece);
         }*/
     }
 
     /**
-     * Permet à une case de prévenir qu'on a clické dessus
+     * Permet a une case de prÃ©venir qu'on a clickÃ© dessus
      * 
-     * @param case          Case clickée
+     * @param case          Case clickÃ©e
      */
     public void onClic(ChessCase _case)
     {

@@ -19,7 +19,6 @@ int main(void)
     initSignal(handlerEnd);
     
     // Cree un thread qui ecoutera ce que la station 2 et 4 lui dira
-    pthread_t th;
     if(pthread_create(&receive_2, NULL, receiveFrom2, NULL) != 0 ||
        pthread_create(&receive_4, NULL, receiveFrom4, NULL) != 0) {
         printf("Erreur thread\n");
