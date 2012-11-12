@@ -17,7 +17,7 @@ pthread_t receive_2, receive_4;
 
 int main(void)
 {
-    initSignal(handlerEnd);
+    initSignal();
     
     // Initialise les mutex
     pthread_mutex_init(&mutex_received, NULL);

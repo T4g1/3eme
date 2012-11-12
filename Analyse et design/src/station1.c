@@ -16,7 +16,7 @@ pthread_t receive_2, receive_4;
 
 int main(void)
 {
-    initSignal(handlerEnd);
+    initSignal();
     
     // Cree un thread qui ecoutera ce que la station 2 et 4 lui dira
     if(pthread_create(&receive_2, NULL, receiveFrom2, NULL) != 0 ||
