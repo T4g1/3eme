@@ -4,6 +4,7 @@
  */
 package Entity;
 
+import java.awt.Color;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +23,29 @@ public class Piece implements Serializable {
     private Long id;
     private int x;
     private int y;
+    private Color color;
+    
+    //<editor-fold defaultstate="collapsed" desc="Constructeur">
+
+    public Piece() {
+    }
+    
+    /**
+     * Constructeur de la piéce
+     * 
+     * @param x     Absicce de la piéce
+     * @param y     Ordonnée de la piéce
+     * @param color Couleur de la piéce
+     */
+    public Piece(int x, int y, Color color)
+    {
+        this.x = x;
+        this.y = y;
+        
+        this.color = color;
+    }
+    
+    //</editor-fold>
     
     /**
      * Indique si la piéce est a la position donnée
@@ -40,10 +64,20 @@ public class Piece implements Serializable {
     }
     
     /**
+     * Donne la couleur de la piéce
+     * 
+     * @return      Couleur de la piéce 
+     */
+    public Color getColor()
+    {
+        return color;
+    }
+    
+    /**
      * Donne la position de la case en x
      * @return      Position de la case en x
      */
-    public int getCaseX() {
+    public int getPieceX() {
         return x;
     }
 
@@ -51,8 +85,24 @@ public class Piece implements Serializable {
      * Donne la position de la case en y
      * @return      Position de la case en y
      */
-    public int getCaseY() {
+    public int getPieceY() {
         return y;
+    }
+    
+    /**
+     * Donne le nom de fichier de la piéce
+     * 
+     * @param equipe        Couleur de la piéce
+     * @return              Nom du fichier contenant la piéce
+     */
+    public String getFilename(Color color)
+    {
+        if(color == Color.WHITE) {
+            return "6a.gif";
+        }
+        else {
+            return "6a.gif";
+        }
     }
     
     //</editor-fold>

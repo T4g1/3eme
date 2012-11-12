@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package chessclient;
 
 import Entity.Echiquier;
@@ -14,7 +10,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 /**
  * Fenetre permettant de rejoindre ou cr√©er une nouvelle partie
@@ -46,10 +41,10 @@ public class LobbyUI extends javax.swing.JFrame {
         
         // Indique le nombre de parties trouv√©es
         if(l_echiquier.length <= 0) {
-            labelLobbyState.setText("Aucune partie trouv√©e ...");
+            labelLobbyState.setText("Aucune partie trouvÈe ...");
             rejoindrePartie.setEnabled(false);
         } else {
-            labelLobbyState.setText(l_echiquier.length + " partie(s) trouv√©e(s) ...");
+            labelLobbyState.setText(l_echiquier.length + " partie(s) trouvÈe(s) ...");
             rejoindrePartie.setEnabled(true);
         }
     }
@@ -154,8 +149,8 @@ public class LobbyUI extends javax.swing.JFrame {
             Main.showGame();
         } else {
             JOptionPane.showMessageDialog(
-                    new JFrame(), "Cr√©ation de partie √©chou√©e ...",
-                    "Erreur lors de la cr√©ation de partie",
+                    new JFrame(), "CrÈation de partie ÈchouÈe ...",
+                    "Erreur lors de la crÈation de partie",
                     JOptionPane.ERROR_MESSAGE
             );
         }
@@ -166,7 +161,7 @@ public class LobbyUI extends javax.swing.JFrame {
     }//GEN-LAST:event_nameEchiquierActionPerformed
 
     private void rejoindrePartieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejoindrePartieActionPerformed
-        // RÔøΩcupÔøΩre la partie que l'on veut rejoindre
+        // RÈcupÈre la partie que l'on veut rejoindre
         // TODO
         
         int id = 0;

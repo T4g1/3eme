@@ -1,5 +1,6 @@
 package chessclient;
 
+import Entity.Piece;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -19,7 +20,7 @@ public class ChessCase extends JPanel {
     private GameUI parent;
     private int x;
     private int y;
-    //private Piece piece;
+    private Piece piece;
     
     private Color backgroundColor;
     
@@ -39,7 +40,7 @@ public class ChessCase extends JPanel {
         
         this.x = x;
         this.y = y;
-        //this.piece = null;
+        this.piece = null;
         
         this.backgroundColor = backgroundColor;
         
@@ -67,31 +68,31 @@ public class ChessCase extends JPanel {
     //</editor-fold>
     
     /**
-     * Retire les pi√©ces sur la case
+     * Retire les piÈces sur la case
      */
     public void removePiece()
     {
         removeAll();
         updateUI();
         
-        //piece = null;
+        piece = null;
     }
     
     /**
-     * Ajoute une pi√©ce sur la case
+     * Ajoute une piÈce sur la case
      * 
-     * @param piece     Ajoute la pi√©ce sur la case
+     * @param piece     Ajoute la piÈce sur la case
      */
-    /*public void addPiece(Piece piece)
+    public void addPiece(Piece piece)
     {
         add(new JLabel(new ImageIcon(
                 "C:\\Users\\T4g1\\Desktop\\3eme\\Sys. Dis\\Labo 2\\" +
-                "piecesimages\\" + piece.getFilename(piece.getEquipe())
+                "piecesimages\\" + piece.getFilename(piece.getColor())
         )));
         updateUI();
         
         this.piece = piece;
-    }*/
+    }
     
     /**
      * Fonction appell√©e lorsqu'on clique sur la case

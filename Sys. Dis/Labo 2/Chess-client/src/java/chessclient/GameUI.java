@@ -1,11 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package chessclient;
 
+import Entity.Piece;
+import Session.GameSessionRemote;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Point;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  * Fenetre de jeu du jeu
@@ -14,20 +19,21 @@ import java.awt.Dimension;
 public class GameUI extends javax.swing.JFrame {
     public static final int GRID_WIDTH = 8;
     public static final int GRID_HEIGHT = 8;
-    private static final int CASE_WIDTH = 50;
-    private static final int CASE_HEIGHT = 71;
-    private static final Color highlightColor = Color.RED;
     
+    private GameSessionRemote gameSession;
     private ChessCase[][] l_case = new ChessCase[GRID_WIDTH][GRID_HEIGHT];
     
-    //private List<Piece> l_piece;
+    private Color playerColor = Color.WHITE;
+    private List<Piece> l_piece;
     private ChessCase selectedCase;
-    //private List<Point> highlighted;
+    private List<Point> authorizedMove;
     
     /**
      * Creates new form GameUI
      */
     public GameUI() {
+        gameSession = lookupGameSessionRemote();
+        
         initComponents();
         
         selectedCase = null;
@@ -60,47 +66,21 @@ public class GameUI extends javax.swing.JFrame {
         setSize(window_size);
         setResizable(false);
         
-        // Liste des piéces en jeu
-        /*l_piece = new ArrayList<Piece>();
-        
-        l_piece.add(new Tour    (0, 0, Equipe.NOIR));
-        l_piece.add(new Cavalier(1, 0, Equipe.NOIR));
-        l_piece.add(new Fou     (2, 0, Equipe.NOIR));
-        l_piece.add(new Reine   (3, 0, Equipe.NOIR));
-        l_piece.add(new Roi     (4, 0, Equipe.NOIR));
-        l_piece.add(new Fou     (5, 0, Equipe.NOIR));
-        l_piece.add(new Cavalier(6, 0, Equipe.NOIR));
-        l_piece.add(new Tour    (7, 0, Equipe.NOIR));
-        l_piece.add(new Pion    (0, 1, Equipe.NOIR));
-        l_piece.add(new Pion    (1, 1, Equipe.NOIR));
-        l_piece.add(new Pion    (2, 1, Equipe.NOIR));
-        l_piece.add(new Pion    (3, 1, Equipe.NOIR));
-        l_piece.add(new Pion    (4, 1, Equipe.NOIR));
-        l_piece.add(new Pion    (5, 1, Equipe.NOIR));
-        l_piece.add(new Pion    (6, 1, Equipe.NOIR));
-        l_piece.add(new Pion    (7, 1, Equipe.NOIR));
-        
-        l_piece.add(new Tour    (0, 7, Equipe.BLANC));
-        l_piece.add(new Cavalier(1, 7, Equipe.BLANC));
-        l_piece.add(new Fou     (2, 7, Equipe.BLANC));
-        l_piece.add(new Reine   (3, 7, Equipe.BLANC));
-        l_piece.add(new Roi     (4, 7, Equipe.BLANC));
-        l_piece.add(new Fou     (5, 7, Equipe.BLANC));
-        l_piece.add(new Cavalier(6, 7, Equipe.BLANC));
-        l_piece.add(new Tour    (7, 7, Equipe.BLANC));
-        l_piece.add(new Pion    (0, 6, Equipe.BLANC));
-        l_piece.add(new Pion    (1, 6, Equipe.BLANC));
-        l_piece.add(new Pion    (2, 6, Equipe.BLANC));
-        l_piece.add(new Pion    (3, 6, Equipe.BLANC));
-        l_piece.add(new Pion    (4, 6, Equipe.BLANC));
-        l_piece.add(new Pion    (5, 6, Equipe.BLANC));
-        l_piece.add(new Pion    (6, 6, Equipe.BLANC));
-        l_piece.add(new Pion    (7, 6, Equipe.BLANC));
+        // Demande la liste des piéces au serveur
+        l_piece = gameSession.getListPieces();
         
         // Ajoute les piéce sur leurs position de départ
         for(Piece piece: l_piece) {
-            l_case[piece.getX()][piece.getY()].addPiece(piece);
-        }*/
+            int x = piece.getPieceX();
+            int y = piece.getPieceY();
+            
+            // On inverse le plateau pour l'un des joueurs
+            if(playerColor == Color.WHITE) {
+                y = (GRID_HEIGHT - 1) - y;
+            }
+            
+            l_case[x][y].addPiece(piece);
+        }
         
         // Redessine l'échiquier dans la fenêtre
         echiquier.invalidate();
@@ -183,4 +163,14 @@ public class GameUI extends javax.swing.JFrame {
     private javax.swing.JPanel echiquier;
     private javax.swing.JLabel labelGameState;
     // End of variables declaration//GEN-END:variables
+
+    private GameSessionRemote lookupGameSessionRemote() {
+        try {
+            Context c = new InitialContext();
+            return (GameSessionRemote) c.lookup("java:comp/env/GameSession");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
 }
