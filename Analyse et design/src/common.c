@@ -133,7 +133,7 @@ int waitTime(unsigned long milisec)
  *
  * @param handler       Fonction handler
  */
-void initSignal(void (*handler)())
+void initSignal()
 {
     struct sigaction act;
     sigset_t set;
@@ -143,7 +143,7 @@ void initSignal(void (*handler)())
     
     act.sa_flags = 0;
     act.sa_mask = set;
-    act.sa_handler = handler;
+    act.sa_handler = handlerEnd;
     sigaction(SIGINT, &act, NULL);
 }
 

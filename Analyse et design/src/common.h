@@ -15,8 +15,8 @@
 #define ON      1
 #define OFF     0
 
-#define TRUE	1
-#define FALSE 0
+#define TRUE    1
+#define FALSE   0
 
 // Mutex de la station
 pthread_mutex_t mutex_received;
