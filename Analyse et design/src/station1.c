@@ -152,7 +152,8 @@ void* receiveFrom2(void* arg)
             printf("Recu de la station 2: %s\n", buffer);
             
             // Indique que la station 2 attend une piece
-            if(strcmp("ATTEND_PIECE", buffer)) {
+            if(strcmp("ATTEND_PIECE", buffer) == 0) {
+                printf("La station 2 attend une piece ...\n", buffer);
                 setCanGivePiece(TRUE);
             }
         }
@@ -177,7 +178,8 @@ void* receiveFrom4(void* arg)
             printf("Recu de la station 4: %s\n", buffer);
             
             // Indique que la station 4 a finit
-            if(strcmp("FIN_PIECE", buffer)) {
+            if(strcmp("FIN_PIECE", buffer) == 0) {
+                printf("La station 4 a fini ...\n", buffer);
                 setPieceReceived(TRUE);
             }
         }
