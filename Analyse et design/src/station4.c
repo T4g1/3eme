@@ -28,6 +28,10 @@ int main(void)
         return 1;
     }
     
+    // Attend que le serveur d'~coute soit lanc~
+    printf("Appuyez sur une touche lorsque station 3 et station 1 seront lance ...\n");
+    while(kbhit() == 0);
+    
     initSend(&station_3, ADDR_STATION_3, PORT_LISTEN_3_4);
     initSend(&station_1, ADDR_STATION_1, PORT_LISTEN_1_4);
     
@@ -74,9 +78,10 @@ void* receiveFrom3(void* arg)
         if ((v = recvfrom(sockRecv, buffer, BUFFER_SIZE, 0, (struct sockaddr *)&addr, &addr_len)) > 0) {
             printf("Recu de la station 3: %s\n", buffer);
             
-            // Indique que la station 3 nous a donné une piece
+            // Indique que la station 3 nous a donne une piece
             if(strcmp("DONNE_PIECE", buffer)) {
                 setPieceReceived(TRUE);
+            }
         }
     }
 }

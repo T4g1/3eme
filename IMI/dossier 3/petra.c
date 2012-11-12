@@ -20,13 +20,13 @@ struct {
 int fdIn, fdOut;
 int superviseur;
 
-int main()
+int main(void)
 {
     pthread_t th_receive;
     char buffer[BUFFER_SIZE];
     
     // Initialisation du PETRA en entrée
-    if((fdIn = open(FILE_PETRA_IN, O_RDONLY)) == -1) {{
+    if((fdIn = open(FILE_PETRA_IN, O_RDONLY)) == -1) {
         perror("Err. ouvertue petra out");
         return -1;
     }
@@ -43,6 +43,10 @@ int main()
         return 1;
     }
     
+    // Attend que le serveur d'écoute soit lancé
+    printf("Appuyez sur une touche lorsque le serveur d'ecoute sera lance ...\n");
+    while(kbhit() == 0);
+    
     initSend(&superviseur, ADDR_SUPERVISEUR, PORT_VERS_SUPERVISEUR);
     
     // Place tout les actuateurs à 0
@@ -51,7 +55,7 @@ int main()
     
     // Mise a jour des capteurs
     while(1) {
-        read(fdPetraIn, &new_capt.byte, 1);
+        read(fdIn, &new_capt.byte, 1);
         
         if(new_capt.byte == u_capt.byte)
             continue;
@@ -59,7 +63,7 @@ int main()
         // Envois des modifications
         u_capt.byte = new_capt.byte;
         sprintf(buffer, "CAPTEUR:%d", u_capt.byte);
-        SendTo(superviseur, ADDR_SUPERVISEUR, PORT_VERS_SUPERVISION, buffer, BUFFER_SIZE);
+        SendTo(superviseur, ADDR_SUPERVISEUR, PORT_VERS_SUPERVISEUR, buffer, BUFFER_SIZE);
     }
     
     // Place tout les actuateurs à 0
@@ -68,11 +72,10 @@ int main()
     
     close(fdIn);
     close(fdOut);
+    
+    return 1;
 }
 
-/**
- * Recois les données du superviseur
- */
 void receiveFromSuperviseur()
 {
     char buffer[BUFFER_SIZE];

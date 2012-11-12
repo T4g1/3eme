@@ -12,6 +12,11 @@
 #include <sys/types.h>
 #include <netdb.h>
 #include <string.h>
+#include <termios.h>
+#include <stdlib.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <ncurses.h>
 
 
 #define BYTE    unsigned char
@@ -55,5 +60,7 @@ BYTE getCapteur();
 
 int getBit(int value, int bit);
 void setBit(int* value, int bit, int bitValue);
+
+int kbhit(void);
 
 #endif

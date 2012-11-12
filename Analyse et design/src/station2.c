@@ -30,7 +30,11 @@ int main(void)
         return 1;
     }
     
-    initSend(&station_1, ADDR_STATION_1, PORT_LISTEN_1_2);
+    // Attend que le serveur d'~coute soit lanc~
+    printf("Appuyez sur une touche lorsque station 1 et station 3 seront lance ...\n");
+    while(kbhit() == 0);
+    
+    //initSend(&station_1, ADDR_STATION_1, PORT_LISTEN_1_2);
     initSend(&station_3, ADDR_STATION_3, PORT_LISTEN_3_2);
     
     initLink();
@@ -57,18 +61,18 @@ void reinitialise()
     // Position du pousseur de piece
     printf("Rentre le pousseur de piece ...\n");
     setActuateur(PP, OFF);
-    wait(PP_RENTRE, TRUE);
+    waitBit(PP_RENTRE, TRUE);
     
     // Position de l'ascenseur
     printf("Descend l'ascensseur ...\n");
     setActuateur(ASC_MONTE, OFF);
     setActuateur(ASC_DESCEND, ON);
-    wait(ASC_BAS, TRUE);
+    waitBit(ASC_BAS, TRUE);
     setActuateur(ASC_DESCEND, OFF);
     
     // Previens la station 1 qu'on attend une piece
     printf("Previens la station 1 que l'on attend une piece ...\n");
-    SendTo(station_1, ADDR_STATION_1, PORT_LISTEN_1_2, "ATTEND_PIECE", 12);
+    //SendTo(station_1, ADDR_STATION_1, PORT_LISTEN_1_2, "ATTEND_PIECE", 12);
     setPieceReceived(FALSE);
 }
 
@@ -79,18 +83,18 @@ void processPiece()
 {
     // Attend que la station 1 nous ai donne une piece
     printf("Attend que la station 1 nous ai donne une piece ...\n");
-    while(!getPieceReceived())
-        waitTime(500);
+    //while(!getPieceReceived())
+    //    waitTime(500);
     
     printf("Attend que la piece soit en place ...\n");
-    wait(PIECE, TRUE);
+    waitBit(PIECE, TRUE);
     waitTime(1000);
 
     // Monte l'ascenseur
     printf("Monte l'ascensseur ...\n");
     setActuateur(ASC_DESCEND, OFF);
     setActuateur(ASC_MONTE, ON);
-    wait(ASC_HAUT, TRUE);
+    waitBit(ASC_HAUT, TRUE);
     setActuateur(ASC_MONTE, OFF);
     
     // Attend que la station 3 soit en reception
@@ -133,9 +137,10 @@ void* receiveFrom1(void* arg)
         if ((v = recvfrom(sockRecv, buffer, BUFFER_SIZE, 0, (struct sockaddr *)&addr, &addr_len)) > 0) {
             printf("Recu de la station 1: %s\n", buffer);
             
-            // Indique que la station 1 nous a donné une piece
+            // Indique que la station 1 nous a donne une piece
             if(strcmp("DONNE_PIECE", buffer)) {
                 setPieceReceived(TRUE);
+            }
         }
     }
 }
@@ -158,7 +163,8 @@ void* receiveFrom3(void* arg)
             printf("Recu de la station 3: %s\n", buffer);
             
             // Indique que la station 3 attend une piece
-            if(strcmp("ATTEND_PIECE", buffer)) {
+            if(strcmp("ATTEND_PIECE", buffer) == 0) {
+            	printf("Station 3 attend piece\n");
                 setCanGivePiece(TRUE);
             }
         }
