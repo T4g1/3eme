@@ -6,8 +6,6 @@ package chessclient;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
-import javax.swing.JPanel;
 
 /**
  * Fenetre de jeu du jeu
@@ -53,10 +51,6 @@ public class GameUI extends javax.swing.JFrame {
                 echiquier.add(l_case[x][y]);
             }
         }
-        
-        echiquier.invalidate();
-        // Ajoute l'échiquier dans la fenêtre
-        //add(echiquier);
         
         // Modifie les dimensions de la fenêtre
         Dimension window_size = new Dimension();
@@ -107,6 +101,9 @@ public class GameUI extends javax.swing.JFrame {
         for(Piece piece: l_piece) {
             l_case[piece.getX()][piece.getY()].addPiece(piece);
         }*/
+        
+        // Redessine l'échiquier dans la fenêtre
+        echiquier.invalidate();
     }
 
     /**
