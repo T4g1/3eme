@@ -5,9 +5,10 @@
 #define FRAISE_MONTE        9  /* PB */     // Fait monter la fraiseuse
 #define CAROUSSEL           16 /* PA */     // Active le caroussel
 #define FRAISE_DESC         17 /* PA */     // Fait descendre la fraiseuse
-#define SOL_H               18 /* PA */     // ?
-#define SOL_V               19 /* PA */     // ?
-#define EJECTER             20 /* PA */     // Ejecteur de piéces
+#define FRAISEUSE           18 /* PA */     // Active la fraiseuse
+#define SOL_H               19 /* PA */     // Solenoide horizontal
+#define SOL_V               20 /* PA */     // Solenoide vertical
+#define EJECTER             21 /* PA */     // Ejecteur de piéces
 
 // Capteurs
 #define FRAISE_HAUT         9  /* PB */     // Fraiseuse en position haute

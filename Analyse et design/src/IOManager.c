@@ -17,14 +17,11 @@ int readPROFIBUS()
     #ifdef NOT_REALENV
     write(1, "IO_ReadIByte", 12);
     #else
-    printf("3\n");
     IO_RefreshOutput(1, &status);
     
-    printf("4\n");
     // Rcupre les deux bytes de donnes
     IO_ReadIByte(1, 64, 0, 1, &byte0, &status);
     IO_ReadIByte(1, 64, 1, 1, &byte1, &status);
-    printf("5\n");
     #endif
     
     // Concatne les deux bytes
@@ -42,15 +39,24 @@ void writePROFIBUS(int value)
 {
     short status;
     
-    unsigned char byte0 = (unsigned char)(value & 0xff);            // Valeur que l'on veut crire sur le byte 0
-    unsigned char byte1 = (unsigned char)((value >> 8) & 0xff);     // Valeur que l'on veut crire sur le byte 1
+    BYTE byte0 = 0;//(unsigned char)(value & 0xff);            // Valeur que l'on veut crire sur le byte 0
+    BYTE byte1 = 0;//(unsigned char)((value >> 8) & 0xff);     // Valeur que l'on veut crire sur le byte 1
+    
+    BYTE tabByte0[8] = { 0, 0, 0, 0,  0, 0, 0, 0 };
+    BYTE tabByte1[8] = { 0, 0, 0, 0,  0, 0, 0, 0 };
+    printf("Write: %d\n", value);
     
     #ifdef NOT_REALENV
     write(1, "IO_WriteQByte", 14);
     #else
-    //IO_WriteQByte(1, 64, 0, 1, &byte0, &status);
-    //IO_WriteQByte(1, 64, 1, 1, &byte1, &status);
-    IO_RefreshOutput(1, NULL);
+    
+    IO_RefreshOutput(1, &status);
+    printf("Byte0: %d\n", byte0);
+    IO_WriteQByte(1, 64, 0, 1, &byte0, &status);
+    
+    printf("Byte1: %d\n", byte1);
+    IO_WriteQByte(1, 64, 1, 1, tabByte1, &status);
+    IO_RefreshOutput(1, &status);
     #endif
 }
 

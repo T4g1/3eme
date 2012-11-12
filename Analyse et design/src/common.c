@@ -13,6 +13,9 @@
 
 int fd;
 
+int pieceReceived = FALSE;
+int canGivePiece = FALSE;
+
 
 /**
  * Initialise la connexion a la station
@@ -31,6 +34,7 @@ void initLink()
     #ifdef NOT_REALENV
     write(1, "INIT", 4);
     #else
+    printf("IO_Init ...\n");
     IO_Init(1, &status);
     #endif
 #endif
@@ -97,7 +101,7 @@ void setActuateur(int bit, int value)
  * @param bit       Capteurs que l'on surveille
  * @param value     Valeur que l'on attend
  */
-void wait(int bit, int value)
+void waitBit(int bit, int value)
 {
     while(getCapteur(bit) != value)
         waitTime(10);
@@ -134,12 +138,12 @@ void initSignal(void (*handler)())
     struct sigaction act;
     sigset_t set;
     // Arme le SIGINT
-    sigemptyset(set);
-    sigaddset(set, SIGINT);
+    sigemptyset(&set);
+    sigaddset(&set, SIGINT);
     
-    act->sa_flags = 0;
-    act->sa_mask = *set;
-    act->sa_handler = handler;
+    act.sa_flags = 0;
+    act.sa_mask = set;
+    act.sa_handler = handler;
     sigaction(SIGINT, &act, NULL);
 }
 
@@ -195,4 +199,31 @@ void setCanGivePiece(int value)
     pthread_mutex_lock(&mutex_give);
     canGivePiece = value; 
     pthread_mutex_unlock(&mutex_give);
+}
+
+int kbhit(void)
+{
+    struct termios oldt, newt;
+    int ch;
+    int oldf;
+
+    tcgetattr(STDIN_FILENO, &oldt);
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+    oldf = fcntl(STDIN_FILENO, F_GETFL, 0);
+    fcntl(STDIN_FILENO, F_SETFL, oldf | O_NONBLOCK);
+
+    ch = getchar();
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+
+    fcntl(STDIN_FILENO, F_SETFL, oldf);
+
+    if(ch == EOF)
+        return 0;
+
+    ungetc(ch, stdin);
+
+    return 1;
 }

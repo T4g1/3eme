@@ -11,7 +11,7 @@ public class EchiquierTableModel extends AbstractTableModel {
     private Echiquier[] l_echiquier;
     private String[] columnNames = {
             "Nom de la partie",
-            "Nombre de joueurs présent"
+            "Nombre de joueurs prÃ©sent"
     };
     
     public void setListing(Echiquier[] l_echiquier) {

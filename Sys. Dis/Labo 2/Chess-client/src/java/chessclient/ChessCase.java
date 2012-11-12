@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * Gére une case du plateau de jeu
+ * GÃ©re une case du plateau de jeu
  * @author T4g1
  */
 public class ChessCase extends JPanel {
@@ -67,7 +67,7 @@ public class ChessCase extends JPanel {
     //</editor-fold>
     
     /**
-     * Retire les piéces sur la case
+     * Retire les piÃ©ces sur la case
      */
     public void removePiece()
     {
@@ -78,9 +78,9 @@ public class ChessCase extends JPanel {
     }
     
     /**
-     * Ajoute une piéce sur la case
+     * Ajoute une piÃ©ce sur la case
      * 
-     * @param piece     Ajoute la piéce sur la case
+     * @param piece     Ajoute la piÃ©ce sur la case
      */
     /*public void addPiece(Piece piece)
     {
@@ -94,7 +94,7 @@ public class ChessCase extends JPanel {
     }*/
     
     /**
-     * Fonction appellée lorsqu'on clique sur la case
+     * Fonction appellÃ©e lorsqu'on clique sur la case
      */
     public void onClic()
     {
@@ -102,7 +102,7 @@ public class ChessCase extends JPanel {
     }
     
     /**
-     * Met la case en évidence ou la réinitialise
+     * Met la case en Ã©vidence ou la rÃ©initialise
      * 
      * @param state     true si on veut activer le highlight
      */
@@ -166,7 +166,7 @@ public class ChessCase extends JPanel {
     /**
      * Donne le type de piece qui est sur la case
      * 
-     * @return      Type de la piéce qui est sur la case
+     * @return      Type de la piÃ©ce qui est sur la case
      */
     /*public Piece getPiece() {
         return piece;

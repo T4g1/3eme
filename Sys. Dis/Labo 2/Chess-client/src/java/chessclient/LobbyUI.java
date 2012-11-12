@@ -44,12 +44,12 @@ public class LobbyUI extends javax.swing.JFrame {
         // Redessine le jTable
         jTableParties.invalidate();
         
-        // Indique le nombre de parties trouvées
+        // Indique le nombre de parties trouvÃ©es
         if(l_echiquier.length <= 0) {
-            labelLobbyState.setText("Aucune partie trouvée ...");
+            labelLobbyState.setText("Aucune partie trouvÃ©e ...");
             rejoindrePartie.setEnabled(false);
         } else {
-            labelLobbyState.setText(l_echiquier.length + " partie(s) trouvée(s) ...");
+            labelLobbyState.setText(l_echiquier.length + " partie(s) trouvÃ©e(s) ...");
             rejoindrePartie.setEnabled(true);
         }
     }
@@ -69,15 +69,13 @@ public class LobbyUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTableParties.setModel(new EchiquierTableModel());
-        jTableParties.setCellSelectionEnabled(false);
-        jTableParties.setRowSelectionAllowed(true);
         jTableParties.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTableParties.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTableParties);
         jTableParties.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        creerPartie.setText("Créer une partie");
-        creerPartie.setToolTipText("Crée une partie avec le nom saisit ci-contre");
+        creerPartie.setText("CrÃ©er une partie");
+        creerPartie.setToolTipText("CrÃ©e une partie avec le nom saisit ci-contre");
         creerPartie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 creerPartieActionPerformed(evt);
@@ -92,21 +90,22 @@ public class LobbyUI extends javax.swing.JFrame {
         });
 
         rejoindrePartie.setText("Rejoindre partie");
-        rejoindrePartie.setToolTipText("Rejoins la partie séléctionnée dans la liste");
+        rejoindrePartie.setToolTipText("Rejoins la partie sÃ©lÃ©ctionnÃ©e dans la liste");
         rejoindrePartie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rejoindrePartieActionPerformed(evt);
             }
         });
 
-        refreshListing.setText("Rafraîchir");
+        refreshListing.setText("RafraÃ®chir");
+        refreshListing.setToolTipText("RafraÃ®chit la liste des parties");
         refreshListing.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 refreshListingActionPerformed(evt);
             }
         });
 
-        labelLobbyState.setText("Aucune partie trouvée ...");
+        labelLobbyState.setText("Aucune partie trouvÃ©e ...");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -149,14 +148,14 @@ public class LobbyUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void creerPartieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creerPartieActionPerformed
-        // Création de la partie
+        // Crï¿½ation de la partie
         long id = lobbySession.createEchiquier(nameEchiquier.getText());
         if(id > -1) {
             Main.showGame();
         } else {
             JOptionPane.showMessageDialog(
-                    new JFrame(), "Création de partie échouée ...",
-                    "Erreur lors de la création de partie",
+                    new JFrame(), "CrÃ©ation de partie Ã©chouÃ©e ...",
+                    "Erreur lors de la crÃ©ation de partie",
                     JOptionPane.ERROR_MESSAGE
             );
         }
@@ -167,7 +166,7 @@ public class LobbyUI extends javax.swing.JFrame {
     }//GEN-LAST:event_nameEchiquierActionPerformed
 
     private void rejoindrePartieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejoindrePartieActionPerformed
-        // Récupére la partie que l'on veut rejoindre
+        // Rï¿½cupï¿½re la partie que l'on veut rejoindre
         // TODO
         
         int id = 0;

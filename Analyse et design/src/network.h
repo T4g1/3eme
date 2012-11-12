@@ -25,6 +25,7 @@
 // Taille maximale des messages reseaux
 #define BUFFER_SIZE           100
 
+int initSend(int *sock, char* addr, int port);
 int initListen(int *s, struct sockaddr_in *addr, int port);
 int SendTo (int sock, const char *host, unsigned short int port, const char *buffer, int size);
 

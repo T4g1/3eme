@@ -1,7 +1,7 @@
 CC=qcc
 CFLAGS=-DLNOT_REALENV
 LDFLAGS=-l socket -Bstatic lib/libappio.a
-EXEC=station1 station2
+EXEC=station1 station2 station3 station4
 OBJ=network.o IOManager.o BitManager.o
 OBJSTATION1=station1.o PROFIBUS_common.o $(OBJ)
 OBJSTATION2=station2.o common.o $(OBJ)
@@ -17,7 +17,7 @@ station2: $(OBJSTATION2)
 	$(CC) -o station2 $(OBJSTATION2) $(LDFLAGS)
 
 station3: $(OBJSTATION3)
-	$(CC) -o station2 $(OBJSTATION3) $(LDFLAGS)
+	$(CC) -o station3 $(OBJSTATION3) $(LDFLAGS)
 
 station4: $(OBJSTATION4)
 	$(CC) -o station4 $(OBJSTATION4) $(LDFLAGS)
