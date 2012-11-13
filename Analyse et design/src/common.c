@@ -137,6 +137,7 @@ void initSignal()
 {
     struct sigaction act;
     sigset_t set;
+    
     // Arme le SIGINT
     sigemptyset(&set);
     sigaddset(&set, SIGINT);
@@ -154,6 +155,9 @@ void initSignal()
  */
 void handlerEnd(int signo)
 {
+    // Reception d'un Ctrl + C
+    printf("Terminaison du programme par Ctrl + C\n");
+    
     closeLink();
     
     // Detruit les mutex
