@@ -34,7 +34,6 @@ void initLink()
     #ifdef NOT_REALENV
     write(1, "INIT", 4);
     #else
-    printf("IO_Init ...\n");
     IO_Init(1, &status);
     #endif
 #endif
@@ -163,6 +162,8 @@ void handlerEnd(int signo)
     // Detruit les mutex
     pthread_mutex_destroy(&mutex_received);
     pthread_mutex_destroy(&mutex_give);
+    
+    exit(0);
 }
 
 /**

@@ -18,6 +18,10 @@
 #define TRUE    1
 #define FALSE   0
 
+#define ROUGE   0
+#define NOIRE   1
+#define METAL   2
+
 // Mutex de la station
 pthread_mutex_t mutex_received;
 pthread_mutex_t mutex_give;

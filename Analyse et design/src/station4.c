@@ -1,11 +1,7 @@
-#include "station3.h"
+#include "station4.h"
 
 #include "common.h"
 #include "network.h"
-
-#define ROUGE   0
-#define NOIRE   1
-#define METAL   2
 
 #define ENTREE  0
 #define TUBE1   1
@@ -17,6 +13,7 @@
 void reinitialise();
 void processPiece();
 void* receiveFrom3(void* arg);
+void handlerEnd4(int signo);
 
 int station_3;
 int station_1;
@@ -27,7 +24,10 @@ int pieceType = METAL;
 
 
 int main(void)
-{
+{    
+    struct sigaction act;
+    sigset_t set;
+    
     initSignal();
     
     // Initialise les mutex
@@ -48,8 +48,26 @@ int main(void)
     initSend(&station_1, ADDR_STATION_1, PORT_LISTEN_1_4);
     
     initLink();
+    
+    // Arme le SIGINT
+    sigemptyset(&set);
+    sigaddset(&set, SIGINT);
+    
+    act.sa_flags = 0;
+    act.sa_mask = set;
+    act.sa_handler = handlerEnd4;
+    sigaction(SIGINT, &act, NULL);
         
-    // Boucle principale
+    // Active le mode de positionnement
+    printf("Activation du mode de positionnement ...\n");
+    setActuateur(AMPLIFICATEUR, ON);
+    setActuateur(REGULATEUR, ON);
+    
+    // Calibrage
+    printf("Calibrage ...\n");
+    waitTime(5000);
+    
+   // Boucle principale
     while(1) {
         reinitialise();
         processPiece();
@@ -69,8 +87,19 @@ void reinitialise()
     
     // Ouvre la pince
     printf("Ouvre la pince ...\n");
-    setActuateur(PINCE, OFF);
+    setActuateur(PINCE, ON);
     waitTime(500);
+    
+    // Remonte le bras
+    printf("Remonte le bras ...\n");
+    setActuateur(BRAS_V, OFF);
+    waitBit(BRAS_V_RENTRE, TRUE);
+    
+    // Rentre le bras
+    printf("Rentre le bras ...\n");
+    setActuateur(SORTIR_BRAS_H, OFF);
+    setActuateur(RENTRER_BRAS_H, ON);
+    waitBit(BRAS_H_RENTRE, TRUE);
     
     // Previens la station 3 qu'on attend une piece
     printf("Previens la station 3 que l'on attend une piece ...\n");
@@ -88,6 +117,11 @@ void processPiece()
     while(!getPieceReceived())
         waitTime(500);
     
+    // Ouvre la pince
+    printf("Ouvre la pince ...\n");
+    setActuateur(PINCE, ON);
+    waitTime(500);
+    
     // Abaisser le bras
     printf("Abaisse le bras ...\n");
     setActuateur(BRAS_V, ON);
@@ -95,7 +129,7 @@ void processPiece()
     
     // Prendre la piece
     printf("Prend la piece ...\n");
-    setActuateur(PINCE, ON);
+    setActuateur(PINCE, OFF);
     waitTime(500);
     
     // Remonte le bras
@@ -109,20 +143,31 @@ void processPiece()
             deplacerBras(TUBE1);
             break;
         
-        case NOIRE:
-            // Place le bras au dessus du tube 1
+        case ROUGE:
+            // Place le bras au dessus du tube 2
             deplacerBras(TUBE2);
             break;
             
-        default:    // case ROUGE:
-            // Place le bras au dessus du tube 1
+        default:    // case NOIRE:
+            // Place le bras au dessus du tube 3
             deplacerBras(TUBE3);
     }
     
+    // Sort le bras
+    setActuateur(RENTRER_BRAS_H, OFF);
+    setActuateur(SORTIR_BRAS_H, ON);
+    waitBit(BRAS_H_SORTIT, TRUE);
+    
     // Lache la piece
     printf("Lache la piece ...\n");
-    setActuateur(PINCE, OFF);
+    setActuateur(PINCE, ON);
     waitTime(500);
+    
+    // Rentre le bras
+    printf("Rentre le bras ...\n");
+    setActuateur(SORTIR_BRAS_H, OFF);
+    setActuateur(RENTRER_BRAS_H, ON);
+    waitBit(BRAS_H_RENTRE, TRUE);
     
     // Previens la station 1 qu'on a finit
     printf("Previens la station 1 qu'on a finit le traitement ...\n");
@@ -151,6 +196,18 @@ void* receiveFrom3(void* arg)
                 printf("Piece recue de la station 3\n", buffer);
                 setPieceReceived(TRUE);
             }
+            if(strcmp("PIECE_ROUGE", buffer) == 0) {
+            	printf("Piece rouge en transit\n");
+                setPieceType(ROUGE);
+            }
+            if(strcmp("PIECE_METAL", buffer) == 0) {
+            	printf("Piece mettalique en transit\n");
+                setPieceType(METAL);
+            }
+            if(strcmp("PIECE_NOIRE", buffer) == 0) {
+            	printf("Piece noire en transit\n");
+                setPieceType(NOIRE);
+            }
         }
     }
 }
@@ -168,11 +225,13 @@ int getPieceType()
     
     return temp;
 }
-void setPieceType(int value)
+int setPieceType(int value)
 {
     pthread_mutex_lock(&mutex_pieceType);
     pieceType = value; 
     pthread_mutex_unlock(&mutex_pieceType);
+    
+    return 0;
 }
 
 /**
@@ -181,12 +240,7 @@ void setPieceType(int value)
  */
 void deplacerBras(int position)
 {
-    // Active le mode de positionnement
-    printf("Activation du mode de positionnement ...\n");
-    setActuateur(AMPLIFICATEUR, ON);
-    setActuateur(REGULATEUR, ON);
-    
-    // Place les bit 2 et 3 du positionnement a 0
+     // Place les bit 2 et 3 du positionnement a 0
     printf("Desactive les 2 bit non significatif de positionnement ...\n");
     setActuateur(POS_2, OFF);
     setActuateur(POS_3, OFF);
@@ -218,14 +272,31 @@ void deplacerBras(int position)
             break;
     }
     
-    // Impulsion pour créer le déplacement
-    printf("Envoi de l'impulsion pour déplacer le bras ...\n");
-    setActuateur(START, ON);
-    waitTime(500);
+    // Tempo entre le positionnement des bit et le front montant
+    waitTime(300);
+    
+    // Impulsion pour creer le deplacement
+    printf("Envoi de l'impulsion pour deplacer le bras ...\n");
     setActuateur(START, OFF);
+    waitTime(200);
+    setActuateur(START, ON);
+    waitTime(1000);
+}
+
+/**
+ * Ferme le programme proprement
+ *
+ * @param signo     Numero de l'intteruption
+ */
+void handlerEnd4(int signo)
+{
+    // Reception d'un Ctrl + C
+    printf("Terminaison de station 4 par Ctrl + C\n");
     
     // Desactive le mode de positionnement
     printf("Desactivation du mode de positionnement ...\n");
     setActuateur(AMPLIFICATEUR, OFF);
     setActuateur(REGULATEUR, OFF);
-}
+    
+    handlerEnd(signo);
+}

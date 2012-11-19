@@ -17,7 +17,7 @@ int readPROFIBUS()
     #ifdef NOT_REALENV
     write(1, "IO_ReadIByte", 12);
     #else
-    IO_RefreshOutput(1, &status);
+    IO_RefreshInput(1, &status);
     
     // Rcupre les deux bytes de donnes
     IO_ReadIByte(1, 64, 0, 1, &byte0, &status);
@@ -39,23 +39,16 @@ void writePROFIBUS(int value)
 {
     short status;
     
-    BYTE byte0 = 0;//(unsigned char)(value & 0xff);            // Valeur que l'on veut crire sur le byte 0
-    BYTE byte1 = 0;//(unsigned char)((value >> 8) & 0xff);     // Valeur que l'on veut crire sur le byte 1
-    
-    BYTE tabByte0[8] = { 0, 0, 0, 0,  0, 0, 0, 0 };
-    BYTE tabByte1[8] = { 0, 0, 0, 0,  0, 0, 0, 0 };
-    printf("Write: %d\n", value);
+    BYTE byte0 = (unsigned char)(value & 0xff);            // Valeur que l'on veut crire sur le byte 0
+    BYTE byte1 = (unsigned char)((value >> 8) & 0xff);     // Valeur que l'on veut crire sur le byte 1
     
     #ifdef NOT_REALENV
     write(1, "IO_WriteQByte", 14);
     #else
     
     IO_RefreshOutput(1, &status);
-    printf("Byte0: %d\n", byte0);
     IO_WriteQByte(1, 64, 0, 1, &byte0, &status);
-    
-    printf("Byte1: %d\n", byte1);
-    IO_WriteQByte(1, 64, 1, 1, tabByte1, &status);
+    IO_WriteQByte(1, 64, 1, 1, &byte1, &status);
     IO_RefreshOutput(1, &status);
     #endif
 }

@@ -35,7 +35,7 @@ int main(void)
     while(kbhit() == 0);
     
     initSend(&station_2, ADDR_STATION_2, PORT_LISTEN_2_3);
-    //initSend(&station_4, ADDR_STATION_4, PORT_LISTEN_4_3);
+    initSend(&station_4, ADDR_STATION_4, PORT_LISTEN_4_3);
     
     initLink();
         
@@ -96,10 +96,22 @@ void processPiece()
     while(!getPieceReceived())
         waitTime(500);
     
+    // Attend que la station 4 attende une piece
+    printf("Attend que la station 4 soit en attente ...\n");
+    while(!getCanGivePiece())
+        waitTime(500);
+    
+    // Ejecte la piece
+    printf("Ejecte la piece ...\n");
+    setActuateur(EJECTER, ON);
+    waitTime(1000);
+    printf("Ejecte plus la piece ...\n");
+    setActuateur(EJECTER, OFF);
+    
     // Attend que la piece soit presente
     printf("Attend la piece dans le slot 1 ...\n");
     waitBit(PIECE_SLOT_1, TRUE);
-    waitTime(1000);
+        waitTime(1000);
     
     // Place la piece en position 2
     printf("Active le caroussel ...\n");
@@ -149,11 +161,15 @@ void processPiece()
     printf("Attend la piece dans le slot 3 ...\n");
     waitBit(PIECE_SLOT_3, TRUE);
     
+    waitTime(500);
+    
     // Solenoide vertical
     printf("Activation du solenoide vertical ...\n");
     setActuateur(SOL_V, ON);
     waitTime(1000);
     setActuateur(SOL_V, OFF);
+    
+    waitTime(500);
     
     // Place la piece en position 4
     printf("Active le caroussel ...\n");
@@ -162,16 +178,9 @@ void processPiece()
     setActuateur(CAROUSSEL, OFF);
     waitBit(CAROUSSEL_STABLE, TRUE);
     
-    // Ejecte la piece
-    printf("Ejecte la piece ...\n");
-    setActuateur(EJECTER, ON);
-    waitTime(1000);
-    printf("Ejecte plus la piece ...\n");
-    setActuateur(EJECTER, OFF);
-    
     // Previens la station 4 qu'on lui donne une piece
     printf("Previens la station 4 qu'on lui donne une piece ...\n");
-    //SendTo(station_4, ADDR_STATION_4, PORT_LISTEN_4_3, "DONNE_PIECE", 11);
+    SendTo(station_4, ADDR_STATION_4, PORT_LISTEN_4_3, "DONNE_PIECE", 11);
     setCanGivePiece(FALSE);
 }
 
@@ -196,6 +205,18 @@ void* receiveFrom2(void* arg)
             if(strcmp("DONNE_PIECE", buffer) == 0) {
             	printf("Piece recue e la station 2\n");
                 setPieceReceived(TRUE);
+            }
+            if(strcmp("PIECE_ROUGE", buffer) == 0) {
+            	printf("Piece rouge en transit\n");
+                SendTo(station_4, ADDR_STATION_4, PORT_LISTEN_4_3, "PIECE_ROUGE", 11);
+            }
+            if(strcmp("PIECE_METAL", buffer) == 0) {
+            	printf("Piece mettalique en transit\n");
+                SendTo(station_4, ADDR_STATION_4, PORT_LISTEN_4_3, "PIECE_METAL", 11);
+            }
+            if(strcmp("PIECE_NOIRE", buffer) == 0) {
+            	printf("Piece noire en transit\n");
+                SendTo(station_4, ADDR_STATION_4, PORT_LISTEN_4_3, "PIECE_NOIRE", 11);
             }
         }
     }

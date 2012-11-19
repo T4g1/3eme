@@ -6,7 +6,7 @@
 #define POS_1               1  /* PC */     // Bit de positionnement 1
 #define POS_2               2  /* PC */     // Bit de positionnement 2
 #define POS_3               3  /* PC */     // Bit de positionnement 3
-#define START               4  /* PC */     // Permet d'effectuer le déplacement donné par
+#define START               4  /* PC */     // Permet d'effectuer le d~placement donn~ par
                                             // un front montant
 #define AMPLIFICATEUR       6  /* PC */     // Amplificateur
 #define REGULATEUR          7  /* PC */     // Regulateur
@@ -18,8 +18,8 @@
 // Capteurs
 #define BRAS_H_SORTIT       8  /* PB */     // Bras horizontal sortit
 #define BRAS_V_SORTIT       9  /* PA */     // Bras vertical sortit
-#define BRAS_H_RENTRE       15 /* PA */     // Bras horizontal rentre
-#define BRAS_V_RENTRE       16 /* PA */     // Bras vertical rentre
+#define BRAS_H_RENTRE       16 /* PA */     // Bras horizontal rentre
+#define BRAS_V_RENTRE       17 /* PA */     // Bras vertical rentre
 #define READY               21 /* PA */     // ?
 #define ALIM_ACTIVE         22 /* PA */     // ?
 #define EN_POSITION         23 /* PA */     // ?

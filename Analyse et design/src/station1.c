@@ -29,15 +29,12 @@ int main(void)
     printf("Appuyez sur une touche lorsque le serveur station 2 d'ecoute sera lance ...\n");
     while(kbhit() == 0);
     
-    //initSend(&station_2, ADDR_STATION_2, PORT_LISTEN_2_1);
+    initSend(&station_2, ADDR_STATION_2, PORT_LISTEN_2_1);
     
     initLink();
     
-    // Debut de la procedure
-    setCanGivePiece(TRUE);
-    
-    // Met le bras a droite
-    //waitBit(PP1_OUT, TRUE);
+    // Debut du traitement
+    setPieceReceived(TRUE);
     
     // Boucle principale
     while(1) {
@@ -88,14 +85,25 @@ void reinitialise()
  */
 void processPiece()
 {
+    // Attend que la station 4 ai finit son traitement
+    printf("Attend que la station 4 ai finit son traitement ...\n");
+    while(!getPieceReceived())
+        waitTime(500);
+        
     // Attend que la station 2 soit en attente de piece
     printf("Attend que la station 2 soit en attente de piece ...\n");
     while(!getCanGivePiece())
         waitTime(500);
     
+    setPieceReceived(FALSE);
+    
     // Amenne le bras a droite
     setActuateur(BRAS_POSITION, ON);
     waitBit(BRAS_DROITE, TRUE);
+    
+    printf("Attend une piece dans l'un des tubes ...\n");
+    while(!getCapteur(PIECE_1) && !getCapteur(PIECE_2) )
+    	waitTime(10);
     
     // Piece dans le tube 1
     if(getCapteur(PIECE_1)) {
@@ -120,7 +128,7 @@ void processPiece()
         waitBit(PP2_RENTRE, TRUE);
     }
     // Piece dans le tube 3
-    else if(getCapteur(PIECE_3)) {
+    /*else if(getCapteur(PIECE_3)) {
         printf("Pousse la piece du tube 3 ...\n");
         setActuateur(PP3_IN, OFF);
         setActuateur(PP3_OUT, ON);
@@ -129,9 +137,47 @@ void processPiece()
         setActuateur(PP3_OUT, OFF);
         setActuateur(PP3_IN, ON);
         waitBit(PP3_RENTRE, TRUE);
-    }
+    }*/ // ERREUR STATION 3 - Capteur piece
     
     // Active le poussoir principal
+    printf("Active le poussoir principal ...\n");
+    setActuateur(MAIN_P, ON);
+    waitBit(MAIN_P_SORTIT, TRUE);
+    
+    // Place le bras a gauche
+    printf("Place le bras a gauche ...\n");
+    setActuateur(BRAS_POSITION, OFF);
+    waitBit(BRAS_GAUCHE, TRUE);
+    
+    // Aspire la piéce
+    printf("Active l'aspiration ...\n");
+    setActuateur(ASPIRATION, ON);
+    waitBit(PIECE_ASPIRE, TRUE);
+    
+    // Place le bras a droite
+    printf("Place le bras a droite ...\n");
+    setActuateur(BRAS_POSITION, ON);
+    waitBit(BRAS_DROITE, TRUE);
+    
+    // Rentre le poussoir principal
+    printf("Rentre le poussoir principal ...\n");
+    setActuateur(MAIN_P, OFF);
+    waitBit(MAIN_P_RENTRE, TRUE);
+    
+    // Desactive l'aspiration
+    printf("Desactive l'aspiration ...\n");
+    setActuateur(ASPIRATION, OFF);
+    waitBit(PIECE_ASPIRE, FALSE);
+    
+    // Place le bras a gauche
+    printf("Place le bras a gauche ...\n");
+    setActuateur(BRAS_POSITION, OFF);
+    waitBit(BRAS_GAUCHE, TRUE);
+    
+    // Previens la station 2 qu'elle a une piece
+    printf("Previens la station 2 qu'on lui donne une piece ...\n");
+    SendTo(station_2, ADDR_STATION_2, PORT_LISTEN_2_1, "DONNE_PIECE", 11);
+    setCanGivePiece(FALSE);
 }
 
 /**

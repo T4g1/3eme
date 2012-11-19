@@ -14,6 +14,8 @@ int station_1;
 int station_3;
 pthread_t receive_1, receive_3;
 
+int pieceMetal = 0;
+int pieceNoire = 0;
 
 int main(void)
 {
@@ -34,7 +36,7 @@ int main(void)
     printf("Appuyez sur une touche lorsque station 1 et station 3 seront lance ...\n");
     while(kbhit() == 0);
     
-    //initSend(&station_1, ADDR_STATION_1, PORT_LISTEN_1_2);
+    initSend(&station_1, ADDR_STATION_1, PORT_LISTEN_1_2);
     initSend(&station_3, ADDR_STATION_3, PORT_LISTEN_3_2);
     
     initLink();
@@ -72,7 +74,7 @@ void reinitialise()
     
     // Previens la station 1 qu'on attend une piece
     printf("Previens la station 1 que l'on attend une piece ...\n");
-    //SendTo(station_1, ADDR_STATION_1, PORT_LISTEN_1_2, "ATTEND_PIECE", 12);
+    SendTo(station_1, ADDR_STATION_1, PORT_LISTEN_1_2, "ATTEND_PIECE", 12);
     setPieceReceived(FALSE);
 }
 
@@ -83,19 +85,39 @@ void processPiece()
 {
     // Attend que la station 1 nous ai donne une piece
     printf("Attend que la station 1 nous ai donne une piece ...\n");
-    //while(!getPieceReceived())
-    //    waitTime(500);
+    while(!getPieceReceived())
+        waitTime(500);
     
     printf("Attend que la piece soit en place ...\n");
     waitBit(PIECE, TRUE);
     waitTime(1000);
-
+    
+    // Regarde si c'est une piece metallique
+    pieceMetal = getCapteur(PIECE_METAL);
+    if(pieceMetal) {
+        printf("--->>> Piece en métal\n");
+        SendTo(station_3, ADDR_STATION_3, PORT_LISTEN_3_2, "PIECE_METAL", 11);
+    }
+    
     // Monte l'ascenseur
     printf("Monte l'ascensseur ...\n");
     setActuateur(ASC_DESCEND, OFF);
     setActuateur(ASC_MONTE, ON);
     waitBit(ASC_HAUT, TRUE);
     setActuateur(ASC_MONTE, OFF);
+    
+    waitTime(1000);
+    
+    // Piece noire
+    pieceNoire = !getCapteur(HAUTEUR_PIECE);
+    if(pieceNoire && !pieceMetal) {
+        printf("--->>> Piece noire\n");
+        SendTo(station_3, ADDR_STATION_3, PORT_LISTEN_3_2, "PIECE_NOIRE", 11);
+    }
+    else if(!pieceMetal) {
+        printf("--->>> Piece rouge\n");
+        SendTo(station_3, ADDR_STATION_3, PORT_LISTEN_3_2, "PIECE_ROUGE", 11);
+    }
     
     // Attend que la station 3 soit en reception
     printf("Attend que la station 3 soit prete a recevoir une piece ...\n");
@@ -138,7 +160,7 @@ void* receiveFrom1(void* arg)
             printf("Recu de la station 1: %s\n", buffer);
             
             // Indique que la station 1 nous a donne une piece
-            if(strcmp("DONNE_PIECE", buffer)) {
+            if(strcmp("DONNE_PIECE", buffer) == 0) {
                 setPieceReceived(TRUE);
             }
         }
