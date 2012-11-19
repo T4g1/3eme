@@ -38,12 +38,12 @@ public class GameUI extends javax.swing.JFrame {
         
         selectedCase = null;
         
-        // Crée toutes les cases du jeu
+        // Cree toutes les cases du jeu
         for(int y=0; y<GRID_HEIGHT; y++)
         {
             for(int x=0; x<GRID_WIDTH; x++)
             {
-                // Crée la case
+                // Cree la case
                 if((x + y) % 2 == 0)
                 {
                     l_case[x][y] = new ChessCase(this, x, y, Color.WHITE);
@@ -53,43 +53,37 @@ public class GameUI extends javax.swing.JFrame {
                     l_case[x][y] = new ChessCase(this, x, y, Color.BLACK);
                 }
         
-                // Ajoute la case sur l'échéquier
+                // Ajoute la case sur l'echequier
                 echiquier.add(l_case[x][y]);
             }
         }
         
-        // Modifie les dimensions de la fenêtre
-        Dimension window_size = new Dimension();
-        window_size.width = GRID_WIDTH * ChessCase.getCaseWidth();
-        window_size.height = GRID_HEIGHT * ChessCase.getCaseHeight();
-        
-        setSize(window_size);
         setResizable(false);
         
-        // Demande la liste des piéces au serveur
+        // Demande la liste des pieces au serveur
         l_piece = gameSession.getListPieces();
         
-        // Ajoute les piéce sur leurs position de départ
+        // Ajoute les piece sur leurs position de depart
         for(Piece piece: l_piece) {
             int x = piece.getPieceX();
             int y = piece.getPieceY();
             
             // On inverse le plateau pour l'un des joueurs
-            if(playerColor == Color.WHITE) {
+            if(playerColor.getRGB() == Color.WHITE.getRGB()) {
                 y = (GRID_HEIGHT - 1) - y;
             }
             
             l_case[x][y].addPiece(piece);
         }
         
-        // Redessine l'échiquier dans la fenêtre
+        // Redessine l'echiquier dans la fenetre
         echiquier.invalidate();
     }
 
     /**
-     * Permet à une case de prévenir qu'on a clické dessus
+     * Permet a une case de prevenir qu'on a clicke dessus
      * 
-     * @param case          Case clickée
+     * @param case          Case clickee
      */
     public void onClic(ChessCase _case)
     {
@@ -128,10 +122,12 @@ public class GameUI extends javax.swing.JFrame {
         echiquier = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Chess GAME");
 
         labelGameState.setText("En attente de joueurs ...");
 
         echiquier.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        echiquier.setMinimumSize(new java.awt.Dimension(ChessCase.CASE_WIDTH * GameUI.GRID_WIDTH, ChessCase.CASE_HEIGHT * GameUI.GRID_HEIGHT));
         echiquier.setLayout(new java.awt.GridLayout(GRID_HEIGHT, GRID_WIDTH));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

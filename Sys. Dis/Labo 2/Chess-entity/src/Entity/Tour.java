@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Entity;
 
 import java.awt.Color;
@@ -39,14 +35,12 @@ public class Tour extends Piece implements Serializable {
     
     /**
      * Donne le nom de fichier de la piéce
-     * 
-     * @param equipe        Couleur de la piéce
      * @return              Nom du fichier contenant la piéce
      */
     @Override
-    public String getFilename(Color color)
+    public String getFilename()
     {
-        if(color == Color.WHITE) {
+        if(color.getRGB() == Color.WHITE.getRGB()) {
             return "7a.gif";
         }
         else {

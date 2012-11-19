@@ -13,9 +13,9 @@ import javax.swing.JPanel;
  * @author T4g1
  */
 public class ChessCase extends JPanel {
-    private static final int CASE_WIDTH = 50;
-    private static final int CASE_HEIGHT = 71;
-    private static final Color highlightColor = Color.RED;
+    public static final int CASE_WIDTH = 50;
+    public static final int CASE_HEIGHT = 71;
+    public static final Color highlightColor = Color.RED;
 
     private GameUI parent;
     private int x;
@@ -68,7 +68,7 @@ public class ChessCase extends JPanel {
     //</editor-fold>
     
     /**
-     * Retire les piéces sur la case
+     * Retire les pieces sur la case
      */
     public void removePiece()
     {
@@ -79,15 +79,15 @@ public class ChessCase extends JPanel {
     }
     
     /**
-     * Ajoute une piéce sur la case
+     * Ajoute une piece sur la case
      * 
-     * @param piece     Ajoute la piéce sur la case
+     * @param piece     Ajoute la piece sur la case
      */
     public void addPiece(Piece piece)
     {
         add(new JLabel(new ImageIcon(
                 "C:\\Users\\T4g1\\Desktop\\3eme\\Sys. Dis\\Labo 2\\" +
-                "piecesimages\\" + piece.getFilename(piece.getColor())
+                "piecesimages\\" + piece.getFilename()
         )));
         updateUI();
         
@@ -147,31 +147,13 @@ public class ChessCase extends JPanel {
     }
 
     /**
-     * Donne la largeur d'une case
-     * 
-     * @return      Largeur d'une case
-     */
-    public static int getCaseWidth() {
-        return CASE_WIDTH;
-    }
-
-    /**
-     * Donne la largeur d'une case
-     * 
-     * @return      Largeur d'une case
-     */
-    public static int getCaseHeight() {
-        return CASE_HEIGHT;
-    }
-
-    /**
      * Donne le type de piece qui est sur la case
      * 
      * @return      Type de la piÃ©ce qui est sur la case
      */
-    /*public Piece getPiece() {
+    public Piece getPiece() {
         return piece;
-    }*/
+    }
     
     //</editor-fold>
 

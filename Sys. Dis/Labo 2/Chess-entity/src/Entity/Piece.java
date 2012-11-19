@@ -23,7 +23,7 @@ public class Piece implements Serializable {
     private Long id;
     private int x;
     private int y;
-    private Color color;
+    protected Color color;
     
     //<editor-fold defaultstate="collapsed" desc="Constructeur">
 
@@ -91,13 +91,11 @@ public class Piece implements Serializable {
     
     /**
      * Donne le nom de fichier de la piéce
-     * 
-     * @param equipe        Couleur de la piéce
      * @return              Nom du fichier contenant la piéce
      */
-    public String getFilename(Color color)
+    public String getFilename()
     {
-        if(color == Color.WHITE) {
+        if(color.getRGB() == Color.WHITE.getRGB()) {
             return "6a.gif";
         }
         else {

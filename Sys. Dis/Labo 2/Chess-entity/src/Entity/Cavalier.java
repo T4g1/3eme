@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Entity;
 
 import java.awt.Color;
@@ -16,26 +12,30 @@ import javax.persistence.Id;
  * @author T4g1
  */
 @Entity
-public class Pion extends Piece implements Serializable {
+public class Cavalier extends Piece implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    //<editor-fold defaultstate="collapsed" desc="Constructeur">
 
-    public Pion() {
+    public Cavalier() {
     }
     
     /**
-     * Constructeur du pion
+     * Constructeur du fou
      * 
-     * @param x         Absice de la piéce
+     * @param x         Absice de la piece
      * @param y         Ordonnée de la piéce
-     * @param equipe    Equipé du pion
+     * @param color     Couleur de la piece
      */
-    public Pion(int x, int y, Color color)
+    public Cavalier(int x, int y, Color color)
     {
         super(x, y, color);
     }
+    
+    //</editor-fold>
     
     /**
      * Donne le nom de fichier de la piéce
@@ -45,14 +45,12 @@ public class Pion extends Piece implements Serializable {
     public String getFilename()
     {
         if(color.getRGB() == Color.WHITE.getRGB()) {
-            return "6a.gif";
+            return "7b.gif";
         }
         else {
-            return "1a.gif";
+            return "0b.gif";
         }
     }
-
-    //<editor-fold defaultstate="collapsed" desc="???">
 
     @Override
     public int hashCode() {
@@ -64,10 +62,10 @@ public class Pion extends Piece implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Pion)) {
+        if (!(object instanceof Cavalier)) {
             return false;
         }
-        Pion other = (Pion) object;
+        Cavalier other = (Cavalier) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -76,9 +74,7 @@ public class Pion extends Piece implements Serializable {
 
     @Override
     public String toString() {
-        return "Entity.Pion[ id=" + id + " ]";
+        return "Entity.Cavalier[ id=" + id + " ]";
     }
-    
-    //</editor-fold>
     
 }

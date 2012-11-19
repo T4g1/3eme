@@ -41,10 +41,10 @@ public class LobbyUI extends javax.swing.JFrame {
         
         // Indique le nombre de parties trouv√©es
         if(l_echiquier.length <= 0) {
-            labelLobbyState.setText("Aucune partie trouvÈe ...");
+            labelLobbyState.setText("Aucune partie trouvee ...");
             rejoindrePartie.setEnabled(false);
         } else {
-            labelLobbyState.setText(l_echiquier.length + " partie(s) trouvÈe(s) ...");
+            labelLobbyState.setText(l_echiquier.length + " partie(s) trouvee(s) ...");
             rejoindrePartie.setEnabled(true);
         }
     }
@@ -149,8 +149,8 @@ public class LobbyUI extends javax.swing.JFrame {
             Main.showGame();
         } else {
             JOptionPane.showMessageDialog(
-                    new JFrame(), "CrÈation de partie ÈchouÈe ...",
-                    "Erreur lors de la crÈation de partie",
+                    new JFrame(), "Creation de partie echouee ...",
+                    "Erreur lors de la creation de partie",
                     JOptionPane.ERROR_MESSAGE
             );
         }
@@ -161,7 +161,7 @@ public class LobbyUI extends javax.swing.JFrame {
     }//GEN-LAST:event_nameEchiquierActionPerformed
 
     private void rejoindrePartieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejoindrePartieActionPerformed
-        // RÈcupÈre la partie que l'on veut rejoindre
+        // Recupere la partie que l'on veut rejoindre
         // TODO
         
         int id = 0;

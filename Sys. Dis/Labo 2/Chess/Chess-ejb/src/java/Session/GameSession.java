@@ -1,7 +1,11 @@
 package Session;
 
+import Entity.Cavalier;
+import Entity.Fou;
 import Entity.Piece;
 import Entity.Pion;
+import Entity.Reine;
+import Entity.Roi;
 import Entity.Tour;
 import java.awt.Color;
 import java.awt.Point;
@@ -24,12 +28,12 @@ public class GameSession implements GameSessionRemote {
         List<Piece> l_pieces = new ArrayList<Piece>();
         
         l_pieces.add(new Tour    (0, 0, Color.BLACK));
-        //l_pieces.add(new Cavalier(1, 0, Color.BLACK));
-        //l_pieces.add(new Fou     (2, 0, Color.BLACK));
-        //l_pieces.add(new Reine   (3, 0, Color.BLACK));
-        //l_pieces.add(new Roi     (4, 0, Color.BLACK));
-        //l_pieces.add(new Fou     (5, 0, Color.BLACK));
-        //l_pieces.add(new Cavalier(6, 0, Color.BLACK));
+        l_pieces.add(new Cavalier(1, 0, Color.BLACK));
+        l_pieces.add(new Fou     (2, 0, Color.BLACK));
+        l_pieces.add(new Reine   (3, 0, Color.BLACK));
+        l_pieces.add(new Roi     (4, 0, Color.BLACK));
+        l_pieces.add(new Fou     (5, 0, Color.BLACK));
+        l_pieces.add(new Cavalier(6, 0, Color.BLACK));
         l_pieces.add(new Tour    (7, 0, Color.BLACK));
         l_pieces.add(new Pion    (0, 1, Color.BLACK));
         l_pieces.add(new Pion    (1, 1, Color.BLACK));
@@ -41,12 +45,12 @@ public class GameSession implements GameSessionRemote {
         l_pieces.add(new Pion    (7, 1, Color.BLACK));
         
         l_pieces.add(new Tour    (0, 7, Color.WHITE));
-        //l_pieces.add(new Cavalier(1, 7, Color.WHITE));
-        //l_pieces.add(new Fou     (2, 7, Color.WHITE));
-        //l_pieces.add(new Reine   (3, 7, Color.WHITE));
-        //l_pieces.add(new Roi     (4, 7, Color.WHITE));
-        //l_pieces.add(new Fou     (5, 7, Color.WHITE));
-        //l_pieces.add(new Cavalier(6, 7, Color.WHITE));
+        l_pieces.add(new Cavalier(1, 7, Color.WHITE));
+        l_pieces.add(new Fou     (2, 7, Color.WHITE));
+        l_pieces.add(new Reine   (3, 7, Color.WHITE));
+        l_pieces.add(new Roi     (4, 7, Color.WHITE));
+        l_pieces.add(new Fou     (5, 7, Color.WHITE));
+        l_pieces.add(new Cavalier(6, 7, Color.WHITE));
         l_pieces.add(new Tour    (7, 7, Color.WHITE));
         l_pieces.add(new Pion    (0, 6, Color.WHITE));
         l_pieces.add(new Pion    (1, 6, Color.WHITE));
