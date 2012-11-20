@@ -1,8 +1,10 @@
 package chessclient;
 
 import Entity.Echiquier;
+import Entity.Joueur;
 import Session.LobbySessionRemote;
 import TableModel.EchiquierTableModel;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -17,12 +19,14 @@ import javax.swing.JOptionPane;
  */
 public class LobbyUI extends javax.swing.JFrame {
     private LobbySessionRemote lobbySession;
+    private Joueur joueur;
     
     /**
      * Creates new form GameUI
      */
     public LobbyUI() throws Exception {
         lobbySession = lookupLobbySessionRemote();
+        joueur = lobbySession.createJoueur();
         
         initComponents();
     }
@@ -31,7 +35,7 @@ public class LobbyUI extends javax.swing.JFrame {
      * Met a jour la liste des parties
      */
     public void refresh() {
-        Echiquier[] l_echiquier = lobbySession.getListing();
+        List<Echiquier> l_echiquier = lobbySession.getListing();
         
         EchiquierTableModel model = (EchiquierTableModel) jTableParties.getModel();
         model.setListing(l_echiquier);
@@ -40,11 +44,11 @@ public class LobbyUI extends javax.swing.JFrame {
         jTableParties.invalidate();
         
         // Indique le nombre de parties trouvées
-        if(l_echiquier.length <= 0) {
+        if(l_echiquier.size() <= 0) {
             labelLobbyState.setText("Aucune partie trouvee ...");
             rejoindrePartie.setEnabled(false);
         } else {
-            labelLobbyState.setText(l_echiquier.length + " partie(s) trouvee(s) ...");
+            labelLobbyState.setText(l_echiquier.size() + " partie(s) trouvee(s) ...");
             rejoindrePartie.setEnabled(true);
         }
     }
@@ -144,7 +148,7 @@ public class LobbyUI extends javax.swing.JFrame {
 
     private void creerPartieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creerPartieActionPerformed
         // Cr�ation de la partie
-        long id = lobbySession.createEchiquier(nameEchiquier.getText());
+        long id = lobbySession.createEchiquier(nameEchiquier.getText(), joueur);
         if(id > -1) {
             Main.showGame();
         } else {
@@ -162,10 +166,12 @@ public class LobbyUI extends javax.swing.JFrame {
 
     private void rejoindrePartieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejoindrePartieActionPerformed
         // Recupere la partie que l'on veut rejoindre
-        // TODO
+        int selectedRow = jTableParties.getSelectedRow();
+        EchiquierTableModel model = 
+                (EchiquierTableModel)jTableParties.getModel();
+        Echiquier echiquier = (Echiquier)model.getValueAt(selectedRow, 2);
         
-        int id = 0;
-        int resultCode = lobbySession.joinEchiquier(id);
+        int resultCode = lobbySession.joinEchiquier(echiquier.getId(), joueur);
         
         switch(resultCode) {
             case -1:

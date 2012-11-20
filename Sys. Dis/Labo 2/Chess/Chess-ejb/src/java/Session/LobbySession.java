@@ -1,6 +1,11 @@
 package Session;
 
 import Entity.Echiquier;
+import Entity.Joueur;
+import Facade.EchiquierFacadeLocal;
+import Facade.JoueurFacadeLocal;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 /**
@@ -10,22 +15,30 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class LobbySession implements LobbySessionRemote {
-    private Echiquier[] l_echiquier;
+    @EJB
+    private JoueurFacadeLocal joueurFacade;
+    @EJB
+    private EchiquierFacadeLocal echiquierFacade;
     /**
      * Donne la liste des parties en cours
      * @return      Liste d'echiquier
      */
     @Override
-    public Echiquier[] getListing() {
-        int nb_parties = (int)(Math.random() * (100 - 10)) + 10;
-        l_echiquier = new Echiquier[nb_parties];
+    public List<Echiquier> getListing() {
+        return echiquierFacade.findAll();
+    }
+    
+    /**
+     * Crée un nouveau joueur
+     * @return  Nouveau joueur
+     */
+    @Override
+    public Joueur createJoueur() {
+        Joueur joueur = new Joueur();
         
-        for(int i=0; i<nb_parties; i++) {
-            l_echiquier[i] = new Echiquier();
-            l_echiquier[i].setNom("Partie sans nom " + (i+1) + "/" + nb_parties);
-        }
+        joueurFacade.create(joueur);
         
-        return l_echiquier;
+        return joueur;
     }
 
     /**
@@ -34,13 +47,14 @@ public class LobbySession implements LobbySessionRemote {
      * @return      Id de la partie, -1 si erreur
      */
     @Override
-    public long createEchiquier(String nom) {
+    public long createEchiquier(String nom, Joueur joueur1) {
         Echiquier echiquier = new Echiquier();
-        echiquier.setNom(nom);
+        echiquier.setJoueur1(joueur1);
+        echiquier.setJoueur2(null);
         
-        // TODO
+        echiquierFacade.create(echiquier);
         
-        return -1;
+        return echiquier.getId();
     }
 
     /**
@@ -49,9 +63,19 @@ public class LobbySession implements LobbySessionRemote {
      * @return      1 en cas de succes, -1 si erreur, 0 si partie pleine
      */
     @Override
-    public int joinEchiquier(long id) {
-        // TODO
+    public int joinEchiquier(long id, Joueur joueur2) {
+        Echiquier echiquier = echiquierFacade.find(id);
+        if(echiquier == null) {
+            return -1;
+        }
         
-        return -1;
+        if(echiquier.getPlayerCount() >= 2) {
+            return 0;
+        }
+        
+        echiquier.setJoueur2(joueur2);
+        echiquierFacade.edit(echiquier);
+        
+        return 1;
     }
 }

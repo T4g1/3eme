@@ -18,6 +18,7 @@ public class Echiquier implements Serializable {
     private Long id;
     private String nom;
     private Piece[] l_piece = new Piece[16 * 16];
+    private Joueur[] l_joueur = new Joueur[2];
 
     //<editor-fold defaultstate="collapsed" desc="Accesseurs">
     
@@ -46,9 +47,15 @@ public class Echiquier implements Serializable {
     }
     
     public int getPlayerCount() {
-        // TODO
+        int count = 0;
         
-        return 0;
+        for(Joueur joueur: l_joueur) {
+            if(joueur != null) {
+                count++;
+            }
+        }
+        
+        return count;
     }
     
     //</editor-fold>
@@ -61,6 +68,14 @@ public class Echiquier implements Serializable {
     
     public void setNom(String nom) {
         this.nom = nom;
+    }
+    
+    public void setJoueur1(Joueur joueur) {
+        l_joueur[0] = joueur;
+    }
+    
+    public void setJoueur2(Joueur joueur) {
+        l_joueur[1] = joueur;
     }
     
     //</editor-fold>

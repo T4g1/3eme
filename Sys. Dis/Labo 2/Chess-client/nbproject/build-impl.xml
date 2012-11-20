@@ -805,19 +805,19 @@ exists or setup the property manually. For example like this:
         <!-- You can override this target in the ../build.xml file. -->
     </target>
     <target depends="compile" if="is.server.weblogic" name="library-inclusion-in-archive">
-        <basename file="${file.reference.Chess-entity.jar}" property="manifest.file.reference.Chess-entity.jar"/>
         <basename file="${file.reference.Chess-library.jar}" property="manifest.file.reference.Chess-library.jar"/>
+        <basename file="${file.reference.Chess-entity.jar}" property="manifest.file.reference.Chess-entity.jar"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
             <attribute name="Extension-List" value="jar-1 jar-2 "/>
-            <attribute name="jar-1-Extension-Name" value="${manifest.file.reference.Chess-entity.jar}"/>
-            <attribute name="jar-2-Extension-Name" value="${manifest.file.reference.Chess-library.jar}"/>
+            <attribute name="jar-1-Extension-Name" value="${manifest.file.reference.Chess-library.jar}"/>
+            <attribute name="jar-2-Extension-Name" value="${manifest.file.reference.Chess-entity.jar}"/>
         </manifest>
     </target>
     <target depends="compile" if="dist.ear.dir" name="library-inclusion-in-manifest">
-        <copyfiles files="${file.reference.Chess-entity.jar}" manifestproperty="manifest.file.reference.Chess-entity.jar" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.Chess-library.jar}" manifestproperty="manifest.file.reference.Chess-library.jar" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.Chess-entity.jar}" manifestproperty="manifest.file.reference.Chess-entity.jar" todir="${dist.ear.dir}/lib"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Class-Path" value="${manifest.file.reference.Chess-entity.jar} lib/${manifest.file.reference.Chess-entity.jar} ${manifest.file.reference.Chess-library.jar} lib/${manifest.file.reference.Chess-library.jar} "/>
+            <attribute name="Class-Path" value="${manifest.file.reference.Chess-library.jar} lib/${manifest.file.reference.Chess-library.jar} ${manifest.file.reference.Chess-entity.jar} lib/${manifest.file.reference.Chess-entity.jar} "/>
         </manifest>
     </target>
     <target name="-copy-meta-inf">

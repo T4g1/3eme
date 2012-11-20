@@ -1,6 +1,7 @@
 package TableModel;
 
 import Entity.Echiquier;
+import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -8,20 +9,20 @@ import javax.swing.table.AbstractTableModel;
  * @author T4g1
  */
 public class EchiquierTableModel extends AbstractTableModel {
-    private Echiquier[] l_echiquier;
+    private List<Echiquier> l_echiquier;
     private String[] columnNames = {
             "Nom de la partie",
             "Nombre de joueurs présent"
     };
     
-    public void setListing(Echiquier[] l_echiquier) {
+    public void setListing(List<Echiquier> l_echiquier) {
         this.l_echiquier = l_echiquier;
     }
 
     @Override
     public int getRowCount() {
         if(l_echiquier != null) {
-            return l_echiquier.length;
+            return l_echiquier.size();
         }
         
         return 0;
@@ -43,12 +44,14 @@ public class EchiquierTableModel extends AbstractTableModel {
             return null;
         }
         
-        Echiquier echiquier = l_echiquier[rowIndex];
+        Echiquier echiquier = l_echiquier.get(rowIndex);
         switch(columnIndex) {
             case 0:
                 return echiquier.getNom();
             case 1:
                 return echiquier.getPlayerCount() + "/2";
+            case 2:
+                return echiquier;
         }
         
         return null;

@@ -25,8 +25,8 @@ public class Main {
             lobbyUI = new LobbyUI();
             gameUI = new GameUI();
         
-            //showIntro();
-            showGame();
+            showIntro();
+            //showGame();
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
