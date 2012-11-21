@@ -148,9 +148,10 @@ public class LobbyUI extends javax.swing.JFrame {
 
     private void creerPartieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creerPartieActionPerformed
         // Crï¿½ation de la partie
-        long id = lobbySession.createEchiquier(nameEchiquier.getText(), joueur);
-        if(id > -1) {
-            Main.showGame();
+        long echiquierId = lobbySession.createEchiquier(nameEchiquier.getText(), joueur);
+        if(echiquierId > -1) {
+            System.out.println("Joueur " + String.valueOf(joueur.getId()) + " crée une partie ...");
+            Main.showGame(echiquierId, joueur.getId());
         } else {
             JOptionPane.showMessageDialog(
                     new JFrame(), "Creation de partie echouee ...",
@@ -189,7 +190,8 @@ public class LobbyUI extends javax.swing.JFrame {
                 );
                 break;
             case 1:
-                Main.showGame();
+                System.out.println("Joueur " + String.valueOf(joueur.getId()) + " rejoins une partie ...");
+                Main.showGame(echiquier.getId(), joueur.getId());
                 break;
         }
     }//GEN-LAST:event_rejoindrePartieActionPerformed

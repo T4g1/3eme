@@ -5,7 +5,9 @@
 package Session;
 
 import Entity.Piece;
+import java.awt.Color;
 import java.awt.Point;
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.Remote;
 
@@ -15,6 +17,11 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface GameSessionRemote {
-    List<Piece> getListPieces();
-    List<Point> authorizedMove(Piece piece);
+    Collection<Piece> getListPieces(Long id);
+    Piece pieceOnEchiquierAt(Long echiquierId, int x, int y);
+    List<Point> whereCanItGo(Long echiquierId, Long pieceId);
+    int moveTo(Long echiquierId, Long pieceId, int x, int y);
+    Long whosTurnIsIt(Long id);
+    void playerLeave(Long joueurId, Long echiquierId);
+    Color getPlayerColor(Long joueurId);
 }

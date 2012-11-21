@@ -62,16 +62,16 @@
           </Border>
         </Property>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new java.awt.Dimension(ChessCase.CASE_WIDTH * GameUI.GRID_WIDTH, ChessCase.CASE_HEIGHT * GameUI.GRID_HEIGHT)" type="code"/>
+          <Connection code="new java.awt.Dimension(ChessCase.CASE_WIDTH * Constant.GRID_WIDTH, ChessCase.CASE_HEIGHT * Constant.GRID_HEIGHT)" type="code"/>
         </Property>
       </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
         <Property name="columns" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="GRID_WIDTH" type="code"/>
+          <Connection code="Constant.GRID_WIDTH" type="code"/>
         </Property>
         <Property name="rows" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="GRID_HEIGHT" type="code"/>
+          <Connection code="Constant.GRID_HEIGHT" type="code"/>
         </Property>
       </Layout>
     </Container>

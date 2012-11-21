@@ -85,13 +85,16 @@ public class ChessCase extends JPanel {
      */
     public void addPiece(Piece piece)
     {
-        add(new JLabel(new ImageIcon(
-                "C:\\Users\\T4g1\\Desktop\\3eme\\Sys. Dis\\Labo 2\\" +
-                "piecesimages\\" + piece.getFilename()
-        )));
-        updateUI();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         
         this.piece = piece;
+        
+        //System.out.println(classLoader.getResource(piece.getFilename()));
+        add(new JLabel(new ImageIcon(
+                classLoader.getResource(piece.getFilename())
+        )));
+        
+        updateUI();
     }
     
     /**

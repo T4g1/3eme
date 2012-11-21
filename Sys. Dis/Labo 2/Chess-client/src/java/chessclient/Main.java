@@ -56,11 +56,16 @@ public class Main {
     
     /**
      * Affiche le jeu
+     * @param echiquierId       Id de l'echiquier
+     * @param joueurId          Id du joueur
      */
-    public static void showGame()
+    public static void showGame(Long echiquierId, Long joueurId)
     {
+        gameUI.initGame(echiquierId, joueurId);
+        
         introUI.setVisible(false);
         lobbyUI.setVisible(false);
+        
         gameUI.setVisible(true);
     }
 }
