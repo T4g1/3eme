@@ -1,0 +1,32 @@
+﻿Build started 22/11/2012 23:21:12.
+     1>Project "E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Applic_Materiel\Applic_Materiel.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\Applic_Materiel.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\lib\network.cpp ApplicMateriel.cpp main.cpp
+         network.cpp
+     1>e:\users\t4g1\projets\3eme\java\etape 2\serveur_village\lib\network.cpp(86): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+         Generating Code...
+         Compiling...
+         main.cpp
+         ApplicMateriel.cpp
+     1>e:\users\t4g1\projets\3eme\java\etape 2\serveur_village\applic_materiel\applicmateriel.cpp(28): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Debug\Applic_Materiel.exe" /NOLOGO pthreadVCE2.lib ws2_32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Applic_Materiel.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Debug\Applic_Materiel.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Debug\Applic_Materiel.lib" /MACHINE:X86 Debug\network.obj
+         Debug\ApplicMateriel.obj
+         Debug\main.obj
+         LINK : E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Debug\Applic_Materiel.exe not found or not built by the last incremental link; performing full link
+         Applic_Materiel.vcxproj -> E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Debug\Applic_Materiel.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Debug\Applic_Materiel.exe;#1" /manifest Debug\Applic_Materiel.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Debug\Applic_Materiel.unsuccessfulbuild".
+         Touching "Debug\Applic_Materiel.lastbuildstate".
+     1>Done Building Project "E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Applic_Materiel\Applic_Materiel.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.81

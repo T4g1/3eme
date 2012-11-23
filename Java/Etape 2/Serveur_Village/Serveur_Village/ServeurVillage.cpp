@@ -105,8 +105,10 @@ void* ServeurVillage::ThServeurFHMP(void* data)
 	return NULL;
 }
 
+/** Gestion d'un client Applic_Materiel */
 void* ServeurVillage::ThClientFHMP(void* data)
 {
+	char buffer[BUFFER_SIZE];
 	SOCKET csock;
 
 	while(true) {
@@ -117,6 +119,16 @@ void* ServeurVillage::ThClientFHMP(void* data)
 		csock = l_clientSocket->top();
 		l_clientSocket->pop();
 		pthread_mutex_unlock(mutex_pool);
+
+		// Ecoute le client
+		while(true) {
+			if(recv(csock, buffer) < 0) {
+				cout << "Erreur lors de la récéption du message, fermeture du client ..." << endl;
+				break;
+			}
+
+			cout << "Recu du client " << csock << ": " << buffer << endl;
+		}
 		
 		cout << "FHMP: Fermeture de la socket client: " << csock << endl;
 		closesocket(csock);

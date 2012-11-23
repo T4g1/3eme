@@ -1,22 +1,17 @@
-﻿Build started 15/11/2012 15:12:37.
-     1>Project "C:\Users\T4g1\Desktop\3eme\Java\Etape 2\Serveur_Village\Serveur_Village\Serveur_Village.vcxproj" on node 2 (build target(s)).
+﻿Build started 22/11/2012 23:23:24.
+     1>Project "E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Serveur_Village\Serveur_Village.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Touching "Debug\Serveur_Village.unsuccessfulbuild".
+         Creating "Debug\Serveur_Village.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ServeurVillage.cpp
-         ServeurVillage.cpp
+         All outputs are up-to-date.
        Link:
-         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\T4g1\Desktop\3eme\Java\Etape 2\Serveur_Village\Debug\Serveur_Village.exe" /NOLOGO pthreadVCE2.lib ws2_32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Serveur_Village.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\T4g1\Desktop\3eme\Java\Etape 2\Serveur_Village\Debug\Serveur_Village.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\T4g1\Desktop\3eme\Java\Etape 2\Serveur_Village\Debug\Serveur_Village.lib" /MACHINE:X86 Debug\main.obj
-         Debug\network.obj
-         Debug\ServeurVillage.obj
-         Serveur_Village.vcxproj -> C:\Users\T4g1\Desktop\3eme\Java\Etape 2\Serveur_Village\Debug\Serveur_Village.exe
-       Manifest:
-         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\T4g1\Desktop\3eme\Java\Etape 2\Serveur_Village\Debug\Serveur_Village.exe;#1" /manifest Debug\Serveur_Village.exe.intermediate.manifest
+         All outputs are up-to-date.
+         Serveur_Village.vcxproj -> E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Debug\Serveur_Village.exe
        FinalizeBuildStatus:
          Deleting file "Debug\Serveur_Village.unsuccessfulbuild".
          Touching "Debug\Serveur_Village.lastbuildstate".
-     1>Done Building Project "C:\Users\T4g1\Desktop\3eme\Java\Etape 2\Serveur_Village\Serveur_Village\Serveur_Village.vcxproj" (build target(s)).
+     1>Done Building Project "E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Serveur_Village\Serveur_Village.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:07.09
+Time Elapsed 00:00:00.05

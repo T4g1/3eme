@@ -21,7 +21,7 @@
     <ClCompile Include="ServeurVillage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="network.cpp">
+    <ClCompile Include="..\lib\network.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,7 +29,7 @@
     <ClInclude Include="ServeurVillage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="network.h">
+    <ClInclude Include="..\lib\network.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -61,12 +61,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\lib\network.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="network.cpp" />
     <ClCompile Include="ServeurVillage.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="network.h" />
+    <ClInclude Include="..\lib\network.h" />
     <ClInclude Include="ServeurVillage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -7,7 +7,7 @@
 #include <stack>
 #include <vector>
 
-#include "network.h"
+#include "../lib/network.h"
 
 #define PORT_ADMIN		27015
 #define PORT_VILLAGE	27016
