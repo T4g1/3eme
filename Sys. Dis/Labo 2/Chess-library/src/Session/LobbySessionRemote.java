@@ -13,6 +13,7 @@ import javax.ejb.Remote;
 public interface LobbySessionRemote {
     List<Echiquier> getListing();
     Joueur createJoueur();
+    void removePlayer(Long joueurId);
     long createEchiquier(String nom, Joueur joueur1);
     int joinEchiquier(long id, Joueur joueur2);
 }

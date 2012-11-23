@@ -42,10 +42,7 @@ public class ChessCase extends JPanel {
         this.y = y;
         this.piece = null;
         
-        this.backgroundColor = backgroundColor;
-        
-        // Modifie la couleur de fond
-        setBackground(backgroundColor);
+        setBackgroundcolor(backgroundColor);
         
         // Ajoute un mouse listenner pour les clic utilisateurs
         addMouseListener(new MouseAdapter() {
@@ -89,7 +86,6 @@ public class ChessCase extends JPanel {
         
         this.piece = piece;
         
-        //System.out.println(classLoader.getResource(piece.getFilename()));
         add(new JLabel(new ImageIcon(
                 classLoader.getResource(piece.getFilename())
         )));
@@ -98,7 +94,7 @@ public class ChessCase extends JPanel {
     }
     
     /**
-     * Fonction appellée lorsqu'on clique sur la case
+     * Fonction appellee lorsqu'on clique sur la case
      */
     public void onClic()
     {
@@ -106,7 +102,7 @@ public class ChessCase extends JPanel {
     }
     
     /**
-     * Met la case en évidence ou la réinitialise
+     * Met la case en evidence ou la réinitialise
      * 
      * @param state     true si on veut activer le highlight
      */
@@ -161,6 +157,13 @@ public class ChessCase extends JPanel {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Mutateurs">
+    
+    public void setBackgroundcolor(Color color) {
+        this.backgroundColor = color;
+        
+        // Modifie la couleur de fond
+        setBackground(backgroundColor);
+    }
     
     /**
      * Modifie la position de la case en x

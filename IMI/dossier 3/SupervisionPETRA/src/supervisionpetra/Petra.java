@@ -1,5 +1,12 @@
 package supervisionpetra;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Gestion du PETRA a travers le réseau
  * @author T4g1
@@ -16,13 +23,25 @@ public class Petra {
     private String ip;
     private int port;
     private int actuateurs;
+    private Socket socket;
+    private OutputStream oStream;
     
     public Petra(String ip, int port)
-    {
+    {        
+        actuateurs = 0;
+        
         this.ip = ip;
         this.port = port;
         
-        actuateurs = 0;
+        try {
+            // Connection au petra
+            socket = new Socket(ip, port);
+            oStream = socket.getOutputStream();
+        } catch (UnknownHostException ex) {
+            System.out.println("Erreur d'ip");
+        } catch (IOException ex) {
+            System.out.println("Erreur d'accept");
+        }
     }
     
     /**
@@ -32,7 +51,20 @@ public class Petra {
      */
     private void send(String message)
     {
-        System.out.println(message);
+        int num = Integer.parseInt(message);
+        String bin = Integer.toBinaryString(num);
+        
+        int size = bin.length();
+        for(int i=0; i<8-size; i++) {
+            bin = "0" + bin;
+        }
+        System.out.println("Valeur envoyée: " + bin + "." + message);
+        
+        try {
+            oStream.write(message.getBytes());
+        } catch (IOException ex) {
+            Logger.getLogger(Petra.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**
@@ -62,6 +94,7 @@ public class Petra {
         // l'envoi de CP + 1 doit etre fait pour changer la valeur
         if(bit != CP)
         {
+            System.out.println(CP + " Envoi de " + bit);
             send(String.valueOf(actuateurs));
         }
     }

@@ -26,9 +26,20 @@ public class LobbyUI extends javax.swing.JFrame {
      */
     public LobbyUI() throws Exception {
         lobbySession = lookupLobbySessionRemote();
-        joueur = lobbySession.createJoueur();
+        joueur = null;
         
         initComponents();
+    }
+    
+    /**
+     * Initialise le joueur
+     */
+    public void init() {
+        if(joueur != null) {
+            lobbySession.removePlayer(joueur.getId());
+        }
+        
+        joueur = lobbySession.createJoueur();
     }
     
     /**
@@ -65,7 +76,12 @@ public class LobbyUI extends javax.swing.JFrame {
         refreshListing = new javax.swing.JButton();
         labelLobbyState = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Recherche de partie");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jTableParties.setModel(new EchiquierTableModel());
         jTableParties.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -73,8 +89,8 @@ public class LobbyUI extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTableParties);
         jTableParties.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        creerPartie.setText("CrÃ©er une partie");
-        creerPartie.setToolTipText("CrÃ©e une partie avec le nom saisit ci-contre");
+        creerPartie.setText("Créer une partie");
+        creerPartie.setToolTipText("Crée une partie avec le nom saisit ci-contre");
         creerPartie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 creerPartieActionPerformed(evt);
@@ -89,22 +105,22 @@ public class LobbyUI extends javax.swing.JFrame {
         });
 
         rejoindrePartie.setText("Rejoindre partie");
-        rejoindrePartie.setToolTipText("Rejoins la partie sÃ©lÃ©ctionnÃ©e dans la liste");
+        rejoindrePartie.setToolTipText("Rejoins la partie séléctionnée dans la liste");
         rejoindrePartie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rejoindrePartieActionPerformed(evt);
             }
         });
 
-        refreshListing.setText("RafraÃ®chir");
-        refreshListing.setToolTipText("RafraÃ®chit la liste des parties");
+        refreshListing.setText("Rafraîchir");
+        refreshListing.setToolTipText("Rafraîchit la liste des parties");
         refreshListing.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 refreshListingActionPerformed(evt);
             }
         });
 
-        labelLobbyState.setText("Aucune partie trouvÃ©e ...");
+        labelLobbyState.setText("Aucune partie trouvée ...");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -199,6 +215,15 @@ public class LobbyUI extends javax.swing.JFrame {
     private void refreshListingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshListingActionPerformed
         refresh();
     }//GEN-LAST:event_refreshListingActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        if(joueur != null) {
+            lobbySession.removePlayer(joueur.getId());
+            joueur = null;
+        }
+
+        Main.showIntro();
+    }//GEN-LAST:event_formWindowClosing
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton creerPartie;

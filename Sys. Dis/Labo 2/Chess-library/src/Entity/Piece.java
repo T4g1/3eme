@@ -72,6 +72,14 @@ public class Piece implements Serializable {
     
     //<editor-fold defaultstate="collapsed" desc="Accesseurs">
 
+    /**
+     * Donne le type de la piece
+     * @return      Type de la piece
+     */
+    public String getType() {
+        return "";
+    }
+    
     public Long getId() {
         return id;
     }

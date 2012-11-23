@@ -112,6 +112,27 @@ BYTE getCapteur()
 }
 
 /**
+ * Attend un certain temps donne
+ *
+ * @param milisec     Milliseconde a attendre
+ */
+int waitTime(unsigned long milisec)
+{
+    struct timespec req= {0};
+    
+    time_t sec = (int)(milisec / 1000);
+    milisec = milisec - (sec * 1000);
+    
+    req.tv_sec = sec;
+    req.tv_nsec = milisec * 1000000L;
+    
+    while(nanosleep(&req, &req) == -1)
+        continue;
+     
+    return 1;
+}
+
+/**
  * Donne le bit demandé de la valeur donnée
  *
  * @param value         Valeur dont on veut extraire un bit
@@ -166,4 +187,4 @@ int kbhit(void)
 	ungetc(ch, stdin);
 
 	return 1;
-}
+}

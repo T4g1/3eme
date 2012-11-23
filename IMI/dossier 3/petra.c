@@ -1,6 +1,8 @@
 #include "common.h"
 
 void receiveFromSuperviseur();
+void initSignal();
+void handlerEnd(int signo);
 
 union {
     struct ACTUATEURS act ;
@@ -24,6 +26,9 @@ int main(void)
 {
     pthread_t th_receive;
     char buffer[BUFFER_SIZE];
+	int nbEnvoi = 0;
+	
+	initSignal();
     
     // Initialisation du PETRA en entrée
     if((fdIn = open(FILE_PETRA_IN, O_RDONLY)) == -1) {
@@ -57,21 +62,17 @@ int main(void)
     while(1) {
         read(fdIn, &new_capt.byte, 1);
         
-        if(new_capt.byte == u_capt.byte)
+        if(new_capt.byte == u_capt.byte && nbEnvoi > 0)
             continue;
         
         // Envois des modifications
         u_capt.byte = new_capt.byte;
-        sprintf(buffer, "CAPTEUR:%d", u_capt.byte);
-        SendTo(superviseur, ADDR_SUPERVISEUR, PORT_VERS_SUPERVISEUR, buffer, BUFFER_SIZE);
+        sprintf(buffer, "%d", u_capt.byte);
+		printf("Nouvelle valeur de capteur: %s\n", buffer);
+        if(SendTo(superviseur, ADDR_SUPERVISEUR, PORT_VERS_SUPERVISEUR, buffer, BUFFER_SIZE) < 0)
+        	printf("Send echoue\n");
+        nbEnvoi += 1;
     }
-    
-    // Place tout les actuateurs à 0
-    u_act.byte = 0x00;
-    write(fdOut, &u_act.byte, 1);
-    
-    close(fdIn);
-    close(fdOut);
     
     return 1;
 }
@@ -80,15 +81,68 @@ void receiveFromSuperviseur()
 {
     char buffer[BUFFER_SIZE];
     struct sockaddr_in addr;
-    int v, sockRecv, addr_len, erreur = -1;
+    int value, v, sockRecv, addr_len, erreur = -1;
     
     initListen(&sockRecv, &addr, PORT_DEPUIS_SUPERVISEUR);
+	printf("Client connecté\n");
     
     // Reception des donnees
     while(1) {
         addr_len = sizeof(addr);
         if ((v = recvfrom(sockRecv, buffer, BUFFER_SIZE, 0, (struct sockaddr *)&addr, &addr_len)) > 0) {
+			buffer[v] = '\0';
             printf("Message recu: %s\n", buffer);
+			
+			if(strcmp("SWITCH_STATE", buffer) == 0) {
+                printf("Changement d'etat ...\n", buffer);
+            }
+			else {
+				value = atoi(buffer);
+                printf("Valeurs d'actuateurs recue: %d\n", value);
+				
+				u_act.byte = value;
+				write(fdOut, &u_act.byte, 1);
+			}
         }
     }
+}
+
+/**
+ * Prepare l'armement du signal
+ *
+ * @param handler       Fonction handler
+ */
+void initSignal()
+{
+    struct sigaction act;
+    sigset_t set;
+    
+    // Arme le SIGINT
+    sigemptyset(&set);
+    sigaddset(&set, SIGINT);
+    
+    act.sa_flags = 0;
+    act.sa_mask = set;
+    act.sa_handler = handlerEnd;
+    sigaction(SIGINT, &act, NULL);
+}
+
+/**
+ * Ferme le programme proprement
+ *
+ * @param signo     Numero de l'intteruption
+ */
+void handlerEnd(int signo)
+{
+    // Reception d'un Ctrl + C
+    printf("Terminaison du programme par Ctrl + C\n");
+    
+    // Place tout les actuateurs à 0
+    u_act.byte = 0x00;
+    write(fdOut, &u_act.byte, 1);
+    
+    close(fdIn);
+    close(fdOut);
+    
+    exit(0);
 }

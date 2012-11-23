@@ -130,10 +130,10 @@ public class GameSession implements GameSessionRemote {
         }
         
         // Piéce prise
+        String type = "";
         Piece piecePrise = echiquier.getPiece(x, y);
         if(piecePrise != null) {
-            // Verifier si c'est le roi
-            // TODO
+            type = piecePrise.getType();
             
             echiquier.removePiece(x, y);
             
@@ -150,13 +150,51 @@ public class GameSession implements GameSessionRemote {
         echiquier.switchFocusedPlayer();
         echiquierFacade.edit(echiquier);
         
-        // Previens qu'un tour est passé
         JMSProducer producer = new JMSProducer();
-        producer.sendMessage(echiquier.getJoueur1().getId(), "NEXT_TURN");
-        producer.sendMessage(echiquier.getJoueur2().getId(), "NEXT_TURN");
+        
+        // Si c'est le roi
+        if(type.equals("ROI")) {
+            if(echiquier.getJoueur1().getColor().getRGB() == piecePrise.getColor().getRGB()) {
+                producer.sendMessage(echiquier.getJoueur1().getId(), "YOU_LOOSE");
+                producer.sendMessage(echiquier.getJoueur2().getId(), "YOU_WIN");
+            }
+            else {
+                producer.sendMessage(echiquier.getJoueur1().getId(), "YOU_WIN");
+                producer.sendMessage(echiquier.getJoueur2().getId(), "YOU_LOOSE");
+            }
+            
+            // Termine la partie
+            echiquier.setGameOver(true);
+            echiquierFacade.edit(echiquier);
+        }
+        else {
+            // Previens qu'un tour est passé
+            producer.sendMessage(echiquier.getJoueur1().getId(), "NEXT_TURN");
+            producer.sendMessage(echiquier.getJoueur2().getId(), "NEXT_TURN");
+        }
+        
         producer.close();
         
         return 1;
+    }
+    
+    /**
+     * Termine une partie
+     * @param echiquierId       Id de l'echiquier
+     */
+    private void deleteEchiquier(Long echiquierId) {
+        Echiquier echiquier = echiquierFacade.find(echiquierId);
+        if(echiquier == null) {
+            return;
+        }
+        
+        // Supprime les pieces
+        Collection<Piece> l_pieces = echiquier.getListPiece();
+        for(Piece piece: l_pieces) {
+            pieceFacade.remove(piece);
+        }
+        
+        echiquierFacade.remove(echiquier);
     }
     
     /**
@@ -183,16 +221,36 @@ public class GameSession implements GameSessionRemote {
             return;
         }
         
-        Long joueur1 = echiquier.getJoueur1().getId();
-        Long joueur2 = echiquier.getJoueur2().getId();
+        Joueur joueur1 = echiquier.getJoueur1();
+        Joueur joueur2 = echiquier.getJoueur2();
         
         JMSProducer producer = new JMSProducer();
         
-        if(joueurId == joueur1) {
-            producer.sendMessage(joueur2, "YOU_WON");
+        // Previens l'autre joueur qu'il a gagne
+        if(joueur1 != null && joueurId == joueur1.getId()) {
+            echiquier.setJoueur1(null);
+            
+            // Si la partie n'est pas finie
+            if(!echiquier.gameOver() && joueur2 != null) {
+                producer.sendMessage(joueur2.getId(), "YOU_WIN");
+            }
         }
         else {
-            producer.sendMessage(joueur1, "YOU_WON");
+            echiquier.setJoueur2(null);
+            
+            // Si la partie n'est pas finie
+            if(!echiquier.gameOver() && joueur1 != null) {
+                producer.sendMessage(joueur1.getId(), "YOU_WIN");
+            }
+        }
+        
+        // Fin de la partie
+        echiquier.setGameOver(true);
+        echiquierFacade.edit(echiquier);
+        
+        // Les deux joueurs sont partit
+        if(echiquier.getJoueur1() == null && echiquier.getJoueur2() == null) {
+            deleteEchiquier(echiquierId);
         }
         
         producer.close();

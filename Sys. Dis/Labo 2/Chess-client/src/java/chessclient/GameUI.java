@@ -34,7 +34,8 @@ public class GameUI extends javax.swing.JFrame implements MessageListener {
     private Collection<Piece> l_piece;
     private Piece selectedPiece;
     private List<Point> authorizedMove;
-    private Boolean isMyTurn = false;
+    private boolean isMyTurn = false;
+    private boolean partieFinie;
     
     private JMSConsumer consumer;
     
@@ -85,7 +86,7 @@ public class GameUI extends javax.swing.JFrame implements MessageListener {
             y = (Constant.GRID_HEIGHT - 1) - y;
         }
         
-        if(!isMyTurn) {
+        if(!isMyTurn || partieFinie) {
             return;
         }
         
@@ -161,6 +162,31 @@ public class GameUI extends javax.swing.JFrame implements MessageListener {
         this.echiquierId = echiquierId;
         this.joueurId = joueurId;
         
+        partieFinie = false;
+        
+        // Change les couleurs des cases
+        for(int y=0; y<Constant.GRID_HEIGHT; y++)
+        {
+            for(int x=0; x<Constant.GRID_WIDTH; x++)
+            {
+                // On doit inverser les couleurs pour un joueur
+                int couleur = 0;
+                if(gameSession.getPlayerColor(joueurId).getRGB() == Color.BLACK.getRGB()) {
+                    couleur = 1;
+                }
+                
+                // Modifie la couleur
+                if(((x + y) + couleur) % 2 == 0)
+                {
+                    l_case[x][y].setBackgroundcolor(Color.WHITE);
+                }
+                else
+                {
+                    l_case[x][y].setBackgroundcolor(Color.BLACK);
+                }
+            }
+        }
+        
         consumer = new JMSConsumer(String.valueOf(joueurId));
         consumer.addListener(this);
     }
@@ -172,8 +198,12 @@ public class GameUI extends javax.swing.JFrame implements MessageListener {
         labelGameState = new javax.swing.JLabel();
         echiquier = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Chess GAME");
+        setTitle("Chess Ultimate");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         labelGameState.setText("En attente de joueurs ...");
 
@@ -206,11 +236,26 @@ public class GameUI extends javax.swing.JFrame implements MessageListener {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        gameSession.playerLeave(joueurId, echiquierId);
+        
+        Main.showLobby();
+    }//GEN-LAST:event_formWindowClosing
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel echiquier;
     private javax.swing.JLabel labelGameState;
     // End of variables declaration//GEN-END:variables
 
+    private int closeGame() {
+        gameSession.playerLeave(joueurId, echiquierId);
+        
+        Main.showLobby();
+        
+        return DO_NOTHING_ON_CLOSE;
+    }
+    
     private GameSessionRemote lookupGameSessionRemote() {
         try {
             Context c = new InitialContext();
@@ -232,18 +277,21 @@ public class GameUI extends javax.swing.JFrame implements MessageListener {
             Logger.getLogger(GameUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        if(text.equals("YOU_WON")) {
+        if(text.equals("YOU_WIN")) {
             labelGameState.setText("Vous avez gagné !");
             labelGameState.invalidate();
+            partieFinie = true;
         }
         else if(text.equals("YOU_LOOSE")) {
             labelGameState.setText("Vous avez perdu !");
             labelGameState.invalidate();
+            partieFinie = true;
         }
         else {
             refreshGameState();
-            refreshEchiquier();
         }
+        
+        refreshEchiquier();
     }
     
     /**

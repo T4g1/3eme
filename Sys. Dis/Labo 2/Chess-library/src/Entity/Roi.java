@@ -86,6 +86,15 @@ public class Roi extends Piece implements Serializable {
         
         return l_where;
     }
+
+    /**
+     * Donne le type de la piece
+     * @return      Type de la piece
+     */
+    @Override
+    public String getType() {
+        return "ROI";
+    }
     
     /**
      * Donne le nom de fichier de la piéce

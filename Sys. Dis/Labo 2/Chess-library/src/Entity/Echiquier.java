@@ -23,6 +23,7 @@ public class Echiquier implements Serializable {
     private Long id;
     private String nom;
     private int focusedPlayer;
+    private boolean gameOver;
     
     @OneToMany(fetch=FetchType.EAGER)
     private Collection<Piece> l_pieces = new ArrayList<Piece>();
@@ -34,6 +35,7 @@ public class Echiquier implements Serializable {
         setJoueur2(null);
         
         setNom(name);
+        gameOver = false;
         
         l_pieces.add(new Tour    (0, 0, Color.BLACK));
         l_pieces.add(new Cavalier(1, 0, Color.BLACK));
@@ -128,6 +130,10 @@ public class Echiquier implements Serializable {
         return count;
     }
     
+    public boolean gameOver() {
+        return gameOver;
+    }
+    
     public Joueur getJoueur1() {
         return l_joueur[0];
     }
@@ -169,6 +175,14 @@ public class Echiquier implements Serializable {
      */
     public void switchFocusedPlayer() {
         focusedPlayer = (focusedPlayer + 1) % 2;
+    }
+    
+    /**
+     * Indique l'etat de la partie
+     * @param value     Etat de la partie
+     */
+    public void setGameOver(boolean value) {
+        gameOver = value;
     }
     
     //</editor-fold>

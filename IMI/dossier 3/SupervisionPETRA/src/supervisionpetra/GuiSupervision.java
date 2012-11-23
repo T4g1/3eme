@@ -1,15 +1,27 @@
 package supervisionpetra;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
+import java.net.Socket;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class GuiSupervision extends javax.swing.JFrame {
     private Petra petra;
+    private ServerSocket server;
     public GuiSupervision() {
         initComponents();
         
-        petra = new Petra("192.168.1.1", 27015);
+        petra = new Petra("10.59.40.67", 27016);
+        
+        System.out.println("Ajout du changeSlider");
         setCP.addChangeListener(new changeSlider());
+                
+        System.out.println("Ecoute du PETRA");
+        Server server = new Server(this);
+        server.start();
     }
     
     @SuppressWarnings("unchecked")
@@ -451,13 +463,84 @@ public class GuiSupervision extends javax.swing.JFrame {
     private javax.swing.JCheckBox switchPV;
     private javax.swing.JButton switchState;
     // End of variables declaration//GEN-END:variables
+
+    private void changeActuateurs(int parseInt) {
+        //TODO
+    }
+    
+    public class Server extends Thread
+    {
+        private final GuiSupervision parent;
+        
+        public Server(GuiSupervision parent)
+        {
+            this.parent = parent;
+        }
+        
+        @Override
+        public void run() {
+            System.out.println("LISTEN");
+
+            try
+            {
+                server = new ServerSocket(27015);
+                server.setSoTimeout(100000);
+            } catch (IOException ioe) {
+                System.err.println("[Cannot initialize Server]\n" + ioe);
+                return;
+            }
+
+            Socket clientSocket = null;
+            try {
+                System.out.println("Attente client ...");
+                clientSocket = server.accept();
+            } 
+            catch (IOException e) {
+                System.out.println("Accept failed");
+                return;
+            }
+            System.out.println("Client connecte");
+
+            BufferedReader in;
+            try {
+                in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            } catch (IOException ex) {
+                System.out.println("Input null");
+                return;
+            }
+            System.out.println("Debut des communication");
+
+            String inputLine;
+            try {
+                while(true) {
+                    inputLine = in.readLine();
+                    if(inputLine == null) {
+                        System.out.println("?");
+                        continue;
+                    }
+                    
+                    System.out.println(inputLine);
+                    parent.changeActuateurs(Integer.parseInt(inputLine));
+                }
+            } catch (IOException ex) {
+                System.out.println("Client déconnecté");
+            }
+        }
+    }
     
     public class changeSlider implements ChangeListener
     {
+        int oldValue = -1;
+        
         @Override
         public void stateChanged(ChangeEvent ce)
         {
             int value = ((javax.swing.JSlider)(ce.getSource())).getValue();
+            if(oldValue == value) {
+                return;
+            }
+            
+            oldValue = value;
             
             // Doit envoyer CP puis CP + 1 pour
             // donner les deux bit d'un seul coup

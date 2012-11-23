@@ -18,13 +18,12 @@
 #include <sys/stat.h>
 #include <ncurses.h>
 
-
 #define BYTE    unsigned char
 
 #define FILE_PETRA_IN   "/dev/capteursPETRA"
 #define FILE_PETRA_OUT  "/dev/actuateursPETRA"
 
-#define ADDR_SUPERVISEUR            "192.168.1.1"
+#define ADDR_SUPERVISEUR            "10.59.22.71"
 #define PORT_VERS_SUPERVISEUR       27015
 #define PORT_DEPUIS_SUPERVISEUR     27016
 
@@ -57,6 +56,8 @@ int SendTo (int sock, const char *host, unsigned short int port, const char *buf
 
 void setActuateur(int bit, int value);
 BYTE getCapteur();
+
+int waitTime(unsigned long milisec);
 
 int getBit(int value, int bit);
 void setBit(int* value, int bit, int bitValue);

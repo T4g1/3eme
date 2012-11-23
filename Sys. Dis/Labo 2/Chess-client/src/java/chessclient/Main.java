@@ -47,6 +47,7 @@ public class Main {
      */
     public static void showLobby()
     {
+        lobbyUI.init();
         lobbyUI.refresh();
                 
         introUI.setVisible(false);

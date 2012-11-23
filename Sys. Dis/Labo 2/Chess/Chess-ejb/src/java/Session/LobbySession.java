@@ -103,4 +103,16 @@ public class LobbySession implements LobbySessionRemote {
         
         return 1;
     }
+
+    /**
+     * Supprime le joueur donné
+     * @param joueurId      Id du joueur
+     */
+    @Override
+    public void removePlayer(Long joueurId) {
+        Joueur joueur = joueurFacade.find(joueurId);
+        if(joueur != null) {
+            joueurFacade.remove(joueur);
+        }
+    }
 }
