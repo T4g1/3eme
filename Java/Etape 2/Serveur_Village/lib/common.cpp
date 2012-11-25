@@ -1,6 +1,5 @@
 #include "common.h"
 
-#include <sstream>
 
 /** Attend que l'utilisateur soit pret */
 void pause()

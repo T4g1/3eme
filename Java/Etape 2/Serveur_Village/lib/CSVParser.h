@@ -20,7 +20,11 @@ public:
 	int getInt(string key);
 	vector<string> getKey();
 
+	void set(string key, string value);
+	void save();
+
 private:
+	string filename;
 	map<string, string> elements;
 };
 

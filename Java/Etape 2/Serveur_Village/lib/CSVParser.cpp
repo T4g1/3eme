@@ -8,6 +8,7 @@
 
 CSVParser::CSVParser() : elements()
 {
+	filename = "out.csv";
 }
 
 CSVParser::~CSVParser()
@@ -17,6 +18,8 @@ CSVParser::~CSVParser()
 /** Charge le fichier CSV donné */
 void CSVParser::load(string filename)
 {
+	this->filename = filename;
+
 	// Ouverture du fichier
 	ifstream fichier(filename, ios::in);
 	if(!fichier) return;
@@ -56,4 +59,24 @@ int CSVParser::getInt(string key)
 vector<string> CSVParser::getKey()
 {
 	return getKeyFrom(elements);
+}
+
+/** Insére une nouvelle valeur dans le fichier */
+void CSVParser::set(string key, string value)
+{
+	elements[key] = value;
+	save();
+}
+
+void CSVParser::save()
+{
+	ofstream fichier(filename, ios::out | ios::trunc);
+    if(!fichier) return;
+
+	map<string, string>::iterator it;
+	for(it=elements.begin(); it!=elements.end(); it++) {
+		fichier << it->first << "=" << it->second << endl;
+	}
+ 
+    fichier.close();
 }

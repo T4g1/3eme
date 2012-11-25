@@ -9,15 +9,9 @@
 
 #include "../lib/network.h"
 #include "../lib/CSVParser.h"
+#include "../lib/common.h"
 
 using namespace std;
-
-typedef struct Action {
-	string action;	// Action
-	int article;	// Article demande
-	time_t date;	// Date de realisation
-	string user;	// Login du createur
-} Action;
 
 typedef struct Client {
 	string ip;
@@ -42,6 +36,7 @@ private:
 	static bool isEnPause();
 	static void setPause(bool pause);
 	static void sendCatalogue(SOCKET client);
+	static void sendAction(SOCKET client);
 	
 	static map<int, Action>* l_action;
 	static map<SOCKET, Client>* l_client;

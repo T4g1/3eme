@@ -1,8 +1,7 @@
 #include "ServeurVillage.h"
 
-#include "../lib/common.h"
-
 #include <iostream>
+#include <sstream>
 
 map<int, Action>* ServeurVillage::l_action = new map<int, Action>();
 map<SOCKET, Client>* ServeurVillage::l_client = new map<SOCKET, Client>();
@@ -203,6 +202,12 @@ void ServeurVillage::processRequest(SOCKET client, string request)
 
 		sendCatalogue(client);
 	}
+	// Demande les action enregistree
+	else if(commande.compare("ASK_ACTION") == 0) {
+		cout << "Demande des action recue de " << client << endl;
+
+		sendAction(client);
+	}
 	// Demande de login
 	else if(commande.compare("LOGIN") == 0) {
 		string login = getArg(request, 0);
@@ -232,7 +237,7 @@ void ServeurVillage::processRequest(SOCKET client, string request)
 			commande.compare("DECLASSER") == 0)
 	{
 		string action = commande;
-		int article = atoi(getArg(request, 0).c_str());
+		string article = getArg(request, 0);
 		time_t date = atoi(getArg(request, 1).c_str());
 		
 		time_t now;
@@ -241,19 +246,19 @@ void ServeurVillage::processRequest(SOCKET client, string request)
 		if(date <= now) {
 			cout << "Date de reservation invalide ...";
 			send(client, "DATE_INVALID");
+			return;
 		}
-
-		vector<string> l_materiel = materiel->getKey();
-		if(article <= 0 || (unsigned int)article - 1 >= l_materiel.size()) {
+		else if(article == "") {
 			cout << "Article invalide ...";
 			send(client, "ARTICLE_NOT_FOUND");
+			return;
 		}
 
 		// Ajoute l'action
 		vector<int> l_key = getKeyFrom(*l_action);
 		int id, lastId = (l_key.size() - 1);
 
-		if(lastId < 0) id = 0;
+		if(lastId < 0) id = 1;
 		else id = l_key[lastId] + 1;
 		
 		Action act;
@@ -268,9 +273,45 @@ void ServeurVillage::processRequest(SOCKET client, string request)
 		string reply = "DEMANDE_OK:" + itoa(id);
 		send(client, reply);
 	}
+	// Demande les action enregistree
+	else if(commande.compare("CMAT") == 0) {
+		cout << "Demande de suppression d'action " << client << endl;
+		
+		// Verifie l'id
+		int id = atoi(getArg(request, 0).c_str());
+		if(id <= 0 || l_action->find(id) == l_action->end()) {
+			cout << "Id invalide ...";
+			send(client, "NOT_FOUND");
+			return;
+		}
+
+		// Verifie le propriétaire
+		if((*l_action)[id].user.compare((*l_client)[client].login) != 0) {
+			cout << "Demande echouee, proprietaire ne correspond pas ...";
+			send(client, "NOT_YOURS");
+			return;
+		}
+		
+		l_action->erase(id);
+		cout << "Action " << id << " supprimée" << endl;
+
+		send(client, "SUCCESS_CMAT");
+	}
+	// Demande de materiel
+	else if(commande.compare("ASKMAT") == 0) {
+		string name = getArg(request, 0);
+		if(name == "") {
+			cout << "ASKMAT échoué" << endl;
+			send(client, "ASK_FAILED");
+		}
+
+		materiel->set(name, "1");
+		cout << "Ajout de " << name << " dans le catalogue" << endl;
+		send(client, "ASK_SUCCESS");
+	}
 	// Demande non reconnue
 	else {
-		cout << "Requete recue de " << client << " non reconnue" << endl;
+		cout << "Requete recue de " << client << " non reconnue: " << request << endl;
 		send(client, "UNRECOGNIZED_REQUEST");
 	}
 }
@@ -287,6 +328,27 @@ void ServeurVillage::sendCatalogue(SOCKET client)
 	}
 
 	cout << "Envois du catalogue ..." << endl;
+	send(client, reply);
+}
+
+/** Envois les action au client */
+void ServeurVillage::sendAction(SOCKET client)
+{
+	string reply = "ACTION:";
+	
+	map<int, Action>::iterator it;
+	for(it=l_action->begin(); it!=l_action->end(); it++) {
+		string action = it->second.action;
+		string article = it->second.article;
+		time_t date = it->second.date;
+
+		stringstream sdate;
+		sdate << date;
+
+		reply += itoa(it->first) + ":" + action + ":" + article + ":"; // + sdate.str();
+	}
+
+	cout << "Envois des action ..." << endl;
 	send(client, reply);
 }
 

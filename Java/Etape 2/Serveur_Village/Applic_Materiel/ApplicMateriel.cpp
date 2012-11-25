@@ -1,13 +1,7 @@
 #include "ApplicMateriel.h"
 
-#include "../lib/common.h"
 
-#include <iostream>
-#include <string>
-#include <sstream>
-
-
-ApplicMateriel::ApplicMateriel() : config(), l_materiel()
+ApplicMateriel::ApplicMateriel() : config(), l_materiel(), l_action()
 {
 	// Initialisation du reseau
 	if(net_init() != 0) {
@@ -59,6 +53,23 @@ void ApplicMateriel::start()
 
 		// Gestion du choix
 		if(input.compare("4") == 0) {
+			showAction();
+			if(l_action.size() == 0) {
+				cout << "Rien a annuler ..." << endl;
+				pause(); continue;
+			}
+
+			cout << "Annuler quelle action: ";
+			cin >> input;
+
+			// Saisie de l'action
+			int idAction = atoi(input.c_str());
+			if(idAction <= 0 || l_action.find(idAction) == l_action.end()) {
+				cout << "Saisie invalide ..." << endl;
+				pause(); continue;
+			}
+
+			cmat(idAction);
 		} else if(input.compare("5") == 0) {
 			string name, description, marque, prix, accessoire;
 
@@ -88,16 +99,23 @@ void ApplicMateriel::start()
 			else continue;
 
 			showCatalogue();
+			if(l_materiel.size() == 0) {
+				cout << "Rien a commander ..." << endl;
+				pause(); continue;
+			}
+
 			cout << "Commander quel element: ";
 			cin >> input;
 
 			// Saisie de l'article
 			vector<string> l_key = getKeyFrom(l_materiel);
-			int article = atoi(input.c_str());
-			if(article <= 0 || (unsigned int)article - 1 >= l_key.size()) {
+			int idArticle = atoi(input.c_str());
+			if(idArticle <= 0 || (unsigned int)idArticle - 1 >= l_key.size()) {
 				cout << "Saisie invalide ..." << endl;
 				pause(); continue;
 			}
+
+			string article = l_key[idArticle];
 
 			// Saisie de la date
 			time_t date = askDate();
@@ -184,14 +202,55 @@ void ApplicMateriel::showCatalogue()
 	}
 }
 
+/** Affiche les action */
+void ApplicMateriel::showAction()
+{
+	string buffer = "ASK_ACTION";
+
+	send(socket, buffer);
+	recv(socket, &buffer);
+
+	string commande = getCommande(buffer);
+	if(commande.compare("ACTION") != 0) return;
+
+	// Parcourt la réponse
+	int i = 0;
+	l_action.clear();
+	while(true) {
+		int id = atoi(getArg(buffer, i).c_str());
+		if(id <= 0) break;
+		
+		string action = getArg(buffer, i+1);
+		string article = getArg(buffer, i+2);
+		
+		Action act;
+		act.action = action;
+		act.article = article;
+		//act.date = date;
+		act.user = "";
+
+		l_action[id] = act;
+
+		i += 3;
+	}
+
+	cout << endl << endl;
+	cout << "ACTION ENREGISTREE:" << endl;
+	// Affiche les actions
+	map<int, Action>::iterator it;
+	for(it=l_action.begin(); it!=l_action.end(); it++) {
+		cout << it->first << ") " << it->second.action << " " << it->second.article << endl;
+	}
+}
+
 /** Action BMAT */
-void ApplicMateriel::bmat(string action, int article, time_t date)
+void ApplicMateriel::bmat(string action, string article, time_t date)
 {
 	stringstream sdate;
 	sdate << date;
 	
 	// Evoit de la requete
-	string buffer = action + ":" + itoa(article) + ":" + sdate.str();
+	string buffer = action + ":" + article + ":" + sdate.str();
 	send(socket, buffer);
 	recv(socket, &buffer);
 	cout << "Recu du serveur: " << buffer << endl;
@@ -214,6 +273,26 @@ void ApplicMateriel::bmat(string action, int article, time_t date)
 	pause();
 }
 
+/** Action CMAT */
+void ApplicMateriel::cmat(int id)
+{
+	string buffer = "CMAT:" + itoa(id);
+	send(socket, buffer);
+	recv(socket, &buffer);
+
+	string commande = getCommande(buffer);
+	if(commande.compare("NOT_YOURS") == 0)
+		cout << "Impossible de supprimer l'action, elle ne nous appartient pas ..." << endl;
+	else if(commande.compare("NOT_FOUND") == 0)
+		cout << "Impossible de supprimer l'action, elle n'existe pas ..." << endl;
+	else if(commande.compare("SUCCESS_CMAT") == 0)
+		cout << "Action supprimée" << endl;
+	else 
+		cout << "Reponse innatendue recue, demande echouée ..." << endl;
+
+	pause();
+}
+
 /** Action ASKMAT */
 void ApplicMateriel::askmat(string name, string description, string marque, string prix, string accessoire)
 {
@@ -228,4 +307,6 @@ void ApplicMateriel::askmat(string name, string description, string marque, stri
 		cout << "Demande reussie" << endl;
 	else
 		cout << "Reponse innatendue recue, demande echouée ..." << endl;
+
+	pause();
 }

@@ -6,11 +6,19 @@
 #include <map>
 #include <vector>
 #include <ctime>
+#include <sstream>
 
 #define DATE_INVALIDE	-1
 #define DATE_ANTERIEURE	-2
 
 using namespace std;
+
+typedef struct Action {
+	string action;	// Action
+	string article;	// Article demande
+	time_t date;	// Date de realisation
+	string user;	// Login du createur
+} Action;
 
 void pause();
 time_t askDate();
