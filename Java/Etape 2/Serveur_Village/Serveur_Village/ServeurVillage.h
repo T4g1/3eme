@@ -8,14 +8,21 @@
 #include <vector>
 
 #include "../lib/network.h"
-
-#define PORT_ADMIN		27015
-#define PORT_VILLAGE	27016
-
-#define POOL_SIZE		5
+#include "../lib/CSVParser.h"
 
 using namespace std;
 
+typedef struct Action {
+	string action;	// Action
+	int article;	// Article demande
+	time_t date;	// Date de realisation
+	string user;	// Login du createur
+} Action;
+
+typedef struct Client {
+	string ip;
+	string login;
+} Client;
 
 class ServeurVillage
 {
@@ -31,15 +38,27 @@ private:
 	static void* ThClientFHMP(void* data);
 	static void* ThServeurFHMPA(void* data);
 
-	static map<string, string>* l_clients;
+	static void processRequest(SOCKET client, string request);
+	static bool isEnPause();
+	static void setPause(bool pause);
+	static void sendCatalogue(SOCKET client);
+	
+	static map<int, Action>* l_action;
+	static map<SOCKET, Client>* l_client;
 	static stack<SOCKET>* l_clientSocket;
 
 	pthread_t idThServeurFHMP;
 	pthread_t idThServeurFHMPA;
 
 	// Gestion du pool de client
+	static pthread_mutex_t* mutex_pause;
 	static pthread_mutex_t* mutex_pool;
 	static pthread_cond_t* cond_pool;
+
+	static bool pause;
+	static CSVParser* config;
+	static CSVParser* materiel;
+	static CSVParser* users;
 };
 
 #endif

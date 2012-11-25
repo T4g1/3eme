@@ -61,11 +61,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\lib\common.cpp" />
+    <ClCompile Include="..\lib\CSVParser.cpp" />
     <ClCompile Include="..\lib\network.cpp" />
     <ClCompile Include="ApplicMateriel.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\lib\common.h" />
+    <ClInclude Include="..\lib\CSVParser.h" />
     <ClInclude Include="..\lib\network.h" />
     <ClInclude Include="ApplicMateriel.h" />
   </ItemGroup>

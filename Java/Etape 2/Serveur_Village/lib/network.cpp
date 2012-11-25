@@ -83,24 +83,28 @@ int accept(int socket, char* ip)
     // Attente pendant laquelle le client se connecte
     csock = accept(socket, (SOCKADDR*)&csin, &crecsize);
 
-	strcpy(ip, inet_ntoa(csin.sin_addr));
+	sprintf_s(ip, IP_SIZE, inet_ntoa(csin.sin_addr));
 
 	return csock;
 }
 
-int send(int socket, char* buffer, int size)
+/** Envoi une chaine de caractere vers le serveur */
+int send(int socket, string buffer)
 {
-	return send(socket, buffer, strlen(buffer), 0);
+	return send(socket, buffer.c_str(), buffer.length(), 0);
 }
 
-int recv(int socket, char* buffer)
+/** Recoit une chaine de caractere depuis le serveur */
+int recv(int socket, string* buffer)
 {
+	char cbuffer[BUFFER_SIZE];
 	int n = 0;
 
-	if((n = recv(socket, buffer, BUFFER_SIZE - 1, 0)) < 0)
+	if((n = recv(socket, cbuffer, BUFFER_SIZE, 0)) < 0)
 		return n;
 
-	buffer[n] = 0;
+	cbuffer[n] = 0;
 
+	*buffer = cbuffer;
 	return n;
 }

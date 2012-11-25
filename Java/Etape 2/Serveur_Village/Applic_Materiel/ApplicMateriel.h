@@ -8,8 +8,7 @@
 #include <vector>
 
 #include "../lib/network.h"
-
-#define PORT_VILLAGE	27016
+#include "../lib/CSVParser.h"
 
 using namespace std;
 
@@ -23,8 +22,14 @@ public:
 	void start();
 private:
 	bool connect();
-
-	int socket;
+	bool doLogin(string login, string password);
+	void showCatalogue(); 
+	void bmat(string action, int article, time_t date);
+	void askmat(string name, string description, string marque, string prix, string accessoire);
+	
+	CSVParser config;
+	SOCKET socket;
+	map<string, int> l_materiel;
 };
 
 #endif

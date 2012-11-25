@@ -24,12 +24,24 @@
     <ClCompile Include="ApplicMateriel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\lib\common.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\CSVParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\lib\network.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ApplicMateriel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\CSVParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
