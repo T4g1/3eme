@@ -1,7 +1,7 @@
-﻿Build started 25/11/2012 21:43:27.
+﻿Build started 25/11/2012 23:18:46.
      1>Project "E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Serveur_Village\Serveur_Village.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Touching "Debug\Serveur_Village.unsuccessfulbuild".
+         Creating "Debug\Serveur_Village.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ServeurVillage.cpp
          ServeurVillage.cpp
@@ -22,4 +22,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.62
+Time Elapsed 00:00:01.99

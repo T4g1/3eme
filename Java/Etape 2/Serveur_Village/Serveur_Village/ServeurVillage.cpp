@@ -186,7 +186,8 @@ void* ServeurVillage::ThServeurFHMPA(void* data)
     SOCKET sock, csock;
 	char ip[IP_SIZE];
 
-	if((sock = socketServer(config->getInt("PORT_ADMIN"))) == INVALID_SOCKET) {
+	int port = config->getInt("PORT_ADMIN");
+	if((sock = socketServer(port)) == INVALID_SOCKET) {
 		cout << "FHMPA: Création du socket échouée ..." << endl;
 		return NULL;
 	} else if(sock == SOCKET_ERROR) {
@@ -194,19 +195,60 @@ void* ServeurVillage::ThServeurFHMPA(void* data)
 		return NULL;
 	}
 	
-	cout << "FHMPA: La socket " << sock << " est maintenant ouverte en mode TCP/IP" << endl;
+	cout << "FHMPA: La socket " << sock << 
+			" est maintenant ouverte en mode TCP/IP sur le port " << port << endl;
 
-    if((csock = accept(sock, ip)) == SOCKET_ERROR) {
-		cout << "FHMPA: Listen échoué ..." << endl;
-		return NULL;
+	while(true) {
+		if((csock = accept(sock, ip)) == SOCKET_ERROR) {
+			cout << "FHMPA: Listen échoué ..." << endl;
+			return NULL;
+		}
+
+		cout << "FHMPA: Un client se connecte avec la socket " << csock << " de " << ip << endl;
+	    
+		string buffer;
+		bool logged = false;
+		while(true) {
+			if(recv(csock, &buffer) < 0) {
+				cout << "Erreur lors de la récéption du message, fermeture du client ..." << endl;
+				break;
+			}
+
+			cout << "Recu de l'admin " << csock << ": " << buffer << endl;
+
+			// Traitement du message
+			string commande = getCommande(buffer);
+			if(commande.compare("LOGINA") == 0) {
+				string password = getArg(buffer, 0);
+				if(password.compare(users->get("admin")) == 0) {
+					logged = true;
+					cout << "Login reussit de l'admin" << endl;
+					send(csock, "LOGIN_SUCCESS");
+				} else {
+					logged = false;
+					cout << "Login échoué de l'admin" << endl;
+					send(csock, "LOGIN_FAILED");
+					break;
+				}
+			}
+			else if(logged) {
+				if(commande.compare("LCLIENTS") == 0) {
+					string reply = "";
+					map<SOCKET, Client>::iterator it;
+					for(it=l_client->begin(); it!=l_client->end(); it++) {
+						reply += it->second.login + ":"; 
+					}
+
+					send(csock, reply);
+				}
+			}
+		}
+
+		// Fermeture de la socket client et de la socket serveur
+		cout << "FHMPA: Fermeture de la socket client et serveur" << endl;
+		closesocket(csock);
+		closesocket(sock);
 	}
-
-    cout << "FHMPA: Un client se connecte avec la socket " << csock << " de " << ip << endl;
-	        
-    // Fermeture de la socket client et de la socket serveur
-    cout << "FHMPA: Fermeture de la socket client et serveur" << endl;
-    closesocket(csock);
-    closesocket(sock);
 
 	return NULL;
 }
@@ -243,7 +285,7 @@ void ServeurVillage::processRequest(SOCKET client, string request)
 		// Verifie le password
 		else if(users->get(login).compare(password) == 0) {
 			(*l_client)[client].login = login;
-			cout << "Login réussit" << endl;
+			cout << "Login réussit de " << (*l_client)[client].login << endl;
 			send(client, "LOGIN_SUCCES");
 		}
 		else {
