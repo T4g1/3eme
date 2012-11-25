@@ -2,20 +2,18 @@
 #define __SERVEURVILLAGE__
 
 #include <pthread.h>
-#include <string>
-#include <map>
 #include <stack>
-#include <vector>
 
-#include "../lib/network.h"
 #include "../lib/CSVParser.h"
 #include "../lib/common.h"
+#include "../lib/network.h"
 
 using namespace std;
 
 typedef struct Client {
 	string ip;
 	string login;
+	SOCKET urgence;
 } Client;
 
 class ServeurVillage

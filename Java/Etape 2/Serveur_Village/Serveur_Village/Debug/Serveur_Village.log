@@ -1,4 +1,4 @@
-﻿Build started 25/11/2012 20:44:15.
+﻿Build started 25/11/2012 21:43:27.
      1>Project "E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Serveur_Village\Serveur_Village.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Touching "Debug\Serveur_Village.unsuccessfulbuild".
@@ -11,6 +11,7 @@
          Debug\network.obj
          Debug\main.obj
          Debug\ServeurVillage.obj
+         LINK : E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Debug\Serveur_Village.exe not found or not built by the last incremental link; performing full link
          Serveur_Village.vcxproj -> E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Debug\Serveur_Village.exe
        Manifest:
          C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Debug\Serveur_Village.exe;#1" /manifest Debug\Serveur_Village.exe.intermediate.manifest
@@ -21,4 +22,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.63
+Time Elapsed 00:00:01.62

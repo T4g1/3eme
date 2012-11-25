@@ -1,12 +1,13 @@
 #ifndef __COMMON__
 #define __COMMON__
 
-#include <string>
 #include <iostream>
+#include <string>
 #include <map>
 #include <vector>
 #include <ctime>
 #include <sstream>
+#include <pthread.h>
 
 #define DATE_INVALIDE	-1
 #define DATE_ANTERIEURE	-2

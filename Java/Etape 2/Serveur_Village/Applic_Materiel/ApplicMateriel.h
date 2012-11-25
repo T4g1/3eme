@@ -2,19 +2,15 @@
 #define __APPLICMATERIEL__
 
 #include <pthread.h>
-#include <string>
-#include <map>
 #include <stack>
-#include <vector>
-#include <iostream>
-#include <sstream>
 
-#include "../lib/network.h"
 #include "../lib/CSVParser.h"
 #include "../lib/common.h"
+#include "../lib/network.h"
 
 using namespace std;
 
+void* urgence(void* param);
 
 class ApplicMateriel
 {
@@ -32,6 +28,7 @@ private:
 	void cmat(int id);
 	void askmat(string name, string description, string marque, string prix, string accessoire);
 	
+	pthread_t idThUrgence;
 	CSVParser config;
 	SOCKET socket;
 	map<string, int> l_materiel;

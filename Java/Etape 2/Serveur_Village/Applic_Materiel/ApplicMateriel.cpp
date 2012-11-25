@@ -23,6 +23,13 @@ void ApplicMateriel::start()
 {
 	string login, password;
 
+	// Lance le thread d'urgence
+	int port_urgence = config.getInt("PORT_URGENCE");
+	if(pthread_create(&idThUrgence, NULL, urgence, &port_urgence) != 0)
+		cout << "Création du thread pour les urgences echouée ..." << endl;
+	else
+		cout << "Thread pour les urgences lancé ..." << endl;
+
 	// Connexion au serveur
 	if(!connect())
 		return;
@@ -309,4 +316,61 @@ void ApplicMateriel::askmat(string name, string description, string marque, stri
 		cout << "Reponse innatendue recue, demande echouée ..." << endl;
 
 	pause();
+}
+
+/** Serveur d'ecoute pour des urgences */
+void* urgence(void* param)
+{
+	int port = *(int*)param;
+	SOCKET sock, csock;
+	char ip[IP_SIZE];
+	string buffer;
+
+	if((sock = socketServer(port)) == INVALID_SOCKET) {
+		cout << "URGENCE: Socket d'urgence non créé ..." << endl;
+		return NULL;
+	} else if(sock == SOCKET_ERROR) {
+		cout << "URGENCE: Bind d'urgence échoué ..." << endl;
+		return NULL;
+	}
+	
+	cout << "URGENCE: Le socket d'urgence " << sock << " est maintenant ouverte en mode TCP/IP" << endl;
+
+    if((csock = accept(sock, ip)) == SOCKET_ERROR) {
+		cout << "URGENCE: Listen sur le socket d'urgence échoué ..." << endl;
+		return NULL;
+	}
+	
+	int time;
+    cout << "URGENCE: Le serveur se connecte sur le port d'urgence " << csock << " de " << ip << endl;
+	
+	while(true) {
+		recv(csock, &buffer);
+
+		string commande = getCommande(buffer);
+		if(commande.compare("PAUSE") == 0)
+			cout << "URGENCE: Serveur en pause ..." << endl;
+		else if(commande.compare("UNPAUSE") == 0)
+			cout << "URGENCE: Le serveur sort de pause ..." << endl;
+		else if(commande.compare("CLOSE") == 0) {
+			time = atoi(getArg(buffer, 0).c_str());
+
+			cout << "URGENCE: Le serveur se ferme dans " << time << "secondes ..." << endl;
+			break;
+		}
+	}
+
+    // Fermeture de la socket client et de la socket serveur
+    cout << "URGENCE: Fermeture des socket client et serveur" << endl;
+    closesocket(csock);
+    closesocket(sock);
+
+	while(time--) {
+		Sleep(1);
+		cout << "URGENCE: Fermeture du serveur dans " << time << "seconde(s)" << endl;
+	}
+
+	cout << "Serveur eteint, veuillez quitter le programme ...";
+
+	return NULL;
 }

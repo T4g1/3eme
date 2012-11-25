@@ -107,6 +107,9 @@ void* ServeurVillage::ThServeurFHMP(void* data)
 		pthread_mutex_lock(mutex_pool);
 		l_clientSocket->push(csock);
 
+		// Enregistre l'ip
+		(*l_client)[csock].ip = ip;
+
 		pthread_cond_signal(cond_pool);
 		pthread_mutex_unlock(mutex_pool);
 	}
@@ -137,6 +140,21 @@ void* ServeurVillage::ThClientFHMP(void* data)
 		l_clientSocket->pop();
 		pthread_mutex_unlock(mutex_pool);
 
+		SOCKET urgence;
+			
+		// Création du socket d'urgence
+		string ip = (*l_client)[csock].ip;
+		if((urgence = socketClient(ip.c_str(), config->getInt("PORT_URGENCE"))) == INVALID_SOCKET) {
+			cout << "Connection urgence: Création du socket échouée ..." << endl;
+		} else if(urgence == SOCKET_ERROR) {
+			cout << "Connection urgence: Bind échoué ..." << endl;
+		} else if(urgence == -2) {
+			cout << "Connection urgence: Addresse IP incorrecte ..." << endl;
+		}
+
+		// Enregistre l'urgence
+		(*l_client)[csock].urgence = urgence;
+
 		// Ecoute le client
 		while(true) {
 			if(recv(csock, &buffer) < 0) {
@@ -150,9 +168,11 @@ void* ServeurVillage::ThClientFHMP(void* data)
 			processRequest(csock, buffer);
 		}
 		
+		cout << "FHMP: Fermeture de la socket client d'urgence: " << urgence << endl;
+		closesocket(urgence);
 		cout << "FHMP: Fermeture de la socket client: " << csock << endl;
-		l_client->erase(csock);
 		closesocket(csock);
+		l_client->erase(csock);
 	}
 
 	return NULL;

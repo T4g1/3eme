@@ -46,7 +46,7 @@ int socketServer(int port)
  * Crée un socket client
  * @return		INVALID_SOCKET, SOCKET_ERROR, -2 ou le socket créé
  */
-int socketClient(char* ip, int port)
+int socketClient(const char* ip, int port)
 {
 	SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
 	SOCKADDR_IN sin = { 0 };

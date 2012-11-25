@@ -17,7 +17,7 @@ using namespace std;
 int net_init();
 void net_close();
 int socketServer(int port);
-int socketClient(char* ip, int port);
+int socketClient(const char* ip, int port);
 int accept(int socket, char* ip);
 int send(int socket, string buffer);
 int recv(int socket, string* buffer);
