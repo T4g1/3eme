@@ -75,6 +75,14 @@ public class Echiquier implements Serializable {
     }
     
     /**
+     * Vide les piéces sur l'echiquier
+     */
+    public void clearEchiquier()
+    {
+        l_pieces.clear();
+    }
+    
+    /**
      * Supprime la piéce à la position donnée
      * @param x     Absice
      * @param y     Ordonnée

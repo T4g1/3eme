@@ -143,10 +143,12 @@ void ApplicMateriel::start()
 /** Initialise la connexion au serveur */
 bool ApplicMateriel::connect()
 {
-	char* ip = "127.0.0.1";
+	string ip;
+	cout << "Entrez l'adresse IP du serveur: ";
+	cin >> ip;
 
 	// Création du socket
-	if((socket = socketClient(ip, config.getInt("PORT_VILLAGE"))) == INVALID_SOCKET) {
+	if((socket = socketClient(ip.c_str(), config.getInt("PORT_VILLAGE"))) == INVALID_SOCKET) {
 		cout << "Création du socket échouée ..." << endl;
 		return false;
 	} else if(socket == SOCKET_ERROR) {
@@ -172,8 +174,10 @@ bool ApplicMateriel::doLogin(string login, string password)
 		return true;
 	else if(reply.compare("SERVER_INPAUSE") == 0)
 		cout << "Serveur en pause" << endl;
-	else
+	else if(reply.compare("LOGIN_FAILED") == 0)
 		cout << "Login ou password incorrect" << endl;
+	else
+		serverIndisponnible();
 
 	return false;
 }
@@ -187,7 +191,7 @@ void ApplicMateriel::showCatalogue()
 	recv(socket, &buffer);
 
 	string commande = getCommande(buffer);
-	if(commande.compare("CATALOGUE") != 0) return;
+	if(commande.compare("CATALOGUE") != 0) serverIndisponnible();
 
 	// Parcourt la réponse
 	int i = 0;
@@ -218,7 +222,7 @@ void ApplicMateriel::showAction()
 	recv(socket, &buffer);
 
 	string commande = getCommande(buffer);
-	if(commande.compare("ACTION") != 0) return;
+	if(commande.compare("ACTION") != 0) serverIndisponnible();
 
 	// Parcourt la réponse
 	int i = 0;
@@ -275,7 +279,7 @@ void ApplicMateriel::bmat(string action, string article, time_t date)
 			cout << "Demande enregistrée, id: " << id << endl;
 	}
 	else
-		cout << "Reponse innatendue recue, demande echouée ..." << endl;
+		serverIndisponnible();
 
 	pause();
 }
@@ -295,7 +299,7 @@ void ApplicMateriel::cmat(int id)
 	else if(commande.compare("SUCCESS_CMAT") == 0)
 		cout << "Action supprimée" << endl;
 	else 
-		cout << "Reponse innatendue recue, demande echouée ..." << endl;
+		serverIndisponnible();
 
 	pause();
 }
@@ -313,9 +317,16 @@ void ApplicMateriel::askmat(string name, string description, string marque, stri
 	else if (commande.compare("ASK_SUCCESS") == 0) 
 		cout << "Demande reussie" << endl;
 	else
-		cout << "Reponse innatendue recue, demande echouée ..." << endl;
+		serverIndisponnible();
 
 	pause();
+}
+
+/** Le serveur est fermé */
+void ApplicMateriel::serverIndisponnible()
+{
+	cout << "Le server est eteint ..." << endl;
+	pause(); exit(0);
 }
 
 /** Serveur d'ecoute pour des urgences */
@@ -366,7 +377,7 @@ void* urgence(void* param)
     closesocket(sock);
 
 	while(time--) {
-		Sleep(1);
+		Sleep(1000);
 		cout << "URGENCE: Fermeture du serveur dans " << time << "seconde(s)" << endl;
 	}
 

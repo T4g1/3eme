@@ -27,6 +27,7 @@ private:
 	void bmat(string action, string article, time_t date);
 	void cmat(int id);
 	void askmat(string name, string description, string marque, string prix, string accessoire);
+	void serverIndisponnible();
 	
 	pthread_t idThUrgence;
 	CSVParser config;

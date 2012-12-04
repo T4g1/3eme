@@ -35,6 +35,8 @@ private:
 	static void setPause(bool pause);
 	static void sendCatalogue(SOCKET client);
 	static void sendAction(SOCKET client);
+	static vector<string> getConnectedLogin();
+	static void sendUrgence(string txt);
 	
 	static map<int, Action>* l_action;
 	static map<SOCKET, Client>* l_client;
@@ -46,6 +48,7 @@ private:
 	// Gestion du pool de client
 	static pthread_mutex_t* mutex_pause;
 	static pthread_mutex_t* mutex_pool;
+	static pthread_mutex_t* mutex_info;
 	static pthread_cond_t* cond_pool;
 
 	static bool pause;

@@ -63,7 +63,7 @@ public class AdminTerminaux extends javax.swing.JFrame {
         }
         
         if(socket == null) {
-            System.out.println("Coonection echouée");
+            System.out.println("Connection echouée");
             System.exit(0);
         }
         
@@ -193,6 +193,13 @@ public class AdminTerminaux extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             oStream.write("STOP".getBytes());
+            
+            String reply = read();
+            if("STOP_OK".equals(reply)) {
+                System.exit(0);
+            } else {
+                System.out.println("Erreur lors de la fermeture");
+            }
         } catch (IOException ex) {
             System.out.println("Erreur lors de ETEINDRE");
         }
@@ -220,14 +227,24 @@ public class AdminTerminaux extends javax.swing.JFrame {
 
     private void switchPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchPauseActionPerformed
         try {
+            String reply = "";
+            
             switch (statusText.getText()) {
                 case "RUNNING":
-                    statusText.setText("PAUSE");
                     oStream.write("PAUSE".getBytes());
+                    
+                    reply = read();
+                    if("PAUSE_OK".equals(reply)) {
+                        statusText.setText("PAUSE");
+                    }
                     break;
                 case "PAUSE":
-                    statusText.setText("RUNNING");
                     oStream.write("UNPAUSE".getBytes());
+                    
+                    reply = read();
+                    if("UNPAUSE_OK".equals(reply)) {
+                        statusText.setText("RUNNING");
+                    }
                     break;
             }
         } catch (IOException ex) {

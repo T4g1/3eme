@@ -1,25 +1,33 @@
-﻿Build started 25/11/2012 23:18:46.
-     1>Project "E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Serveur_Village\Serveur_Village.vcxproj" on node 2 (build target(s)).
-     1>InitializeBuildStatus:
+﻿Build started 29/11/2012 13:40:28.
+     1>Project "E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Serveur_Village\Serveur_Village.vcxproj" on node 2 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "Debug\Serveur_Village.lastbuildstate".
+       InitializeBuildStatus:
          Creating "Debug\Serveur_Village.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ServeurVillage.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\lib\common.cpp ..\lib\CSVParser.cpp ..\lib\network.cpp main.cpp ServeurVillage.cpp
          ServeurVillage.cpp
+         main.cpp
+         network.cpp
+         CSVParser.cpp
+         common.cpp
+     1>e:\users\t4g1\projets\3eme\java\etape 2\serveur_village\lib\common.cpp(38): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\time.inl(112) : see declaration of 'localtime'
+         Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Debug\Serveur_Village.exe" /NOLOGO pthreadVCE2.lib ws2_32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Serveur_Village.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Debug\Serveur_Village.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Debug\Serveur_Village.lib" /MACHINE:X86 Debug\common.obj
          Debug\CSVParser.obj
          Debug\network.obj
          Debug\main.obj
          Debug\ServeurVillage.obj
-         LINK : E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Debug\Serveur_Village.exe not found or not built by the last incremental link; performing full link
          Serveur_Village.vcxproj -> E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Debug\Serveur_Village.exe
        Manifest:
          C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Debug\Serveur_Village.exe;#1" /manifest Debug\Serveur_Village.exe.intermediate.manifest
        FinalizeBuildStatus:
          Deleting file "Debug\Serveur_Village.unsuccessfulbuild".
          Touching "Debug\Serveur_Village.lastbuildstate".
-     1>Done Building Project "E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Serveur_Village\Serveur_Village.vcxproj" (build target(s)).
+     1>Done Building Project "E:\Users\T4g1\Projets\3eme\Java\Etape 2\Serveur_Village\Serveur_Village\Serveur_Village.vcxproj" (rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.99
+Time Elapsed 00:00:05.41

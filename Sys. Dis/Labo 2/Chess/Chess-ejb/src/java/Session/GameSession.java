@@ -193,7 +193,8 @@ public class GameSession implements GameSessionRemote {
         for(Piece piece: l_pieces) {
             pieceFacade.remove(piece);
         }
-        
+        echiquier.clearEchiquier();
+        echiquierFacade.edit(echiquier);
         echiquierFacade.remove(echiquier);
     }
     
@@ -216,6 +217,7 @@ public class GameSession implements GameSessionRemote {
      */
     @Override
     public void playerLeave(Long joueurId, Long echiquierId) {
+        System.out.println("Player leave");
         Echiquier echiquier = echiquierFacade.find(echiquierId);
         if(echiquier == null) {
             return;
@@ -227,8 +229,9 @@ public class GameSession implements GameSessionRemote {
         JMSProducer producer = new JMSProducer();
         
         // Previens l'autre joueur qu'il a gagne
-        if(joueur1 != null && joueurId == joueur1.getId()) {
+        if(joueur1 != null && joueurId.equals(joueur1.getId())) {
             echiquier.setJoueur1(null);
+            System.out.println("Delete player 1");
             
             // Si la partie n'est pas finie
             if(!echiquier.gameOver() && joueur2 != null) {
@@ -237,6 +240,7 @@ public class GameSession implements GameSessionRemote {
         }
         else {
             echiquier.setJoueur2(null);
+            System.out.println("Delete player 2");
             
             // Si la partie n'est pas finie
             if(!echiquier.gameOver() && joueur1 != null) {
@@ -251,6 +255,7 @@ public class GameSession implements GameSessionRemote {
         // Les deux joueurs sont partit
         if(echiquier.getJoueur1() == null && echiquier.getJoueur2() == null) {
             deleteEchiquier(echiquierId);
+            System.out.println("Delete echiquier");
         }
         
         producer.close();

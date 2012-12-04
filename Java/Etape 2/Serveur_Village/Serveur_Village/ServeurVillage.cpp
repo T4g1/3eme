@@ -13,6 +13,7 @@ CSVParser* ServeurVillage::users = new CSVParser();
 
 pthread_mutex_t* ServeurVillage::mutex_pause = new pthread_mutex_t();
 pthread_mutex_t* ServeurVillage::mutex_pool = new pthread_mutex_t();
+pthread_mutex_t* ServeurVillage::mutex_info = new pthread_mutex_t();
 pthread_cond_t* ServeurVillage::cond_pool = new pthread_cond_t();
 
 bool ServeurVillage::pause = false;
@@ -89,6 +90,7 @@ void* ServeurVillage::ThServeurFHMP(void* data)
 	
 	pthread_mutex_init(mutex_pool, NULL);
 	pthread_mutex_init(mutex_pause, NULL);
+	pthread_mutex_init(mutex_info, NULL);
 	pthread_cond_init (cond_pool, NULL);
 	
 	// Lance les thread client
@@ -120,6 +122,7 @@ void* ServeurVillage::ThServeurFHMP(void* data)
 	
 	pthread_mutex_destroy(mutex_pause);
 	pthread_mutex_destroy(mutex_pool);
+	pthread_mutex_destroy(mutex_info);
 	pthread_cond_destroy(cond_pool);
 
 	return NULL;
@@ -234,12 +237,27 @@ void* ServeurVillage::ThServeurFHMPA(void* data)
 			else if(logged) {
 				if(commande.compare("LCLIENTS") == 0) {
 					string reply = "";
-					map<SOCKET, Client>::iterator it;
-					for(it=l_client->begin(); it!=l_client->end(); it++) {
-						reply += it->second.login + ":"; 
-					}
+
+					vector<string> l_login = getConnectedLogin();
+					vector<string>::iterator it;
+					for(it=l_login.begin(); it!=l_login.end();it++)
+						reply += *it + ":";
 
 					send(csock, reply);
+				}
+				else if(commande.compare("STOP") == 0) {
+					sendUrgence("CLOSE:10");
+					send(csock, "STOP_OK");
+				}
+				else if(commande.compare("PAUSE") == 0) {
+					sendUrgence("PAUSE");
+					send(csock, "PAUSE_OK");
+					setPause(true);
+				}
+				else if(commande.compare("UNPAUSE") == 0) {
+					sendUrgence("UNPAUSE");
+					send(csock, "UNPAUSE_OK");
+					setPause(false);
 				}
 			}
 		}
@@ -248,14 +266,44 @@ void* ServeurVillage::ThServeurFHMPA(void* data)
 		cout << "FHMPA: Fermeture de la socket client et serveur" << endl;
 		closesocket(csock);
 		closesocket(sock);
+
+		Sleep(10000);
+		exit(0);
 	}
 
 	return NULL;
 }
 
+/** Envois de message d'urgence */
+vector<string> ServeurVillage::getConnectedLogin()
+{
+	vector<string> l_login;
+	
+	pthread_mutex_lock(mutex_info);
+	map<SOCKET, Client>::iterator it;
+	for(it=l_client->begin(); it!=l_client->end(); it++) {
+		l_login.push_back(it->second.login); 
+	}
+	pthread_mutex_unlock(mutex_info);
+
+	return l_login;
+}
+
+/** Envois de message d'urgence */
+void ServeurVillage::sendUrgence(string txt)
+{
+	pthread_mutex_lock(mutex_info);
+	map<SOCKET, Client>::iterator it;
+	for(it=l_client->begin(); it!=l_client->end(); it++)
+		send(it->second.urgence, txt);
+	pthread_mutex_unlock(mutex_info);
+}
+
 /** Traitement des requetes recues */
 void ServeurVillage::processRequest(SOCKET client, string request)
 {
+	pthread_mutex_lock(mutex_info);
+
 	string commande = getCommande(request);
 
 	// Demande la liste du matériel existant
@@ -308,32 +356,31 @@ void ServeurVillage::processRequest(SOCKET client, string request)
 		if(date <= now) {
 			cout << "Date de reservation invalide ...";
 			send(client, "DATE_INVALID");
-			return;
 		}
 		else if(article == "") {
 			cout << "Article invalide ...";
 			send(client, "ARTICLE_NOT_FOUND");
-			return;
 		}
+		else {
+			// Ajoute l'action
+			vector<int> l_key = getKeyFrom(*l_action);
+			int id, lastId = (l_key.size() - 1);
 
-		// Ajoute l'action
-		vector<int> l_key = getKeyFrom(*l_action);
-		int id, lastId = (l_key.size() - 1);
-
-		if(lastId < 0) id = 1;
-		else id = l_key[lastId] + 1;
+			if(lastId < 0) id = 1;
+			else id = l_key[lastId] + 1;
 		
-		Action act;
-		act.action = action;
-		act.article = article;
-		act.date = date;
-		act.user = (*l_client)[client].login;
+			Action act;
+			act.action = action;
+			act.article = article;
+			act.date = date;
+			act.user = (*l_client)[client].login;
 
-		(*l_action)[id] = act;
-		cout << "Nouvelle action de " << action << " par " << act.user << ", id: " << id << endl;
+			(*l_action)[id] = act;
+			cout << "Nouvelle action de " << action << " par " << act.user << ", id: " << id << endl;
 
-		string reply = "DEMANDE_OK:" + itoa(id);
-		send(client, reply);
+			string reply = "DEMANDE_OK:" + itoa(id);
+			send(client, reply);
+		}
 	}
 	// Demande les action enregistree
 	else if(commande.compare("CMAT") == 0) {
@@ -344,20 +391,19 @@ void ServeurVillage::processRequest(SOCKET client, string request)
 		if(id <= 0 || l_action->find(id) == l_action->end()) {
 			cout << "Id invalide ...";
 			send(client, "NOT_FOUND");
-			return;
 		}
 
 		// Verifie le propriétaire
-		if((*l_action)[id].user.compare((*l_client)[client].login) != 0) {
+		else if((*l_action)[id].user.compare((*l_client)[client].login) != 0) {
 			cout << "Demande echouee, proprietaire ne correspond pas ...";
 			send(client, "NOT_YOURS");
-			return;
 		}
-		
-		l_action->erase(id);
-		cout << "Action " << id << " supprimée" << endl;
+		else {
+			l_action->erase(id);
+			cout << "Action " << id << " supprimée" << endl;
 
-		send(client, "SUCCESS_CMAT");
+			send(client, "SUCCESS_CMAT");
+		}
 	}
 	// Demande de materiel
 	else if(commande.compare("ASKMAT") == 0) {
@@ -376,6 +422,8 @@ void ServeurVillage::processRequest(SOCKET client, string request)
 		cout << "Requete recue de " << client << " non reconnue: " << request << endl;
 		send(client, "UNRECOGNIZED_REQUEST");
 	}
+
+	pthread_mutex_unlock(mutex_info);
 }
 
 /** Envois le catalogue au client */
