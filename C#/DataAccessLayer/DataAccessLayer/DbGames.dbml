@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="FinalGameDB" Class="DbGamesDataContext" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=T4g1-PORTABLE3\SQLEXPRESS;Initial Catalog=FinalGameDB;Integrated Security=True" SettingsObjectName="DataAccessLayer.Properties.Settings" SettingsPropertyName="FinalGameDBConnectionString2" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.HighScores" Member="HighScores">
+    <Type Name="HighScore">
+      <Column Name="idJoueur" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="idJeux" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Score" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="utilisateur_HighScore" Member="utilisateur" ThisKey="idJoueur" OtherKey="id" Type="utilisateur" IsForeignKey="true" />
+      <Association Name="Jeux_HighScore" Member="Jeux" ThisKey="idJeux" OtherKey="id" Type="Jeux" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.utilisateurs" Member="utilisateurs">
+    <Type Name="utilisateur">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Nom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Prenom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Pseudo" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Avatar" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Droit" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="utilisateur_HighScore" Member="HighScores" ThisKey="id" OtherKey="idJoueur" Type="HighScore" />
+      <Association Name="utilisateur_Vote" Member="Votes" ThisKey="id" OtherKey="idjoueur" Type="Vote" />
+      <Association Name="utilisateur_Jeux" Member="Jeuxes" ThisKey="id" OtherKey="Editeur" Type="Jeux" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Votes" Member="Votes">
+    <Type Name="Vote">
+      <Column Name="idjoueur" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="idjeu" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="cote" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="utilisateur_Vote" Member="utilisateur" ThisKey="idjoueur" OtherKey="id" Type="utilisateur" IsForeignKey="true" />
+      <Association Name="Jeux_Vote" Member="Jeux" ThisKey="idjeu" OtherKey="id" Type="Jeux" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.admin" Member="admins">
+    <Type Name="admin">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Prenom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Pseudo" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Avatar" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Droit" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.editeurs" Member="editeurs">
+    <Type Name="editeur">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Prenom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Pseudo" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Avatar" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Droit" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.joueurs" Member="joueurs">
+    <Type Name="joueur">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Prenom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Pseudo" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Avatar" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Droit" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UsersActif" Member="UsersActifs">
+    <Type Name="UsersActif">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Prenom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Pseudo" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Avatar" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Droit" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UsersNoActif" Member="UsersNoActifs">
+    <Type Name="UsersNoActif">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Prenom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Pseudo" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Avatar" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Droit" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Categories" Member="Categories">
+    <Type Name="Category">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Nom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Association Name="Category_Jeux" Member="Jeuxes" ThisKey="id" OtherKey="Categorie" Type="Jeux" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Jeux" Member="Jeuxes">
+    <Type Name="Jeux">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Nom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PEGI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Categorie" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Editeur" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="cote" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="joue" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Jeux_HighScore" Member="HighScores" ThisKey="id" OtherKey="idJeux" Type="HighScore" />
+      <Association Name="Jeux_Vote" Member="Votes" ThisKey="id" OtherKey="idjeu" Type="Vote" />
+      <Association Name="Category_Jeux" Member="Category" ThisKey="Categorie" OtherKey="id" Type="Category" IsForeignKey="true" />
+      <Association Name="utilisateur_Jeux" Member="utilisateur" ThisKey="Editeur" OtherKey="id" Type="utilisateur" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

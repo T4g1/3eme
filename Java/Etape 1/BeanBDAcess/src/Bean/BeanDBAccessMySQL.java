@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Bean;
 
 import java.sql.*;
@@ -11,8 +7,6 @@ import java.util.logging.Logger;
 
 /**
  * Gére les connexions a une base de données MySQL
- * 
- * @author T4g1
  */
 public class BeanDBAccessMySQL extends BeanDBAccess {
     private final String DRIVER = "com.mysql.jdbc.Driver";

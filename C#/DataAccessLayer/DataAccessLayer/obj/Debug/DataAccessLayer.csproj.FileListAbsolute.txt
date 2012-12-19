@@ -1,0 +1,12 @@
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\DataAccessLayer\bin\Debug\DataAccessLayer.dll.config
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\DataAccessLayer\obj\Debug\ResolveAssemblyReference.cache
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\DataAccessLayer\obj\Debug\ResolveAssemblyReference.cache
+E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\DataAccessLayer\bin\Debug\DataAccessLayer.dll.config
+E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\DataAccessLayer\obj\Debug\DataAccessLayer.pdb

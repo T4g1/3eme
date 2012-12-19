@@ -9,11 +9,20 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class GuiSupervision extends javax.swing.JFrame {
+    private final int L1 = 0;
+    private final int L2 = 1;
+    private final int T = 2;
+    private final int S = 3;
+    private final int CS = 4;
+    private final int AP = 5;
+    private final int PP = 6;
+    private final int DE = 7;
+    
     private Petra petra;
     private ServerSocket server;
     public GuiSupervision() {
         initComponents();
-        
+        changeActuateurs(0);
         petra = new Petra("10.59.40.67", 27016);
         
         System.out.println("Ajout du changeSlider");
@@ -464,8 +473,59 @@ public class GuiSupervision extends javax.swing.JFrame {
     private javax.swing.JButton switchState;
     // End of variables declaration//GEN-END:variables
 
-    private void changeActuateurs(int parseInt) {
-        //TODO
+    private void changeActuateurs(int value) {
+        String bin = Integer.toBinaryString(value);
+        System.out.println("Recu du serveur: " + bin);
+        
+        char[] l_bit = bin.toCharArray();
+        char bitVal;
+        // Pour les 8 capteurs (bit)
+        for(int bit=0; bit<8; bit++) {
+            // Bit dans le tableau recu
+            if(bit < l_bit.length) {
+                bitVal = l_bit[(l_bit.length-1) - bit];
+            } else {
+                // Bit non recu, donc a 0
+                bitVal = '0';
+            }
+            
+            System.out.println("bit " + bit + ": " + bitVal);
+            setCapteur(bit, bitVal == '1');
+        }
+    }
+
+    /**
+     * Modifie ce qui est affiché pour le capteur donné
+     * @param capteur
+     * @param value
+     */
+    private void setCapteur(int capteur, boolean value) {
+        switch(capteur) {
+            case L1:
+                labelL1.setText((value ? "ON": "OFF"));
+                break;
+            case L2:
+                labelL2.setText((value ? "ON": "OFF"));
+                break;
+            case T:
+                labelT.setText((value ? "ON": "OFF"));
+                break;
+            case S:
+                labelS.setText((value ? "ON": "OFF"));
+                break;
+            case CS:
+                labelCS.setText((value ? "ON": "OFF"));
+                break;
+            case AP:
+                labelAP.setText((value ? "ON": "OFF"));
+                break;
+            case PP:
+                labelPP.setText((value ? "ON": "OFF"));
+                break;
+            case DE:
+                labelDE.setText((value ? "ON": "OFF"));
+                break;
+        }
     }
     
     public class Server extends Thread
@@ -489,7 +549,7 @@ public class GuiSupervision extends javax.swing.JFrame {
                 System.err.println("[Cannot initialize Server]\n" + ioe);
                 return;
             }
-
+            System.out.println("Le serveur est à l'écoute du port " + server.getLocalPort());
             Socket clientSocket = null;
             try {
                 System.out.println("Attente client ...");
@@ -519,8 +579,9 @@ public class GuiSupervision extends javax.swing.JFrame {
                         continue;
                     }
                     
-                    System.out.println(inputLine);
-                    parent.changeActuateurs(Integer.parseInt(inputLine));
+                    try {
+                        parent.changeActuateurs(Integer.parseInt(inputLine));
+                    } catch(NumberFormatException ex) { }
                 }
             } catch (IOException ex) {
                 System.out.println("Client déconnecté");

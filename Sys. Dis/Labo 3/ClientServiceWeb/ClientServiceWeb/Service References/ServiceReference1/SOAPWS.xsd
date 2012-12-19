@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://Session/" targetNamespace="http://Session/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="AddPlayer" type="tns:AddPlayer" />
+  <xs:element name="AddPlayerResponse" type="tns:AddPlayerResponse" />
+  <xs:element name="AlterUser" type="tns:AlterUser" />
+  <xs:element name="AlterUserResponse" type="tns:AlterUserResponse" />
+  <xs:element name="GetLooseByPlayer" type="tns:GetLooseByPlayer" />
+  <xs:element name="GetLooseByPlayerResponse" type="tns:GetLooseByPlayerResponse" />
+  <xs:element name="GetPlayByPlayer" type="tns:GetPlayByPlayer" />
+  <xs:element name="GetPlayByPlayerResponse" type="tns:GetPlayByPlayerResponse" />
+  <xs:element name="GetPlayer" type="tns:GetPlayer" />
+  <xs:element name="GetPlayerResponse" type="tns:GetPlayerResponse" />
+  <xs:element name="RemovePlayer" type="tns:RemovePlayer" />
+  <xs:element name="RemovePlayerResponse" type="tns:RemovePlayerResponse" />
+  <xs:element name="getHighScore" type="tns:getHighScore" />
+  <xs:element name="getHighScoreResponse" type="tns:getHighScoreResponse" />
+  <xs:element name="password" nillable="true" type="xs:string" />
+  <xs:element name="username" nillable="true" type="xs:string" />
+  <xs:complexType name="getHighScore">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="getHighScoreResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:highScore" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="highScore">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="pseudo" type="xs:string" />
+      <xs:element minOccurs="0" name="score" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetLooseByPlayer">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="GetLooseByPlayerResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:highScore" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AlterUser">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long" />
+      <xs:element minOccurs="0" name="pseudo" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AlterUserResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RemovePlayer">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RemovePlayerResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetPlayByPlayer">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="GetPlayByPlayerResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:highScore" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddPlayer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="pseudo" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddPlayerResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetPlayer">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="GetPlayerResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:joueur" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="joueur">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:long" />
+      <xs:element minOccurs="0" name="pseudo" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

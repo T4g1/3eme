@@ -35,8 +35,13 @@ public class TextAreaOutputStream extends OutputStream {
     }  
    
     /** Write output to the Text Area. */  
+    @Override
     public void write(int param) {  
         outWriter.setText(outWriter.getText() + (char)param);  
+        
+        // Auto scroll
+        outWriter.setCaretPosition(outWriter.getDocument().getLength());
+        
         TAINTED = true;  
     }  
 }

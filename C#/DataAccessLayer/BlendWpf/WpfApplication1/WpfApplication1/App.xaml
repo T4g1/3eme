@@ -1,0 +1,9 @@
+﻿<Application
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="WpfApplication1.App"
+	StartupUri="MainWindow.xaml">
+	<Application.Resources>
+		<!-- Les ressources réparties au niveau Application sont définies ici. -->
+	</Application.Resources>
+</Application>

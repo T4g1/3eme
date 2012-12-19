@@ -2,12 +2,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
+import java.net.Socket;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Requêtes transitant sur le réseau
@@ -137,6 +135,19 @@ public class Request implements Serializable {
     public String getStringArg(int i) {
         return Common.byteToString(getArg(i));
     }
+
+    /**
+     * Donne la liste des arguments
+     * @return 
+     */
+    ArrayList<byte[]> getArgs() {
+        // Decryptage
+        if(isEncrypted) {
+            decrypt();
+        }
+        
+        return args;
+    }
     
     //</editor-fold>
     
@@ -164,35 +175,78 @@ public class Request implements Serializable {
     
     /**
      * Envois l'objet sur le flux donné
-     * @param out
+     * @param sock
      * @throws IOException  Erreur d'ecriture
      */
-    public void send(ObjectOutputStream out) throws IOException {
-        encrypt();
-        out.writeObject(this);
-        out.flush();
+    public boolean send(Socket sock) {
+        // Verifie l'argument
+        if(sock == null) {
+            return false;
+        }
+        
+        ObjectOutputStream out;
+        try {
+            out = new ObjectOutputStream(sock.getOutputStream());
+        
+            encrypt();
+            out.writeObject(this);
+            out.flush();
+            
+            return true;
+        } catch (IOException ex) {
+            System.out.println(this.getCommande() + " non envoye, erreur lors du send");
+            return false;
+        }
     }
     
     /**
      * Recois des données sur le flux donné
-     * @param in
+     * @param sock
      * @return      Donnée lues
      * @throws IOException  Erreur de lecture
      */
-    public static Request recv(ObjectInputStream in) throws IOException {
-        Request requ;
-        
-        try {
-            requ = (Request)in.readObject();
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Classe Request introuvable");
-            requ = new Request();
+    public static Request recv(Socket sock) {
+        // Verifie l'argument
+        if(sock == null) {
+            return new Request("SOCK_NULL");
         }
         
-        requ.decrypt();
+        try {
+            ObjectInputStream in = new ObjectInputStream(sock.getInputStream());
+            Request requ = (Request)in.readObject();
         
-        return requ;
+            requ.decrypt();
+
+            return requ;
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println("Erreur lors du recv");
+            return new Request();
+        }
     }
+    
+    /**
+     * Combine le send et le recv
+     * @param sock
+     * @return 
+     */
+    public Request sendAndRecv(Socket sock) {
+        if(send(sock)) {
+            return recv(sock);
+        } else {
+            return new Request();
+        }
+    }
+    
+    /**
+     * Demande au serveur sans paramétre
+     * @param commande
+     * @param sock 
+     */
+    static void quickSend(String commande, Socket sock) {
+        Request request = new Request(commande);
+        request.send(sock);
+    }
+    
     
     //</editor-fold>
 }

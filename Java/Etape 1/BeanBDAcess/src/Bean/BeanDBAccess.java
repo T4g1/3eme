@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Bean;
 
 import java.io.Serializable;
@@ -10,10 +6,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author T4g1
+ *Acces a une base de données de type indéfini (classe mére)
  */
-public class BeanDBAccess implements Serializable {
+public abstract class BeanDBAccess implements Serializable {
     protected Connection connection = null;
     
     /**

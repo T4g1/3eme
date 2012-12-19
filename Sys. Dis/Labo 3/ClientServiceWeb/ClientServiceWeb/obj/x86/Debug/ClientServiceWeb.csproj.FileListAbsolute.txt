@@ -1,0 +1,30 @@
+D:\Ecole\Documents\Ecole\SystemeDistribue\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Ecole\Documents\Ecole\SystemeDistribue\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\ClientServiceWeb.Form1.resources
+D:\Ecole\Documents\Ecole\SystemeDistribue\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\ClientServiceWeb.Properties.Resources.resources
+D:\Ecole\Documents\Ecole\SystemeDistribue\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\Ecole\Documents\Ecole\SystemeDistribue\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\Ecole\Documents\Ecole\SystemeDistribue\ClientServiceWeb\ClientServiceWeb\bin\Debug\ClientServiceWeb.exe.config
+D:\Ecole\Documents\Ecole\SystemeDistribue\ClientServiceWeb\ClientServiceWeb\bin\Debug\ClientServiceWeb.exe
+D:\Ecole\Documents\Ecole\SystemeDistribue\ClientServiceWeb\ClientServiceWeb\bin\Debug\ClientServiceWeb.pdb
+D:\Ecole\Documents\Ecole\SystemeDistribue\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\ClientServiceWeb.exe
+D:\Ecole\Documents\Ecole\SystemeDistribue\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\ClientServiceWeb.pdb
+C:\Users\T4g1\Desktop\Systemedistribue\ClientServiceWeb\ClientServiceWeb\bin\Debug\ClientServiceWeb.exe.config
+C:\Users\T4g1\Desktop\Systemedistribue\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\ClientServiceWeb.exe
+C:\Users\T4g1\Desktop\Systemedistribue\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\ClientServiceWeb.pdb
+C:\Users\T4g1\Desktop\Systemedistribue\ClientServiceWeb\ClientServiceWeb\bin\Debug\ClientServiceWeb.exe
+C:\Users\T4g1\Desktop\Systemedistribue\ClientServiceWeb\ClientServiceWeb\bin\Debug\ClientServiceWeb.pdb
+C:\Users\T4g1\Desktop\Systemedistribue\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\T4g1\Desktop\Systemedistribue\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\ClientServiceWeb.Form1.resources
+C:\Users\T4g1\Desktop\Systemedistribue\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\ClientServiceWeb.Properties.Resources.resources
+C:\Users\T4g1\Desktop\Systemedistribue\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\T4g1\Desktop\Systemedistribue\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\GenerateResource.write.1.tlog
+E:\Users\T4g1\Projets\3eme\Sys. Dis\Labo 3\ClientServiceWeb\ClientServiceWeb\bin\Debug\ClientServiceWeb.exe.config
+E:\Users\T4g1\Projets\3eme\Sys. Dis\Labo 3\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\ClientServiceWeb.exe
+E:\Users\T4g1\Projets\3eme\Sys. Dis\Labo 3\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\ClientServiceWeb.pdb
+E:\Users\T4g1\Projets\3eme\Sys. Dis\Labo 3\ClientServiceWeb\ClientServiceWeb\bin\Debug\ClientServiceWeb.exe
+E:\Users\T4g1\Projets\3eme\Sys. Dis\Labo 3\ClientServiceWeb\ClientServiceWeb\bin\Debug\ClientServiceWeb.pdb
+E:\Users\T4g1\Projets\3eme\Sys. Dis\Labo 3\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\Users\T4g1\Projets\3eme\Sys. Dis\Labo 3\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\ClientServiceWeb.Form1.resources
+E:\Users\T4g1\Projets\3eme\Sys. Dis\Labo 3\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\ClientServiceWeb.Properties.Resources.resources
+E:\Users\T4g1\Projets\3eme\Sys. Dis\Labo 3\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\GenerateResource.read.1.tlog
+E:\Users\T4g1\Projets\3eme\Sys. Dis\Labo 3\ClientServiceWeb\ClientServiceWeb\obj\x86\Debug\GenerateResource.write.1.tlog

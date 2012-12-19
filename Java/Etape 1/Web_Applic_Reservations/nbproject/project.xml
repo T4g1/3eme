@@ -19,11 +19,11 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.BeanBDAccess.jar}</file>
+                    <file>${file.reference.LoginApplet.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.LoginApplet.jar}</file>
+                    <file>${file.reference.BeanBDAccess.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>
@@ -40,5 +40,6 @@
                 <root id="test.src.dir"/>
             </test-roots>
         </data>
+        <references xmlns="http://www.netbeans.org/ns/ant-project-references/1"/>
     </configuration>
 </project>

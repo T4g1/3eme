@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/DataAccessLayer" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/DataAccessLayer" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/System.Data.Linq" />
+  <xs:complexType name="ArrayOfutilisateur">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="utilisateur" nillable="true" type="tns:utilisateur" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfutilisateur" nillable="true" type="tns:ArrayOfutilisateur" />
+  <xs:complexType name="utilisateur">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+      <xs:element minOccurs="0" name="Nom" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Prenom" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Pseudo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System.Data.Linq" minOccurs="0" name="Avatar" nillable="true" type="q1:Binary" />
+      <xs:element minOccurs="0" name="Droit" type="xs:int" />
+      <xs:element minOccurs="0" name="Status" type="xs:boolean" />
+      <xs:element minOccurs="0" name="HighScores" nillable="true" type="tns:ArrayOfHighScore">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Votes" nillable="true" type="tns:ArrayOfVote">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Jeuxes" nillable="true" type="tns:ArrayOfJeux">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="utilisateur" nillable="true" type="tns:utilisateur" />
+  <xs:complexType name="ArrayOfHighScore">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HighScore" nillable="true" type="tns:HighScore" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHighScore" nillable="true" type="tns:ArrayOfHighScore" />
+  <xs:complexType name="HighScore">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idJoueur" type="xs:int" />
+      <xs:element minOccurs="0" name="idJeux" type="xs:int" />
+      <xs:element minOccurs="0" name="Score" nillable="true" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HighScore" nillable="true" type="tns:HighScore" />
+  <xs:complexType name="ArrayOfVote">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Vote" nillable="true" type="tns:Vote" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfVote" nillable="true" type="tns:ArrayOfVote" />
+  <xs:complexType name="Vote">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idjoueur" type="xs:int" />
+      <xs:element minOccurs="0" name="idjeu" type="xs:int" />
+      <xs:element minOccurs="0" name="cote" nillable="true" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Vote" nillable="true" type="tns:Vote" />
+  <xs:complexType name="ArrayOfJeux">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Jeux" nillable="true" type="tns:Jeux" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfJeux" nillable="true" type="tns:ArrayOfJeux" />
+  <xs:complexType name="Jeux">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+      <xs:element minOccurs="0" name="Nom" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PEGI" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Categorie" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Editeur" type="xs:int" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="cote" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="joue" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="HighScores" nillable="true" type="tns:ArrayOfHighScore">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Votes" nillable="true" type="tns:ArrayOfVote">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Jeux" nillable="true" type="tns:Jeux" />
+  <xs:complexType name="ArrayOfCategory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Category" nillable="true" type="tns:Category" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCategory" nillable="true" type="tns:ArrayOfCategory" />
+  <xs:complexType name="Category">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+      <xs:element minOccurs="0" name="Nom" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Jeuxes" nillable="true" type="tns:ArrayOfJeux">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Category" nillable="true" type="tns:Category" />
+  <xs:complexType name="ArrayOfadmin">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="admin" nillable="true" type="tns:admin" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfadmin" nillable="true" type="tns:ArrayOfadmin" />
+  <xs:complexType name="admin">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+      <xs:element minOccurs="0" name="Nom" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Prenom" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Pseudo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/System.Data.Linq" minOccurs="0" name="Avatar" nillable="true" type="q2:Binary" />
+      <xs:element minOccurs="0" name="Droit" type="xs:int" />
+      <xs:element minOccurs="0" name="Status" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="admin" nillable="true" type="tns:admin" />
+  <xs:complexType name="ArrayOfediteur">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="editeur" nillable="true" type="tns:editeur" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfediteur" nillable="true" type="tns:ArrayOfediteur" />
+  <xs:complexType name="editeur">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+      <xs:element minOccurs="0" name="Nom" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Prenom" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Pseudo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/System.Data.Linq" minOccurs="0" name="Avatar" nillable="true" type="q3:Binary" />
+      <xs:element minOccurs="0" name="Droit" type="xs:int" />
+      <xs:element minOccurs="0" name="Status" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="editeur" nillable="true" type="tns:editeur" />
+  <xs:complexType name="ArrayOfjoueur">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="joueur" nillable="true" type="tns:joueur" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfjoueur" nillable="true" type="tns:ArrayOfjoueur" />
+  <xs:complexType name="joueur">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+      <xs:element minOccurs="0" name="Nom" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Prenom" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Pseudo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/System.Data.Linq" minOccurs="0" name="Avatar" nillable="true" type="q4:Binary" />
+      <xs:element minOccurs="0" name="Droit" type="xs:int" />
+      <xs:element minOccurs="0" name="Status" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="joueur" nillable="true" type="tns:joueur" />
+  <xs:complexType name="ArrayOfUsersActif">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UsersActif" nillable="true" type="tns:UsersActif" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUsersActif" nillable="true" type="tns:ArrayOfUsersActif" />
+  <xs:complexType name="UsersActif">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+      <xs:element minOccurs="0" name="Nom" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Prenom" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Pseudo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/System.Data.Linq" minOccurs="0" name="Avatar" nillable="true" type="q5:Binary" />
+      <xs:element minOccurs="0" name="Droit" type="xs:int" />
+      <xs:element minOccurs="0" name="Status" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UsersActif" nillable="true" type="tns:UsersActif" />
+  <xs:complexType name="ArrayOfUsersNoActif">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UsersNoActif" nillable="true" type="tns:UsersNoActif" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUsersNoActif" nillable="true" type="tns:ArrayOfUsersNoActif" />
+  <xs:complexType name="UsersNoActif">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+      <xs:element minOccurs="0" name="Nom" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Prenom" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Pseudo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/System.Data.Linq" minOccurs="0" name="Avatar" nillable="true" type="q6:Binary" />
+      <xs:element minOccurs="0" name="Droit" type="xs:int" />
+      <xs:element minOccurs="0" name="Status" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UsersNoActif" nillable="true" type="tns:UsersNoActif" />
+</xs:schema>

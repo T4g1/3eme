@@ -58,7 +58,7 @@ public class Petra {
         for(int i=0; i<8-size; i++) {
             bin = "0" + bin;
         }
-        System.out.println("Valeur envoyée: " + bin + "." + message);
+        System.out.println("Valeur envoyée: " + bin + ", en décimal: " + message);
         
         try {
             oStream.write(message.getBytes());
@@ -94,7 +94,7 @@ public class Petra {
         // l'envoi de CP + 1 doit etre fait pour changer la valeur
         if(bit != CP)
         {
-            System.out.println(CP + " Envoi de " + bit);
+            System.out.println("Activateur changé: " + CP + " Envoi de " + bit);
             send(String.valueOf(actuateurs));
         }
     }

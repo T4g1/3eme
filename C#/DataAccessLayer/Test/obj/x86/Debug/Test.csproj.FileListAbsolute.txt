@@ -1,0 +1,7 @@
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\Test\bin\Debug\Test.exe
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\Test\bin\Debug\Test.pdb
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\Test\bin\Debug\DataAccessLayer.dll
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\Test\bin\Debug\DataAccessLayer.pdb
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\Test\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\Test\obj\x86\Debug\Test.exe
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\Test\obj\x86\Debug\Test.pdb
