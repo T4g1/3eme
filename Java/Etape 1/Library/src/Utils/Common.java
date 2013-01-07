@@ -1,3 +1,5 @@
+package Utils;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -11,6 +13,22 @@ import java.io.UnsupportedEncodingException;
  * Utility class
  */
 public class Common {
+    /**
+     * Ajoute des byte[] a un byte[]
+     * @return      Tableau agrandit
+     */
+    public static byte[] appendToByte(byte[] oldbuf1, byte[] oldbuf2) {
+        if(oldbuf1 == null) {
+            return oldbuf2.clone();
+        }
+        
+        byte[] newbuf = new byte[oldbuf1.length + oldbuf2.length];
+        System.arraycopy(oldbuf1, 0, newbuf, 0, oldbuf1.length);
+        System.arraycopy(oldbuf2, 0, newbuf, oldbuf1.length, oldbuf2.length);
+        
+        return newbuf;
+    }
+    
     /**
      * Convertit un tableau de byte en string
      * @param array

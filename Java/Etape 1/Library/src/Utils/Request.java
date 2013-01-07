@@ -1,11 +1,20 @@
+package Utils;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
+import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.util.ArrayList;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 
 /**
  * Requêtes transitant sur le réseau
@@ -75,9 +84,34 @@ public class Request implements Serializable {
      * Encrypte la requete
      * @return          false si la requête est déjà encryptée
      */
-    public boolean encrypt() {
+    public boolean encrypt(SecretKey secretKey) {
         if(isEncrypted) {
             return false;
+        }
+        
+        try {
+            // Initialise le chiffrement
+            Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding", "BC");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            
+            // Chiffre les arguments
+            for(int i=0; i<args.size(); i++) {
+                try {
+                    args.set(
+                            i, cipher.doFinal(args.get(i))
+                    );
+                } catch (IllegalBlockSizeException | BadPaddingException ex) {
+                    System.out.println("Impossible de chiffrer l'argument: " + args.get(i));
+                }
+            }
+        } catch (InvalidKeyException ex) {
+            System.out.println("Requ cryptKey: Cle invalide");
+        } catch (NoSuchProviderException ex) {
+            System.out.println("Provider non disponnible");
+        } catch (NoSuchPaddingException ex) {
+            System.out.println("Padding non disponnible");
+        } catch (NoSuchAlgorithmException ex) {
+            System.out.println("Impossible de generer les cle de cryptographier");
         }
         
         isEncrypted = true;
@@ -88,9 +122,34 @@ public class Request implements Serializable {
      * Decrypte la requete
      * @return          false si la requête est déjà decryptée
      */
-    public boolean decrypt() {
+    public boolean decrypt(SecretKey secretKey) {
         if(!isEncrypted) {
             return false;
+        }
+        
+        try {
+            // Initialise le chiffrement
+            Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding", "BC");
+            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            
+            // Chiffre les arguments
+            for(int i=0; i<args.size(); i++) {
+                try {
+                    args.set(
+                            i, cipher.doFinal(args.get(i))
+                    );
+                } catch (IllegalBlockSizeException | BadPaddingException ex) {
+                    System.out.println("Impossible de dechiffrer l'argument: " + args.get(i));
+                }
+            }
+        } catch (InvalidKeyException ex) {
+            System.out.println("Requ decryptKey: Cle invalide");
+        } catch (NoSuchProviderException ex) {
+            System.out.println("Provider non disponnible");
+        } catch (NoSuchPaddingException ex) {
+            System.out.println("Padding non disponnible");
+        } catch (NoSuchAlgorithmException ex) {
+            System.out.println("Impossible de generer les cle de cryptographier");
         }
         
         isEncrypted = false;
@@ -105,12 +164,15 @@ public class Request implements Serializable {
      * Donne la commande
      */
     public String getCommande() {
-        // Decryptage
-        if(isEncrypted) {
-            decrypt();
-        }
-        
         return Common.byteToString(commande);
+    }
+    
+    /**
+     * Donne la signature du message
+     * @return  Signature
+     */
+    private byte[] getSignature() {
+        return signature;
     }
 
     /**
@@ -119,11 +181,6 @@ public class Request implements Serializable {
      * @return      Argument voulu
      */
     public byte[] getArg(int i) {
-        // Decryptage
-        if(isEncrypted) {
-            decrypt();
-        }
-        
         // Argument inexistant
         if(args.size() <= i) {
             return null;
@@ -140,12 +197,7 @@ public class Request implements Serializable {
      * Donne la liste des arguments
      * @return 
      */
-    ArrayList<byte[]> getArgs() {
-        // Decryptage
-        if(isEncrypted) {
-            decrypt();
-        }
-        
+    public ArrayList<byte[]> getArgs() {
         return args;
     }
     
@@ -167,7 +219,7 @@ public class Request implements Serializable {
             md.update(password.getBytes());
             return md.digest();
         } catch (NoSuchAlgorithmException ex) {
-            System.out.println("Algo SHA1 inexistant, mot de passe non transmis");
+            System.out.println("Algo SHA1 inexistant, digest non transmis");
         }
         
         return null;
@@ -179,6 +231,9 @@ public class Request implements Serializable {
      * @throws IOException  Erreur d'ecriture
      */
     public boolean send(Socket sock) {
+        return send(sock, true);
+    }
+    public boolean send(Socket sock, boolean crypt) {
         // Verifie l'argument
         if(sock == null) {
             return false;
@@ -188,7 +243,13 @@ public class Request implements Serializable {
         try {
             out = new ObjectOutputStream(sock.getOutputStream());
         
-            encrypt();
+            if(crypt) {
+                encrypt(Sign.getKey());
+            }
+            
+            // Signe le message
+            signature = Sign.sign(this.toString().getBytes());
+        
             out.writeObject(this);
             out.flush();
             
@@ -206,6 +267,9 @@ public class Request implements Serializable {
      * @throws IOException  Erreur de lecture
      */
     public static Request recv(Socket sock) {
+        return recv(sock, true);
+    }
+    public static Request recv(Socket sock, boolean decrypt) {
         // Verifie l'argument
         if(sock == null) {
             return new Request("SOCK_NULL");
@@ -214,8 +278,16 @@ public class Request implements Serializable {
         try {
             ObjectInputStream in = new ObjectInputStream(sock.getInputStream());
             Request requ = (Request)in.readObject();
+            
+            // Vérifie la signature
+            if(!Sign.verify(requ.toString().getBytes(), requ.getSignature())) {
+                System.out.println("Message signe: PAS OK");
+                return new Request();
+            }
         
-            requ.decrypt();
+            if(decrypt) {
+                requ.decrypt(Sign.getKey());
+            }
 
             return requ;
         } catch (IOException | ClassNotFoundException ex) {
@@ -230,8 +302,11 @@ public class Request implements Serializable {
      * @return 
      */
     public Request sendAndRecv(Socket sock) {
-        if(send(sock)) {
-            return recv(sock);
+        return sendAndRecv(sock, true);
+    }
+    public Request sendAndRecv(Socket sock, boolean encrypted) {
+        if(send(sock, encrypted)) {
+            return recv(sock, encrypted);
         } else {
             return new Request();
         }
@@ -242,11 +317,27 @@ public class Request implements Serializable {
      * @param commande
      * @param sock 
      */
-    static void quickSend(String commande, Socket sock) {
+    public static void quickSend(String commande, Socket sock) {
         Request request = new Request(commande);
         request.send(sock);
     }
     
+    /**
+     * Retourne une chaine de caractére représentant l'objet
+     * @return      Objet String représentant l'objet
+     */
+    @Override
+    public String toString () {
+        // Ajoute la commande dans le string
+        String string = new String(commande);
+        
+        // Ajoute les arguments
+        for(byte[] arg: args) {
+            string += new String(arg);
+        }
+        
+        return string;
+    }
     
     //</editor-fold>
 }

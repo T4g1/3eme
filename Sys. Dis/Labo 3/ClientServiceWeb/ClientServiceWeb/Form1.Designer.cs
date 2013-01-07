@@ -151,6 +151,7 @@
             this.deletePlayer.TabIndex = 4;
             this.deletePlayer.Text = "Supprimer";
             this.deletePlayer.UseVisualStyleBackColor = true;
+            this.deletePlayer.Click += new System.EventHandler(this.deletePlayer_Click);
             // 
             // pseudoField
             // 
@@ -167,6 +168,7 @@
             this.addPlayer.TabIndex = 2;
             this.addPlayer.Text = "Ajouter";
             this.addPlayer.UseVisualStyleBackColor = true;
+            this.addPlayer.Click += new System.EventHandler(this.addPlayer_Click);
             // 
             // refreshPlayer
             // 
@@ -183,11 +185,11 @@
             this.displayPlayers.AllowUserToAddRows = false;
             this.displayPlayers.AllowUserToDeleteRows = false;
             this.displayPlayers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.displayPlayers.Location = new System.Drawing.Point(9, 6);
+            this.displayPlayers.Location = new System.Drawing.Point(0, 0);
             this.displayPlayers.Name = "displayPlayers";
             this.displayPlayers.ReadOnly = true;
             this.displayPlayers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.displayPlayers.Size = new System.Drawing.Size(415, 273);
+            this.displayPlayers.Size = new System.Drawing.Size(424, 279);
             this.displayPlayers.TabIndex = 0;
             this.displayPlayers.CurrentCellChanged += new System.EventHandler(this.playerSelectedChanged);
             // 
@@ -217,9 +219,9 @@
             // displayHighScore
             // 
             this.displayHighScore.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.displayHighScore.Location = new System.Drawing.Point(9, 6);
+            this.displayHighScore.Location = new System.Drawing.Point(0, 0);
             this.displayHighScore.Name = "displayHighScore";
-            this.displayHighScore.Size = new System.Drawing.Size(374, 250);
+            this.displayHighScore.Size = new System.Drawing.Size(376, 256);
             this.displayHighScore.TabIndex = 0;
             // 
             // winPartieTab

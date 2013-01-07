@@ -5,22 +5,6 @@
       <xsd:import schemaLocation="http://192.168.1.1:8080/SOAPWS/SOAPWS?xsd=1" namespace="http://Session/" />
     </xsd:schema>
   </types>
-  <message name="GetPlayByPlayer">
-    <part name="parameters" element="tns:GetPlayByPlayer" />
-    <part name="username" element="tns:username" />
-    <part name="password" element="tns:password" />
-  </message>
-  <message name="GetPlayByPlayerResponse">
-    <part name="result" element="tns:GetPlayByPlayerResponse" />
-  </message>
-  <message name="GetLooseByPlayer">
-    <part name="parameters" element="tns:GetLooseByPlayer" />
-    <part name="username" element="tns:username" />
-    <part name="password" element="tns:password" />
-  </message>
-  <message name="GetLooseByPlayerResponse">
-    <part name="result" element="tns:GetLooseByPlayerResponse" />
-  </message>
   <message name="AddPlayer">
     <part name="parameters" element="tns:AddPlayer" />
     <part name="username" element="tns:username" />
@@ -36,6 +20,14 @@
   </message>
   <message name="GetPlayerResponse">
     <part name="result" element="tns:GetPlayerResponse" />
+  </message>
+  <message name="AlterUser">
+    <part name="parameters" element="tns:AlterUser" />
+    <part name="username" element="tns:username" />
+    <part name="password" element="tns:password" />
+  </message>
+  <message name="AlterUserResponse">
+    <part name="result" element="tns:AlterUserResponse" />
   </message>
   <message name="RemovePlayer">
     <part name="parameters" element="tns:RemovePlayer" />
@@ -53,23 +45,23 @@
   <message name="getHighScoreResponse">
     <part name="result" element="tns:getHighScoreResponse" />
   </message>
-  <message name="AlterUser">
-    <part name="parameters" element="tns:AlterUser" />
+  <message name="GetPlayByPlayer">
+    <part name="parameters" element="tns:GetPlayByPlayer" />
     <part name="username" element="tns:username" />
     <part name="password" element="tns:password" />
   </message>
-  <message name="AlterUserResponse">
-    <part name="result" element="tns:AlterUserResponse" />
+  <message name="GetPlayByPlayerResponse">
+    <part name="result" element="tns:GetPlayByPlayerResponse" />
+  </message>
+  <message name="GetLooseByPlayer">
+    <part name="parameters" element="tns:GetLooseByPlayer" />
+    <part name="username" element="tns:username" />
+    <part name="password" element="tns:password" />
+  </message>
+  <message name="GetLooseByPlayerResponse">
+    <part name="result" element="tns:GetLooseByPlayerResponse" />
   </message>
   <portType name="SOAPWS">
-    <operation name="GetPlayByPlayer" parameterOrder="parameters username password">
-      <input wsam:Action="http://Session/SOAPWS/GetPlayByPlayerRequest" message="tns:GetPlayByPlayer" />
-      <output wsam:Action="http://Session/SOAPWS/GetPlayByPlayerResponse" message="tns:GetPlayByPlayerResponse" />
-    </operation>
-    <operation name="GetLooseByPlayer" parameterOrder="parameters username password">
-      <input wsam:Action="http://Session/SOAPWS/GetLooseByPlayerRequest" message="tns:GetLooseByPlayer" />
-      <output wsam:Action="http://Session/SOAPWS/GetLooseByPlayerResponse" message="tns:GetLooseByPlayerResponse" />
-    </operation>
     <operation name="AddPlayer" parameterOrder="parameters username password">
       <input wsam:Action="http://Session/SOAPWS/AddPlayerRequest" message="tns:AddPlayer" />
       <output wsam:Action="http://Session/SOAPWS/AddPlayerResponse" message="tns:AddPlayerResponse" />
@@ -77,6 +69,10 @@
     <operation name="GetPlayer" parameterOrder="parameters username password">
       <input wsam:Action="http://Session/SOAPWS/GetPlayerRequest" message="tns:GetPlayer" />
       <output wsam:Action="http://Session/SOAPWS/GetPlayerResponse" message="tns:GetPlayerResponse" />
+    </operation>
+    <operation name="AlterUser" parameterOrder="parameters username password">
+      <input wsam:Action="http://Session/SOAPWS/AlterUserRequest" message="tns:AlterUser" />
+      <output wsam:Action="http://Session/SOAPWS/AlterUserResponse" message="tns:AlterUserResponse" />
     </operation>
     <operation name="RemovePlayer" parameterOrder="parameters username password">
       <input wsam:Action="http://Session/SOAPWS/RemovePlayerRequest" message="tns:RemovePlayer" />
@@ -86,35 +82,17 @@
       <input wsam:Action="http://Session/SOAPWS/getHighScoreRequest" message="tns:getHighScore" />
       <output wsam:Action="http://Session/SOAPWS/getHighScoreResponse" message="tns:getHighScoreResponse" />
     </operation>
-    <operation name="AlterUser" parameterOrder="parameters username password">
-      <input wsam:Action="http://Session/SOAPWS/AlterUserRequest" message="tns:AlterUser" />
-      <output wsam:Action="http://Session/SOAPWS/AlterUserResponse" message="tns:AlterUserResponse" />
+    <operation name="GetPlayByPlayer" parameterOrder="parameters username password">
+      <input wsam:Action="http://Session/SOAPWS/GetPlayByPlayerRequest" message="tns:GetPlayByPlayer" />
+      <output wsam:Action="http://Session/SOAPWS/GetPlayByPlayerResponse" message="tns:GetPlayByPlayerResponse" />
+    </operation>
+    <operation name="GetLooseByPlayer" parameterOrder="parameters username password">
+      <input wsam:Action="http://Session/SOAPWS/GetLooseByPlayerRequest" message="tns:GetLooseByPlayer" />
+      <output wsam:Action="http://Session/SOAPWS/GetLooseByPlayerResponse" message="tns:GetLooseByPlayerResponse" />
     </operation>
   </portType>
   <binding name="SOAPWSPortBinding" type="tns:SOAPWS">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="GetPlayByPlayer">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" parts="parameters" />
-        <soap:header message="tns:GetPlayByPlayer" part="username" use="literal" />
-        <soap:header message="tns:GetPlayByPlayer" part="password" use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="GetLooseByPlayer">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" parts="parameters" />
-        <soap:header message="tns:GetLooseByPlayer" part="username" use="literal" />
-        <soap:header message="tns:GetLooseByPlayer" part="password" use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
     <operation name="AddPlayer">
       <soap:operation soapAction="" />
       <input>
@@ -132,6 +110,17 @@
         <soap:body use="literal" parts="parameters" />
         <soap:header message="tns:GetPlayer" part="username" use="literal" />
         <soap:header message="tns:GetPlayer" part="password" use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="AlterUser">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" parts="parameters" />
+        <soap:header message="tns:AlterUser" part="username" use="literal" />
+        <soap:header message="tns:AlterUser" part="password" use="literal" />
       </input>
       <output>
         <soap:body use="literal" />
@@ -159,12 +148,23 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="AlterUser">
+    <operation name="GetPlayByPlayer">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" parts="parameters" />
-        <soap:header message="tns:AlterUser" part="username" use="literal" />
-        <soap:header message="tns:AlterUser" part="password" use="literal" />
+        <soap:header message="tns:GetPlayByPlayer" part="username" use="literal" />
+        <soap:header message="tns:GetPlayByPlayer" part="password" use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetLooseByPlayer">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" parts="parameters" />
+        <soap:header message="tns:GetLooseByPlayer" part="username" use="literal" />
+        <soap:header message="tns:GetLooseByPlayer" part="password" use="literal" />
       </input>
       <output>
         <soap:body use="literal" />

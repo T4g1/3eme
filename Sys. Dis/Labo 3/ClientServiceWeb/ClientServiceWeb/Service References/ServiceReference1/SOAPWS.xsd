@@ -16,10 +16,10 @@
   <xs:element name="getHighScoreResponse" type="tns:getHighScoreResponse" />
   <xs:element name="password" nillable="true" type="xs:string" />
   <xs:element name="username" nillable="true" type="xs:string" />
-  <xs:complexType name="getHighScore">
+  <xs:complexType name="GetLooseByPlayer">
     <xs:sequence />
   </xs:complexType>
-  <xs:complexType name="getHighScoreResponse">
+  <xs:complexType name="GetLooseByPlayerResponse">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:highScore" />
     </xs:sequence>
@@ -30,10 +30,10 @@
       <xs:element minOccurs="0" name="score" type="xs:long" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="GetLooseByPlayer">
+  <xs:complexType name="getHighScore">
     <xs:sequence />
   </xs:complexType>
-  <xs:complexType name="GetLooseByPlayerResponse">
+  <xs:complexType name="getHighScoreResponse">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:highScore" />
     </xs:sequence>

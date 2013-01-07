@@ -55,14 +55,30 @@ public class controlServlet extends HttpServlet {
             try {
                 int numero = Integer.parseInt(request.getParameter("numero"));
             
-                if(userinfo.commander(numero))
+                int retour = userinfo.commander(numero);
+                if(retour == 1)
                 {
                     request.setAttribute("message", "Ajout au caddie réussit");
                 }
-                else
+                else if(retour == 0)
                 {
                     request.setAttribute("message", 
                             "Erreur: Impossible d'ajouter cette chambre");
+                }
+                else if(retour == -1)
+                {
+                    request.setAttribute("message", 
+                            "Erreur: Authentification au serveur impossible");
+                }
+                else if(retour == -2)
+                {
+                    request.setAttribute("message", 
+                            "Erreur: IP pour la connexion au serveur non valide");
+                }
+                else if(retour == -3)
+                {
+                    request.setAttribute("message", 
+                            "Erreur: Serveur injoignable a l'adresse donnée");
                 }
             } catch(NumberFormatException e) {
                 request.setAttribute("message",

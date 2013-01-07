@@ -1,7 +1,9 @@
-
 import Entity.Order;
-import Entity.Room;
 import TableModel.OrderTableModel;
+import Utils.Common;
+import Utils.Request;
+import Utils.Sign;
+import Utils.TextAreaOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -353,9 +355,9 @@ public class ApplicOccupation extends javax.swing.JFrame {
         Request reply, requ = new Request("LOGIN");
         requ.addArg(login);
         requ.addArg(digest);
-        requ.encrypt();
         
-        reply = requ.sendAndRecv(sock);
+        reply = requ.sendAndRecv(sock, false);
+        Sign.setKey(Sign.decryptKey(reply.getArg(0)));  // Clé symétrique recue
         
         // Vérifie la réussite de la commande
         String result = reply.getCommande();

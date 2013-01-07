@@ -1,6 +1,9 @@
 import Entity.Order;
 import Entity.Room;
 import Entity.Voyageur;
+import Utils.Common;
+import Utils.Request;
+import Utils.Sign;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +29,7 @@ public class ThClientRMP extends Thread {
      */
     @Override
     public void run() {
+        String login = "";
         Request requ;
         System.out.println("Client RMP lance pour le socket " + sock.getPort());
         
@@ -39,7 +43,7 @@ public class ThClientRMP extends Thread {
 
             // DEMANDE DE LOGIN
             if(requ.getCommande().compareTo("LOGIN") == 0) {
-                String login = requ.getStringArg(0);
+                login = requ.getStringArg(0);
                 byte[] password = requ.getArg(1);
 
                 if(verifyLogin(login, password)) {
@@ -67,7 +71,7 @@ public class ThClientRMP extends Thread {
                 }
             }
             // DEMANDE LA LISTE DES RESERVATIONS PASSEES
-            else if(requ.getCommande().compareTo("LROOM") == 0) {
+            else if(requ.getCommande().compareTo("LROOM") == 0 && !login.equals("webservice")) {
                 if(!isLogged) {
                     System.out.println("L'utilisateur doit s'authentifier pour utiliser cette commande ...");
                     continue;
@@ -194,11 +198,13 @@ public class ThClientRMP extends Thread {
         // Digest identique
         if(Arrays.equals(realDigest, digest)) {
             isLogged = true;
-            new Request("LOGIN_SUCCESS").send(sock);
+            Request reply = new Request("LOGIN_SUCCESS");
+            reply.addArg(Sign.getEncryptedKey());
+            reply.send(sock, false);
             return true;
         }
         
-        new Request("LOGIN_FAILED").send(sock);
+        new Request("LOGIN_FAILED").send(sock, false);
         return false;
     }
 

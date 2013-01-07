@@ -110,12 +110,24 @@ namespace ClientServiceWeb
         private void addPlayer_Click(object sender, EventArgs e)
         {
             // Ajout du joueur
-            swc.AddPlayer(
-                    login, password,
-                    new ServiceReference1.AddPlayer() {
-                        pseudo = pseudoField.Text
-                    }
-            );
+            try
+            {
+                swc.AddPlayer(
+                        login, password,
+                        new ServiceReference1.AddPlayer()
+                        {
+                            pseudo = pseudoField.Text
+                        }
+                );
+            }
+            catch (System.ServiceModel.FaultException ex)
+            {
+                    DialogResult result = MessageBox.Show(
+                        "Ajout échoué",
+                        "Erreur", MessageBoxButtons.YesNo
+                );
+                return;
+            }
 
             // Mise a jour de la datagrid
             this.refreshPlayer_Click(null, null);

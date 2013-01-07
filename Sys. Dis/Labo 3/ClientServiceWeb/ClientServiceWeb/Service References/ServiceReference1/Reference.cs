@@ -15,16 +15,6 @@ namespace ClientServiceWeb.ServiceReference1 {
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://Session/", ConfigurationName="ServiceReference1.SOAPWS")]
     public interface SOAPWS {
         
-        // CODEGEN: Generating message contract since the operation GetPlayByPlayer is neither RPC nor document wrapped.
-        [System.ServiceModel.OperationContractAttribute(Action="http://Session/SOAPWS/GetPlayByPlayerRequest", ReplyAction="http://Session/SOAPWS/GetPlayByPlayerResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        ClientServiceWeb.ServiceReference1.GetPlayByPlayerResponse GetPlayByPlayer(ClientServiceWeb.ServiceReference1.GetPlayByPlayerRequest request);
-        
-        // CODEGEN: Generating message contract since the operation GetLooseByPlayer is neither RPC nor document wrapped.
-        [System.ServiceModel.OperationContractAttribute(Action="http://Session/SOAPWS/GetLooseByPlayerRequest", ReplyAction="http://Session/SOAPWS/GetLooseByPlayerResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        ClientServiceWeb.ServiceReference1.GetLooseByPlayerResponse GetLooseByPlayer(ClientServiceWeb.ServiceReference1.GetLooseByPlayerRequest request);
-        
         // CODEGEN: Generating message contract since the operation AddPlayer is neither RPC nor document wrapped.
         [System.ServiceModel.OperationContractAttribute(Action="http://Session/SOAPWS/AddPlayerRequest", ReplyAction="http://Session/SOAPWS/AddPlayerResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -34,6 +24,11 @@ namespace ClientServiceWeb.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://Session/SOAPWS/GetPlayerRequest", ReplyAction="http://Session/SOAPWS/GetPlayerResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         ClientServiceWeb.ServiceReference1.GetPlayerResponse GetPlayer(ClientServiceWeb.ServiceReference1.GetPlayerRequest request);
+        
+        // CODEGEN: Generating message contract since the operation AlterUser is neither RPC nor document wrapped.
+        [System.ServiceModel.OperationContractAttribute(Action="http://Session/SOAPWS/AlterUserRequest", ReplyAction="http://Session/SOAPWS/AlterUserResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        ClientServiceWeb.ServiceReference1.AlterUserResponse1 AlterUser(ClientServiceWeb.ServiceReference1.AlterUserRequest request);
         
         // CODEGEN: Generating message contract since the operation RemovePlayer is neither RPC nor document wrapped.
         [System.ServiceModel.OperationContractAttribute(Action="http://Session/SOAPWS/RemovePlayerRequest", ReplyAction="http://Session/SOAPWS/RemovePlayerResponse")]
@@ -45,10 +40,65 @@ namespace ClientServiceWeb.ServiceReference1 {
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         ClientServiceWeb.ServiceReference1.getHighScoreResponse getHighScore(ClientServiceWeb.ServiceReference1.getHighScoreRequest request);
         
-        // CODEGEN: Generating message contract since the operation AlterUser is neither RPC nor document wrapped.
-        [System.ServiceModel.OperationContractAttribute(Action="http://Session/SOAPWS/AlterUserRequest", ReplyAction="http://Session/SOAPWS/AlterUserResponse")]
+        // CODEGEN: Generating message contract since the operation GetPlayByPlayer is neither RPC nor document wrapped.
+        [System.ServiceModel.OperationContractAttribute(Action="http://Session/SOAPWS/GetPlayByPlayerRequest", ReplyAction="http://Session/SOAPWS/GetPlayByPlayerResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        ClientServiceWeb.ServiceReference1.AlterUserResponse1 AlterUser(ClientServiceWeb.ServiceReference1.AlterUserRequest request);
+        ClientServiceWeb.ServiceReference1.GetPlayByPlayerResponse GetPlayByPlayer(ClientServiceWeb.ServiceReference1.GetPlayByPlayerRequest request);
+        
+        // CODEGEN: Generating message contract since the operation GetLooseByPlayer is neither RPC nor document wrapped.
+        [System.ServiceModel.OperationContractAttribute(Action="http://Session/SOAPWS/GetLooseByPlayerRequest", ReplyAction="http://Session/SOAPWS/GetLooseByPlayerResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        ClientServiceWeb.ServiceReference1.GetLooseByPlayerResponse GetLooseByPlayer(ClientServiceWeb.ServiceReference1.GetLooseByPlayerRequest request);
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.233")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://Session/")]
+    public partial class AddPlayer : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string pseudoField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public string pseudo {
+            get {
+                return this.pseudoField;
+            }
+            set {
+                this.pseudoField = value;
+                this.RaisePropertyChanged("pseudo");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.233")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://Session/")]
+    public partial class GetLooseByPlayer : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
     
     /// <remarks/>
@@ -75,58 +125,16 @@ namespace ClientServiceWeb.ServiceReference1 {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://Session/")]
-    public partial class AlterUserResponse : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private bool returnField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public bool @return {
-            get {
-                return this.returnField;
-            }
-            set {
-                this.returnField = value;
-                this.RaisePropertyChanged("return");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.233")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://Session/")]
-    public partial class AlterUser : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private long idField;
+    public partial class highScore : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string pseudoField;
         
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public long id {
-            get {
-                return this.idField;
-            }
-            set {
-                this.idField = value;
-                this.RaisePropertyChanged("id");
-            }
-        }
+        private long scoreField;
+        
+        private bool scoreFieldSpecified;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
         public string pseudo {
             get {
                 return this.pseudoField;
@@ -134,6 +142,30 @@ namespace ClientServiceWeb.ServiceReference1 {
             set {
                 this.pseudoField = value;
                 this.RaisePropertyChanged("pseudo");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public long score {
+            get {
+                return this.scoreField;
+            }
+            set {
+                this.scoreField = value;
+                this.RaisePropertyChanged("score");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool scoreSpecified {
+            get {
+                return this.scoreFieldSpecified;
+            }
+            set {
+                this.scoreFieldSpecified = value;
+                this.RaisePropertyChanged("scoreSpecified");
             }
         }
         
@@ -216,6 +248,84 @@ namespace ClientServiceWeb.ServiceReference1 {
             set {
                 this.idField = value;
                 this.RaisePropertyChanged("id");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.233")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://Session/")]
+    public partial class AlterUserResponse : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private bool returnField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public bool @return {
+            get {
+                return this.returnField;
+            }
+            set {
+                this.returnField = value;
+                this.RaisePropertyChanged("return");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.233")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://Session/")]
+    public partial class AlterUser : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private long idField;
+        
+        private string pseudoField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public long id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+                this.RaisePropertyChanged("id");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public string pseudo {
+            get {
+                return this.pseudoField;
+            }
+            set {
+                this.pseudoField = value;
+                this.RaisePropertyChanged("pseudo");
             }
         }
         
@@ -339,206 +449,6 @@ namespace ClientServiceWeb.ServiceReference1 {
         }
     }
     
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.233")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://Session/")]
-    public partial class AddPlayer : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private string pseudoField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public string pseudo {
-            get {
-                return this.pseudoField;
-            }
-            set {
-                this.pseudoField = value;
-                this.RaisePropertyChanged("pseudo");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.233")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://Session/")]
-    public partial class GetLooseByPlayer : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.233")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://Session/")]
-    public partial class highScore : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private string pseudoField;
-        
-        private long scoreField;
-        
-        private bool scoreFieldSpecified;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public string pseudo {
-            get {
-                return this.pseudoField;
-            }
-            set {
-                this.pseudoField = value;
-                this.RaisePropertyChanged("pseudo");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
-        public long score {
-            get {
-                return this.scoreField;
-            }
-            set {
-                this.scoreField = value;
-                this.RaisePropertyChanged("score");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool scoreSpecified {
-            get {
-                return this.scoreFieldSpecified;
-            }
-            set {
-                this.scoreFieldSpecified = value;
-                this.RaisePropertyChanged("scoreSpecified");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class GetPlayByPlayerRequest {
-        
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="http://Session/")]
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public string username;
-        
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="http://Session/")]
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public string password;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://Session/", Order=0)]
-        public ClientServiceWeb.ServiceReference1.GetPlayByPlayer GetPlayByPlayer;
-        
-        public GetPlayByPlayerRequest() {
-        }
-        
-        public GetPlayByPlayerRequest(string username, string password, ClientServiceWeb.ServiceReference1.GetPlayByPlayer GetPlayByPlayer) {
-            this.username = username;
-            this.password = password;
-            this.GetPlayByPlayer = GetPlayByPlayer;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class GetPlayByPlayerResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetPlayByPlayerResponse", Namespace="http://Session/", Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable=false)]
-        public highScore[] GetPlayByPlayerResponse1;
-        
-        public GetPlayByPlayerResponse() {
-        }
-        
-        public GetPlayByPlayerResponse(highScore[] GetPlayByPlayerResponse1) {
-            this.GetPlayByPlayerResponse1 = GetPlayByPlayerResponse1;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class GetLooseByPlayerRequest {
-        
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="http://Session/")]
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public string username;
-        
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="http://Session/")]
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public string password;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://Session/", Order=0)]
-        public ClientServiceWeb.ServiceReference1.GetLooseByPlayer GetLooseByPlayer;
-        
-        public GetLooseByPlayerRequest() {
-        }
-        
-        public GetLooseByPlayerRequest(string username, string password, ClientServiceWeb.ServiceReference1.GetLooseByPlayer GetLooseByPlayer) {
-            this.username = username;
-            this.password = password;
-            this.GetLooseByPlayer = GetLooseByPlayer;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class GetLooseByPlayerResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetLooseByPlayerResponse", Namespace="http://Session/", Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable=false)]
-        public highScore[] GetLooseByPlayerResponse1;
-        
-        public GetLooseByPlayerResponse() {
-        }
-        
-        public GetLooseByPlayerResponse(highScore[] GetLooseByPlayerResponse1) {
-            this.GetLooseByPlayerResponse1 = GetLooseByPlayerResponse1;
-        }
-    }
-    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -625,6 +535,50 @@ namespace ClientServiceWeb.ServiceReference1 {
         
         public GetPlayerResponse(joueur[] GetPlayerResponse1) {
             this.GetPlayerResponse1 = GetPlayerResponse1;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class AlterUserRequest {
+        
+        [System.ServiceModel.MessageHeaderAttribute(Namespace="http://Session/")]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string username;
+        
+        [System.ServiceModel.MessageHeaderAttribute(Namespace="http://Session/")]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://Session/", Order=0)]
+        public ClientServiceWeb.ServiceReference1.AlterUser AlterUser;
+        
+        public AlterUserRequest() {
+        }
+        
+        public AlterUserRequest(string username, string password, ClientServiceWeb.ServiceReference1.AlterUser AlterUser) {
+            this.username = username;
+            this.password = password;
+            this.AlterUser = AlterUser;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class AlterUserResponse1 {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://Session/", Order=0)]
+        public ClientServiceWeb.ServiceReference1.AlterUserResponse AlterUserResponse;
+        
+        public AlterUserResponse1() {
+        }
+        
+        public AlterUserResponse1(ClientServiceWeb.ServiceReference1.AlterUserResponse AlterUserResponse) {
+            this.AlterUserResponse = AlterUserResponse;
         }
     }
     
@@ -721,7 +675,7 @@ namespace ClientServiceWeb.ServiceReference1 {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class AlterUserRequest {
+    public partial class GetPlayByPlayerRequest {
         
         [System.ServiceModel.MessageHeaderAttribute(Namespace="http://Session/")]
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
@@ -732,15 +686,15 @@ namespace ClientServiceWeb.ServiceReference1 {
         public string password;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://Session/", Order=0)]
-        public ClientServiceWeb.ServiceReference1.AlterUser AlterUser;
+        public ClientServiceWeb.ServiceReference1.GetPlayByPlayer GetPlayByPlayer;
         
-        public AlterUserRequest() {
+        public GetPlayByPlayerRequest() {
         }
         
-        public AlterUserRequest(string username, string password, ClientServiceWeb.ServiceReference1.AlterUser AlterUser) {
+        public GetPlayByPlayerRequest(string username, string password, ClientServiceWeb.ServiceReference1.GetPlayByPlayer GetPlayByPlayer) {
             this.username = username;
             this.password = password;
-            this.AlterUser = AlterUser;
+            this.GetPlayByPlayer = GetPlayByPlayer;
         }
     }
     
@@ -748,16 +702,62 @@ namespace ClientServiceWeb.ServiceReference1 {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class AlterUserResponse1 {
+    public partial class GetPlayByPlayerResponse {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://Session/", Order=0)]
-        public ClientServiceWeb.ServiceReference1.AlterUserResponse AlterUserResponse;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetPlayByPlayerResponse", Namespace="http://Session/", Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable=false)]
+        public highScore[] GetPlayByPlayerResponse1;
         
-        public AlterUserResponse1() {
+        public GetPlayByPlayerResponse() {
         }
         
-        public AlterUserResponse1(ClientServiceWeb.ServiceReference1.AlterUserResponse AlterUserResponse) {
-            this.AlterUserResponse = AlterUserResponse;
+        public GetPlayByPlayerResponse(highScore[] GetPlayByPlayerResponse1) {
+            this.GetPlayByPlayerResponse1 = GetPlayByPlayerResponse1;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetLooseByPlayerRequest {
+        
+        [System.ServiceModel.MessageHeaderAttribute(Namespace="http://Session/")]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string username;
+        
+        [System.ServiceModel.MessageHeaderAttribute(Namespace="http://Session/")]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://Session/", Order=0)]
+        public ClientServiceWeb.ServiceReference1.GetLooseByPlayer GetLooseByPlayer;
+        
+        public GetLooseByPlayerRequest() {
+        }
+        
+        public GetLooseByPlayerRequest(string username, string password, ClientServiceWeb.ServiceReference1.GetLooseByPlayer GetLooseByPlayer) {
+            this.username = username;
+            this.password = password;
+            this.GetLooseByPlayer = GetLooseByPlayer;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetLooseByPlayerResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetLooseByPlayerResponse", Namespace="http://Session/", Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable=false)]
+        public highScore[] GetLooseByPlayerResponse1;
+        
+        public GetLooseByPlayerResponse() {
+        }
+        
+        public GetLooseByPlayerResponse(highScore[] GetLooseByPlayerResponse1) {
+            this.GetLooseByPlayerResponse1 = GetLooseByPlayerResponse1;
         }
     }
     
@@ -789,34 +789,6 @@ namespace ClientServiceWeb.ServiceReference1 {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        ClientServiceWeb.ServiceReference1.GetPlayByPlayerResponse ClientServiceWeb.ServiceReference1.SOAPWS.GetPlayByPlayer(ClientServiceWeb.ServiceReference1.GetPlayByPlayerRequest request) {
-            return base.Channel.GetPlayByPlayer(request);
-        }
-        
-        public highScore[] GetPlayByPlayer(string username, string password, ClientServiceWeb.ServiceReference1.GetPlayByPlayer GetPlayByPlayer1) {
-            ClientServiceWeb.ServiceReference1.GetPlayByPlayerRequest inValue = new ClientServiceWeb.ServiceReference1.GetPlayByPlayerRequest();
-            inValue.username = username;
-            inValue.password = password;
-            inValue.GetPlayByPlayer = GetPlayByPlayer1;
-            ClientServiceWeb.ServiceReference1.GetPlayByPlayerResponse retVal = ((ClientServiceWeb.ServiceReference1.SOAPWS)(this)).GetPlayByPlayer(inValue);
-            return retVal.GetPlayByPlayerResponse1;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        ClientServiceWeb.ServiceReference1.GetLooseByPlayerResponse ClientServiceWeb.ServiceReference1.SOAPWS.GetLooseByPlayer(ClientServiceWeb.ServiceReference1.GetLooseByPlayerRequest request) {
-            return base.Channel.GetLooseByPlayer(request);
-        }
-        
-        public highScore[] GetLooseByPlayer(string username, string password, ClientServiceWeb.ServiceReference1.GetLooseByPlayer GetLooseByPlayer1) {
-            ClientServiceWeb.ServiceReference1.GetLooseByPlayerRequest inValue = new ClientServiceWeb.ServiceReference1.GetLooseByPlayerRequest();
-            inValue.username = username;
-            inValue.password = password;
-            inValue.GetLooseByPlayer = GetLooseByPlayer1;
-            ClientServiceWeb.ServiceReference1.GetLooseByPlayerResponse retVal = ((ClientServiceWeb.ServiceReference1.SOAPWS)(this)).GetLooseByPlayer(inValue);
-            return retVal.GetLooseByPlayerResponse1;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         ClientServiceWeb.ServiceReference1.AddPlayerResponse1 ClientServiceWeb.ServiceReference1.SOAPWS.AddPlayer(ClientServiceWeb.ServiceReference1.AddPlayerRequest request) {
             return base.Channel.AddPlayer(request);
         }
@@ -842,6 +814,20 @@ namespace ClientServiceWeb.ServiceReference1 {
             inValue.GetPlayer = GetPlayer1;
             ClientServiceWeb.ServiceReference1.GetPlayerResponse retVal = ((ClientServiceWeb.ServiceReference1.SOAPWS)(this)).GetPlayer(inValue);
             return retVal.GetPlayerResponse1;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ClientServiceWeb.ServiceReference1.AlterUserResponse1 ClientServiceWeb.ServiceReference1.SOAPWS.AlterUser(ClientServiceWeb.ServiceReference1.AlterUserRequest request) {
+            return base.Channel.AlterUser(request);
+        }
+        
+        public ClientServiceWeb.ServiceReference1.AlterUserResponse AlterUser(string username, string password, ClientServiceWeb.ServiceReference1.AlterUser AlterUser1) {
+            ClientServiceWeb.ServiceReference1.AlterUserRequest inValue = new ClientServiceWeb.ServiceReference1.AlterUserRequest();
+            inValue.username = username;
+            inValue.password = password;
+            inValue.AlterUser = AlterUser1;
+            ClientServiceWeb.ServiceReference1.AlterUserResponse1 retVal = ((ClientServiceWeb.ServiceReference1.SOAPWS)(this)).AlterUser(inValue);
+            return retVal.AlterUserResponse;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -873,17 +859,31 @@ namespace ClientServiceWeb.ServiceReference1 {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        ClientServiceWeb.ServiceReference1.AlterUserResponse1 ClientServiceWeb.ServiceReference1.SOAPWS.AlterUser(ClientServiceWeb.ServiceReference1.AlterUserRequest request) {
-            return base.Channel.AlterUser(request);
+        ClientServiceWeb.ServiceReference1.GetPlayByPlayerResponse ClientServiceWeb.ServiceReference1.SOAPWS.GetPlayByPlayer(ClientServiceWeb.ServiceReference1.GetPlayByPlayerRequest request) {
+            return base.Channel.GetPlayByPlayer(request);
         }
         
-        public ClientServiceWeb.ServiceReference1.AlterUserResponse AlterUser(string username, string password, ClientServiceWeb.ServiceReference1.AlterUser AlterUser1) {
-            ClientServiceWeb.ServiceReference1.AlterUserRequest inValue = new ClientServiceWeb.ServiceReference1.AlterUserRequest();
+        public highScore[] GetPlayByPlayer(string username, string password, ClientServiceWeb.ServiceReference1.GetPlayByPlayer GetPlayByPlayer1) {
+            ClientServiceWeb.ServiceReference1.GetPlayByPlayerRequest inValue = new ClientServiceWeb.ServiceReference1.GetPlayByPlayerRequest();
             inValue.username = username;
             inValue.password = password;
-            inValue.AlterUser = AlterUser1;
-            ClientServiceWeb.ServiceReference1.AlterUserResponse1 retVal = ((ClientServiceWeb.ServiceReference1.SOAPWS)(this)).AlterUser(inValue);
-            return retVal.AlterUserResponse;
+            inValue.GetPlayByPlayer = GetPlayByPlayer1;
+            ClientServiceWeb.ServiceReference1.GetPlayByPlayerResponse retVal = ((ClientServiceWeb.ServiceReference1.SOAPWS)(this)).GetPlayByPlayer(inValue);
+            return retVal.GetPlayByPlayerResponse1;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ClientServiceWeb.ServiceReference1.GetLooseByPlayerResponse ClientServiceWeb.ServiceReference1.SOAPWS.GetLooseByPlayer(ClientServiceWeb.ServiceReference1.GetLooseByPlayerRequest request) {
+            return base.Channel.GetLooseByPlayer(request);
+        }
+        
+        public highScore[] GetLooseByPlayer(string username, string password, ClientServiceWeb.ServiceReference1.GetLooseByPlayer GetLooseByPlayer1) {
+            ClientServiceWeb.ServiceReference1.GetLooseByPlayerRequest inValue = new ClientServiceWeb.ServiceReference1.GetLooseByPlayerRequest();
+            inValue.username = username;
+            inValue.password = password;
+            inValue.GetLooseByPlayer = GetLooseByPlayer1;
+            ClientServiceWeb.ServiceReference1.GetLooseByPlayerResponse retVal = ((ClientServiceWeb.ServiceReference1.SOAPWS)(this)).GetLooseByPlayer(inValue);
+            return retVal.GetLooseByPlayerResponse1;
         }
     }
 }

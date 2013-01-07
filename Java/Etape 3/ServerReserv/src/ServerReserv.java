@@ -2,6 +2,9 @@ import Bean.BeanDBAccessMySQL;
 import Entity.Order;
 import Entity.Room;
 import Entity.Voyageur;
+import Utils.Request;
+import Utils.Sign;
+import Utils.TextAreaOutputStream;
 import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -40,6 +43,9 @@ public class ServerReserv extends javax.swing.JFrame {
         } catch (IOException ex) {
             System.out.println("Impossible d'ouvrir le fichier d'utilisateur");
         }
+        
+        // Le serveur décide de la clé a utiliser
+        Sign.genKey();
     }
     
     /**

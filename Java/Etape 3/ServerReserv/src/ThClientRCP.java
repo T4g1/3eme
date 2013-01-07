@@ -1,5 +1,7 @@
 import Entity.Order;
-import Entity.Room;
+import Utils.Common;
+import Utils.Request;
+import Utils.Sign;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -135,11 +137,13 @@ public class ThClientRCP extends Thread {
         // Digest identique
         if(Arrays.equals(realDigest, digest)) {
             isLogged = true;
-            new Request("LOGIN_SUCCESS").send(sock);
+            Request reply = new Request("LOGIN_SUCCESS");
+            reply.addArg(Sign.getEncryptedKey());
+            reply.send(sock, false);
             return true;
         }
         
-        new Request("LOGIN_FAILED").send(sock);
+        new Request("LOGIN_FAILED").send(sock, false);
         return false;
     }
 

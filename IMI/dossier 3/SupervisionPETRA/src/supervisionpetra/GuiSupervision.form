@@ -25,35 +25,12 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="labelEtat" min="-2" max="-2" attributes="0"/>
-                          <Component id="labelC1" min="-2" max="-2" attributes="0"/>
-                          <Component id="labelCP" min="-2" max="-2" attributes="0"/>
-                          <Component id="labelC2" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="labelPV" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="labelPA" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="labelAA" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="labelGA" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="switchC1" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="switchC2" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="switchPV" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="setCP" min="-2" max="-2" attributes="0"/>
                   <Component id="switchGA" min="-2" max="-2" attributes="0"/>
@@ -82,7 +59,6 @@
                           <Component id="labelCS" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="switchState" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -91,58 +67,38 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace pref="52" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="labelEtat" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="switchState" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="labelCP" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel17" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labelL1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="labelC1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labelL2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="labelC2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labelT" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="labelPV" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labelS" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="labelPA" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labelCS" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="labelAA" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labelAP" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="labelGA" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel23" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labelPP" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -171,92 +127,11 @@
                   <Component id="setCP" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="140" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabel1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Etat g&#xe9;n&#xe9;ral:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="labelEtat">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="labelEtat"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Position chariot:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel4">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Convoyeur 1:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel5">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Convoyeur 2:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="labelCP">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="labelCP"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="labelC1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="labelC1"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="labelC2">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="labelC2"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel9">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Aspiration plongeur:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="labelPV">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="labelPV"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel11">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Plongeur activ&#xe9;:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel12">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Arbre activ&#xe9;:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel13">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Grappin activ&#xe9;:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="labelPA">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="labelPA"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="labelAA">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="labelAA"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="labelGA">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="labelGA"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel17">
       <Properties>
         <Property name="text" type="java.lang.String" value="L1:"/>
@@ -336,14 +211,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="labelL1"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="switchState">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jButton1"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="switchStateActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="switchC1">
       <Properties>
