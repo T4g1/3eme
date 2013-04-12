@@ -1,0 +1,57 @@
+﻿<Window x:Class="WPFAdmin.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="487" Width="1257" DataContext="{Binding}" WindowStyle="ThreeDBorderWindow" OpacityMask="{x:Null}" Closing="Window_Closing">
+    <Grid Height="690" Visibility="Visible">
+        <DataGrid AutoGenerateColumns="True" Height="232" HorizontalAlignment="Left" Margin="12,86,0,0" Name="dataGrid1" VerticalAlignment="Top" Width="591" CanUserAddRows="False" CanUserDeleteRows="False" IsManipulationEnabled="False" IsReadOnly="True" SelectionMode="Single" MouseDoubleClick="dataGrid1_MouseDoubleClick" />
+        <ComboBox Height="27" HorizontalAlignment="Left" Margin="12,340,0,0" Name="Table_selected" VerticalAlignment="Top" Width="130" ItemsSource="{Binding}" SelectionChanged="Table_selected_SelectionChanged">
+            <ComboBoxItem Content="utilisateurs" />
+            <ComboBoxItem Content="utilisateurs actif" />
+            <ComboBoxItem Content="utilisateurs non actif" />
+            <ComboBoxItem Content="jeux" />
+            <ComboBoxItem Content="admins" />
+            <ComboBoxItem Content="editeurs" />
+            <ComboBoxItem Content="joueurs" />
+            <ComboBoxItem Content="categories" />
+            <ComboBoxItem Content="highscores" />
+            <ComboBoxItem Content="vote" />
+        </ComboBox>
+        <Ellipse Height="27" HorizontalAlignment="Left" Margin="171,340,0,0" Name="connectstate" Stroke="Black" VerticalAlignment="Top" Width="28" Fill="Red" />
+        <Menu Height="33" HorizontalAlignment="Left" Name="menu1" VerticalAlignment="Top" Width="1368" IsMainMenu="True" >
+            <MenuItem Header="_Fichier" />
+            <MenuItem Header="_Editer" />
+            <MenuItem Header="_Vue" />
+            <MenuItem Header="_Ajouter"  Name="addMenu">
+                <MenuItem Header="_Catégorie" Click="ClickOnAddCategory" Name="addCategoryItem" />
+            </MenuItem>
+            <MenuItem Header="_Fenètre" />
+            <MenuItem Header="_Aide" />
+        </Menu>
+        <GroupBox Header="Ajout d'une categorie" Height="321" HorizontalAlignment="Left" Margin="644,39,0,0" Name="addCatGB" VerticalAlignment="Top" Width="629" Visibility="Collapsed">
+            <Grid Height="279" Width="530">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="21*" />
+                    <RowDefinition Height="24*" />
+                    <RowDefinition Height="234*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="32*" />
+                    <ColumnDefinition Width="550*" />
+                </Grid.ColumnDefinitions>
+                <Rectangle Height="232" HorizontalAlignment="Left" Name="rectangle1" Stroke="Black" VerticalAlignment="Top" Width="475" Fill="#1A000000" RadiusX="10" RadiusY="10" StrokeThickness="1" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" />
+                <Button Content="Ajouter" Height="23" HorizontalAlignment="Left" Margin="28,175,0,0" Name="AddCategButton" VerticalAlignment="Top" Width="75" Grid.Column="1" Grid.Row="2" Click="addCategButton_Click" />
+                <Label Content="id:" Height="28" HorizontalAlignment="Left" Margin="28,3,0,0" Name="label1" VerticalAlignment="Top" IsEnabled="True" Grid.Column="1" Grid.Row="2" />
+                <Label Content="Nom:" Height="28" HorizontalAlignment="Left" Margin="28,37,0,0" Name="label2" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2" />
+                <Label Content="Description:" Height="28" HorizontalAlignment="Left" Margin="28,71,0,0" Name="descLabel" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="109,3,0,0" Name="idCatTB" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.Row="2" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="109,42,0,0" Name="nomCatTB" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.Row="2" />
+                <TextBox Height="82" HorizontalAlignment="Left" Margin="109,76,0,0" Name="descriptionTB" VerticalAlignment="Top" Width="200" Grid.Column="1" Grid.Row="2" />
+                <Button Content="Annuler" Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="109,175,0,0" Name="CancelAddCategButton" VerticalAlignment="Top" Width="75" Click="CancelAddCategButton_Click" />
+            </Grid>
+        </GroupBox>
+        <Button Content="Supprimer" Height="23" HorizontalAlignment="Right" Margin="0,344,939,0" Name="deleteButton" VerticalAlignment="Top" Width="75" Click="deleteButton_Click" Visibility="Hidden" />
+        <Label Content="Label" Height="28" HorizontalAlignment="Left" Margin="148,408,0,0" Name="testlabel" VerticalAlignment="Top" Width="317" />
+        <Button Content="changer statut" Height="23" HorizontalAlignment="Left" Margin="227,340,0,0" Name="playerChangeStatus" VerticalAlignment="Top" Width="101" Visibility="Hidden" Click="playerChangeStatus_Click" />
+        <Button Content="Changer status" Height="23" HorizontalAlignment="Left" Margin="220,340,0,0" Name="changeGameStatusButton" VerticalAlignment="Top" Width="109" Click="changeGameStatusButton_Click" Visibility="Hidden" />
+    </Grid>
+</Window>

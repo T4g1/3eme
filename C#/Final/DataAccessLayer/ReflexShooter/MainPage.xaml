@@ -1,0 +1,14 @@
+﻿<UserControl x:Class="ReflexShooter.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" Height="480" Width="640">
+
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Canvas x:Name="graphicDevice" Background="LightBlue">
+            <sdk:Label Canvas.Left="26" Canvas.Top="15" Height="28" Name="label1" Width="120" Content="Score:" />
+            <sdk:Label x:Name="scoreLabel" Canvas.Left="26" Canvas.Top="39" Height="28" Width="120" Content="0" />
+        </Canvas>
+    </Grid>
+</UserControl>

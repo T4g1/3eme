@@ -1,0 +1,5 @@
+C:\DataAccessLayer\WebGame\obj\Debug\ResolveAssemblyReference.cache
+C:\DataAccessLayer\WebGame\bin\CowGame.dll
+C:\DataAccessLayer\WebGame\bin\CowGame.pdb
+C:\DataAccessLayer\WebGame\obj\Debug\CowGame.dll
+C:\DataAccessLayer\WebGame\obj\Debug\CowGame.pdb

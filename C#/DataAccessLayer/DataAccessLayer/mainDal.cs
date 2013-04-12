@@ -25,29 +25,11 @@ namespace DataAccessLayer
 
         //TODO: ici aussi trouver une fucking solutions
         #region insert into
-        public void InsertIntoUtilisateurs(int id, string Nom, string prenom, string pseudo, string password, Image avatar, int Droit, bool Status) { 
-            MemoryStream ms = new MemoryStream();
-            utilisateur user = new utilisateur();
-
-            if( avatar != null)
-                avatar.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-            //avatar.Value.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-            //création du tuple
-            user.id = id;
-            user.Nom = Nom;
-            user.Prenom = prenom;
-            user.Pseudo = pseudo;
-            user.Password = password;
-            user.Avatar = ms.ToArray();
-            user.Droit = Droit;
-            user.Status = Status;
-
+        public void InsertIntoUtilisateurs(utilisateur user) { 
             //ajout à la base si un username et password est spécifié
-            if(pseudo != null && password != null ){
-                DB.utilisateurs.InsertOnSubmit(user);
-                if( AutoCommit )
-                    DB.SubmitChanges();
-            }
+            DB.utilisateurs.InsertOnSubmit(user);
+            if( AutoCommit )
+                DB.SubmitChanges();
         }
         public void InsertIntoJeux(int id, string Nom, string Description, string PEGI, int Categorie, int Editeur) {
             Jeux newGame = new Jeux();
@@ -358,7 +340,7 @@ namespace DataAccessLayer
 
             foreach (Jeux tuple in result)
             {
-                if ((bool)tuple.Status)
+                if (tuple.Status)
                     tuple.Status = false;
                 else
                 {
@@ -468,6 +450,21 @@ namespace DataAccessLayer
         }
         #endregion
 
+
+        public bool loginUser(String username, String password) {
+            IQueryable<utilisateur> result = null;
+
+            result = (from users in DB.utilisateurs
+                      where users.Pseudo == username
+                      where users.Password == password 
+                      select users);
+
+            if (result.Count() > 0)
+                return true;
+            else
+                return false;
+            
+        }
 
         public void commit() {
             DB.SubmitChanges();

@@ -10,15 +10,11 @@ D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WPFAdmin\obj\x86\Debug\GenerateResou
 D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WPFAdmin\obj\x86\Debug\GenerateResource.write.1.tlog
 D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WPFAdmin\bin\Debug\WPFAdmin.exe
 D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WPFAdmin\bin\Debug\WPFAdmin.pdb
-D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WPFAdmin\bin\Debug\DataAccessLayer.dll
-D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WPFAdmin\bin\Debug\DataAccessLayer.pdb
 D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WPFAdmin\obj\x86\Debug\WPFAdmin.exe
 D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WPFAdmin\obj\x86\Debug\WPFAdmin.pdb
 D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WPFAdmin\obj\x86\Debug\modifyElem.baml
 D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WPFAdmin\obj\x86\Debug\modifyElem.g.cs
 E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\WPFAdmin\bin\Debug\WPFAdmin.exe.config
-E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\WPFAdmin\obj\x86\Debug\WPFAdmin.exe
-E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\WPFAdmin\obj\x86\Debug\WPFAdmin.pdb
 E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\WPFAdmin\bin\Debug\WPFAdmin.exe
 E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\WPFAdmin\bin\Debug\WPFAdmin.pdb
 E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\WPFAdmin\obj\x86\Debug\ResolveAssemblyReference.cache
@@ -32,3 +28,5 @@ E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\WPFAdmin\obj\x86\Debug\WPFAdmin.g.
 E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\WPFAdmin\obj\x86\Debug\WPFAdmin.Properties.Resources.resources
 E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\WPFAdmin\obj\x86\Debug\GenerateResource.read.1.tlog
 E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\WPFAdmin\obj\x86\Debug\GenerateResource.write.1.tlog
+E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\WPFAdmin\obj\x86\Debug\WPFAdmin.exe
+E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\WPFAdmin\obj\x86\Debug\WPFAdmin.pdb

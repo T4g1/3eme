@@ -1,0 +1,12 @@
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\DataAccessLayer\bin\Debug\DataAccessLayer.dll.config
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\DataAccessLayer\obj\Debug\ResolveAssemblyReference.cache
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+C:\DataAccessLayer\DataAccessLayer\bin\Debug\DataAccessLayer.dll.config
+C:\DataAccessLayer\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+C:\DataAccessLayer\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+C:\DataAccessLayer\DataAccessLayer\obj\Debug\ResolveAssemblyReference.cache
+C:\DataAccessLayer\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+C:\DataAccessLayer\DataAccessLayer\obj\Debug\DataAccessLayer.pdb

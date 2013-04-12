@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+ <definitions 
+ xmlns="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="SOAPWS" targetNamespace="http://Session/" xmlns:tns="http://Session/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:fi="http://java.sun.com/xml/ns/wsit/2006/09/policy/fastinfoset/service" xmlns:tcp="http://java.sun.com/xml/ns/wsit/2006/09/policy/soaptcp/service" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sc="http://schemas.sun.com/2006/03/wss/server" xmlns:wspp="http://java.sun.com/xml/ns/wsit/policy" 
+ >
+    <message name="hello"/>
+    <message name="helloResponse"/>
+    <message name="GetPlayer"/>
+    <message name="GetPlayerResponse"/>
+    <message name="AddPlayer"/>
+    <message name="AddPlayerResponse"/>
+    <message name="RemovePlayer"/>
+    <message name="RemovePlayerResponse"/>
+    <message name="AlterUser"/>
+    <message name="AlterUserResponse"/>
+    <message name="getHighScore"/>
+    <message name="getHighScoreResponse"/>
+    <message name="GetPlayByPlayer"/>
+    <message name="GetPlayByPlayerResponse"/>
+    <message name="GetLooseByPlayer"/>
+    <message name="GetLooseByPlayerResponse"/>
+    <portType name="SOAPWS">
+        <operation name="hello">
+            <input message="tns:hello"/>
+            <output message="tns:helloResponse"/>
+        </operation>
+        <operation name="GetPlayer">
+            <input message="tns:GetPlayer"/>
+            <output message="tns:GetPlayerResponse"/>
+        </operation>
+        <operation name="AddPlayer">
+            <input message="tns:AddPlayer"/>
+            <output message="tns:AddPlayerResponse"/>
+        </operation>
+        <operation name="RemovePlayer">
+            <input message="tns:RemovePlayer"/>
+            <output message="tns:RemovePlayerResponse"/>
+        </operation>
+        <operation name="AlterUser">
+            <input message="tns:AlterUser"/>
+            <output message="tns:AlterUserResponse"/>
+        </operation>
+        <operation name="getHighScore">
+            <input message="tns:getHighScore"/>
+            <output message="tns:getHighScoreResponse"/>
+        </operation>
+        <operation name="GetPlayByPlayer">
+            <input message="tns:GetPlayByPlayer"/>
+            <output message="tns:GetPlayByPlayerResponse"/>
+        </operation>
+        <operation name="GetLooseByPlayer">
+            <input message="tns:GetLooseByPlayer"/>
+            <output message="tns:GetLooseByPlayerResponse"/>
+        </operation>
+    </portType>
+    <binding name="SOAPWSPortBinding" type="tns:SOAPWS">
+        <operation name="hello">
+            <input></input>
+            <output></output>
+        </operation>
+        <operation name="GetPlayer">
+            <input></input>
+            <output></output>
+        </operation>
+        <operation name="AddPlayer">
+            <input></input>
+            <output></output>
+        </operation>
+        <operation name="RemovePlayer">
+            <input></input>
+            <output></output>
+        </operation>
+        <operation name="AlterUser">
+            <input></input>
+            <output></output>
+        </operation>
+        <operation name="getHighScore">
+            <input></input>
+            <output></output>
+        </operation>
+        <operation name="GetPlayByPlayer">
+            <input></input>
+            <output></output>
+        </operation>
+        <operation name="GetLooseByPlayer">
+            <input></input>
+            <output></output>
+        </operation>
+    </binding>
+    <service name="SOAPWS">
+        <port name="SOAPWSPort" binding="tns:SOAPWSPortBinding"/>
+    </service>
+</definitions>

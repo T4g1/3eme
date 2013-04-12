@@ -1,0 +1,10 @@
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WebGame\obj\Debug\ResolveAssemblyReference.cache
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WebGame\bin\WebGame.dll
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WebGame\bin\WebGame.pdb
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WebGame\obj\Debug\WebGame.dll
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WebGame\obj\Debug\WebGame.pdb
+C:\DataAccessLayer\WebGame\bin\WebGame.dll
+C:\DataAccessLayer\WebGame\bin\WebGame.pdb
+C:\DataAccessLayer\WebGame\obj\Debug\ResolveAssemblyReference.cache
+C:\DataAccessLayer\WebGame\obj\Debug\WebGame.dll
+C:\DataAccessLayer\WebGame\obj\Debug\WebGame.pdb

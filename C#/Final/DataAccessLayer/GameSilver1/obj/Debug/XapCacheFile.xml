@@ -1,0 +1,6 @@
+﻿<xapCache source="C:\DataAccessLayer\GameSilver1\Bin\Debug\GameSilver1.xap" wasSigned="False" certificateThumbprint="" TimeStampUrl="" lastWriteTime="9/01/2013 18:02:53">
+  <file source="C:\DataAccessLayer\GameSilver1\obj\Debug\GameSilver1.dll" archivePath="GameSilver1.dll" lastWriteTime="9/01/2013 04:07:11" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Controls.Data.Input.dll" archivePath="System.Windows.Controls.Data.Input.dll" lastWriteTime="10/03/2011 00:08:16" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.ComponentModel.DataAnnotations.dll" archivePath="System.ComponentModel.DataAnnotations.dll" lastWriteTime="10/03/2011 00:08:16" />
+  <file source="C:\DataAccessLayer\GameSilver1\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="9/01/2013 04:07:11" />
+</xapCache>

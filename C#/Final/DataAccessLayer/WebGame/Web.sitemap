@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  <siteMapNode roles="*">
+    <siteMapNode title="Accueil" description="Il faut bien un début à tout" url="~/Default.aspx" />
+    <siteMapNode title="A propos" description="Informations nous concernant" url="~/About.aspx" />
+    <siteMapNode title="Nos jeux" description="Liste des jeux disponnible sur le site" url="~/GamePage.aspx" />
+    <siteMapNode title="Mes jeux" description="Accéder à la gestion de mes jeux" url="~/Editeur/Manage.aspx" roles="Editeur" />
+    <siteMapNode title="Administration" description="Accéder à la gestion de tout les jeux" url="~/Admin/AdminGames.aspx" roles="Administrateur" />
+  </siteMapNode>
+</siteMap>

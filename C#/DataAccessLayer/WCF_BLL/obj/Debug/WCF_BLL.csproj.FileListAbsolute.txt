@@ -1,11 +1,11 @@
 D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WCF_BLL\bin\Debug\WCF_BLL.dll.config
 D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WCF_BLL\bin\Debug\WCF_BLL.dll
 D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WCF_BLL\bin\Debug\WCF_BLL.pdb
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WCF_BLL\bin\Debug\DataAccessLayer.dll
+D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WCF_BLL\bin\Debug\DataAccessLayer.pdb
 D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WCF_BLL\obj\Debug\ResolveAssemblyReference.cache
 D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WCF_BLL\obj\Debug\WCF_BLL.dll
 D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WCF_BLL\obj\Debug\WCF_BLL.pdb
-D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WCF_BLL\bin\Debug\DataAccessLayer.dll
-D:\Ecole\Documents\Ecole\c#\DataAccessLayer\WCF_BLL\bin\Debug\DataAccessLayer.pdb
 E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\WCF_BLL\bin\Debug\WCF_BLL.dll.config
 E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\WCF_BLL\bin\Debug\WCF_BLL.dll
 E:\Users\T4g1\Projets\3eme\C#\DataAccessLayer\WCF_BLL\bin\Debug\WCF_BLL.pdb

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="FinalGameDB" Class="DbGamesDataContext" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=T4g1-PORTABLE3\SQLEXPRESS;Initial Catalog=FinalGameDB;Integrated Security=True" SettingsObjectName="DataAccessLayer.Properties.Settings" SettingsPropertyName="FinalGameDBConnectionString2" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DELSKEV-PC\SQLEXPRESS;Initial Catalog=FinalGameDB;Integrated Security=True" SettingsObjectName="DataAccessLayer.Properties.Settings" SettingsPropertyName="FinalGameDBConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.HighScores" Member="HighScores">
     <Type Name="HighScore">
       <Column Name="idJoueur" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -11,7 +11,7 @@
   </Table>
   <Table Name="dbo.utilisateurs" Member="utilisateurs">
     <Type Name="utilisateur">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="id" AutoSync="Never" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Nom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Prenom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Pseudo" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
@@ -109,7 +109,7 @@
       <Column Name="PEGI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Categorie" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Editeur" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Status" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Status" Type="System.Boolean" DbType="Bit" CanBeNull="false" />
       <Column Name="cote" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="joue" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Jeux_HighScore" Member="HighScores" ThisKey="id" OtherKey="idJeux" Type="HighScore" />

@@ -36,7 +36,7 @@ public class ApplicReserv extends javax.swing.JFrame {
         
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
         
         yearField.setModel(new SpinnerNumberModel(year, year, year + 10, 1));
         monthField.setModel(new SpinnerNumberModel(month + 1, 1, 12, 1));
